@@ -1,0 +1,14 @@
+The code consists of a test script, called tstatctl, and the API
+functions, in the file called tstatapi.inc.
+
+The tstatctl script is somewhat useful as a basic control script,
+but is primarily intended to demonstrate the use of the API calls.
+
+The API script includes comments to describe input and output.
+
+While I have not had any issues with either of these, there have
+been reported issues with the NT series devices when too many
+commands are sent to the device too quickly.  The recommended
+fix when issues arise, is to include delays in the command sending
+scripts or methods.
+
