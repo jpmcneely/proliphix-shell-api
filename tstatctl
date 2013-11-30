@@ -1,0 +1,151 @@
+#!/bin/bash
+
+# tstatctl - Somewhat useful control script for Proliphix NT20e
+#            thermostat.
+# Version 1.0 - 2013-11-30
+# Copyright (C) 2013 - J.P. McNeely
+#
+# This script will serve as a somewhat-useful control program, but
+# is primarily intended as an example of the API calls.
+#
+# GPL 2.0 License - See LICENSE for redistribution requirements.
+
+# Authentication - Modify this for target device.
+IPADDR="192.168.100.70"
+USERID="admin"
+PASSWD="passw0rd"
+
+# Source the API Implementation
+. ./tstatapi.inc
+
+if [ ! ${1} ]; then
+  echo "usage: $0 COMMAND [OPTIONS]"
+  echo " "
+  echo "Available Commands:"
+  echo "    status      : View Full Status"
+  echo "    setname     : Set Device Name"
+  echo "    sethvacmode : Set HVAC Mode"
+  echo "    setfanmode  : Set Fan Mode"
+  echo "    setheat     : Set Heat SetPoint"
+  echo "    setcool     : Set Cool SetPoint"
+  echo "    setsetback  : Set Setback Status (Hold or Reset Manual Setpoints)"
+  echo " "
+  echo "Use $0 COMMAND for available options."
+  echo " "
+  exit 1
+fi
+
+CMD=${1}
+
+# Full Status
+if [ $CMD = "status" ]; then
+  MODEL=`readSystemMimModelNumber`
+  LOCALTEMP=`readThermSensorTemp Local`
+  RS1TEMP=`readThermSensorTemp RS1`
+  LOWTEMPALRM=`readCommonAlarmStatus LowTemp`
+  HIGHTEMPALRM=`readCommonAlarmStatus HighTemp`
+  FILTERALRM=`readCommonAlarmStatus Filter`
+  NAME=`readCommonDevName`
+  UPTIME=`readSystemUptime`
+  SYSTIME=`readSystemTime`
+  CURSCHEDPERIOD=`readThermCurrentPeriod`
+  CURSCHEDCLASS=`readThermCurrentClass`
+  CURACTIVEPERIOD=`readThermActivePeriod`
+  AVGTEMP=`readThermAverageTemp`
+  CURMODE=`readThermHvacMode`
+  CURSTATE=`readThermHvacState`
+  CURFANMODE=`readThermFanMode`
+  CURFANSTATE=`readThermFanState`
+  CURHEATSETPOINT=`readThermSetbackHeat`
+  CURCOOLSETPOINT=`readThermSetbackCool`
+  CURSETBACKSTATUS=`readThermSetbackStatus`
+  echo " "
+  echo "Name/Model    : $NAME / $MODEL"
+  echo "Time          : $SYSTIME  Up: $UPTIME"
+  echo "HVAC Mode     : $CURMODE"
+  echo "HVAC State    : $CURSTATE"
+  echo "Fan Mode      : $CURFANMODE"
+  echo "Fan State     : $CURFANSTATE"
+  echo "Main Temp     : ${LOCALTEMP}f"
+  echo "RS1 Temp      : ${RS1TEMP}f"
+  echo "Avg Temp      : ${AVGTEMP}f"
+  echo "Heat SetPoint : ${CURHEATSETPOINT}f"
+  echo "Cool SetPoint : ${CURCOOLSETPOINT}f"
+  echo "Setback Status: $CURSETBACKSTATUS"
+  echo "Sched Class   : $CURSCHEDCLASS"
+  echo "Sched Period  : $CURSCHEDPERIOD"
+  echo "Active Period : $CURACTIVEPERIOD"
+  echo "Alarm Status  : LowTemp: $LOWTEMPALRM / HighTemp: $HIGHTEMPALRM / Filter: $FILTERALRM"
+  echo " "
+fi
+
+# Set Device Name
+if [ $CMD = "setname" ]; then
+  if [ ! ${2} ]; then
+    echo "usage: $0 setname \"New+Name\""
+    echo "       NOTE: Replace space with plus (+)"
+    exit 1
+  fi
+  NEWNAME=$2
+  writeCommonDevName $NEWNAME
+  echo "Device Name Set to $NEWNAME" | tr "+" " "
+fi
+
+# Set HVAC Mode
+if [ $CMD = "sethvacmode" ]; then
+  if [ ! ${2} ]; then
+    echo "usage: $0 sethvacmode Off|Heat|Cool|Auto"
+    exit 1
+  fi
+  NEWMODE=$2
+  SETMODE=`writeThermHvacMode $NEWMODE`
+  echo "HVAC Mode Set to $SETMODE"
+fi
+
+# Set Fan Mode
+if [ $CMD = "setfanmode" ]; then
+  if [ ! ${2} ]; then
+    echo "usage: $0 setfanmode Auto|On|Schedule"
+    exit 1
+  fi
+  NEWMODE=$2
+  SETMODE=`writeThermFanMode $NEWMODE`
+  echo "Fan Mode Set to $SETMODE"
+fi
+
+# Set Heat SetPoint
+if [ $CMD = "setheat" ]; then
+  if [ ! ${2} ]; then
+    echo "usage: $0 setheat TEMPERATURE"
+    echo "       Ex.: $0 setheat 68.0"
+    exit 1
+  fi
+  NEWTEMP=$2
+  SETHEAT=`writeThermSetbackHeat $NEWTEMP`
+  echo "Heat Set to ${SETHEAT}f"
+fi
+
+# Set Cool SetPoint
+if [ $CMD = "setcool" ]; then
+  if [ ! ${2} ]; then
+    echo "usage: $0 setcool TEMPERATURE"
+    echo "       Ex.: $0 setcool 72.0"
+    exit 1
+  fi
+  NEWTEMP=$2
+  SETCOOL=`writeThermSetbackCool $NEWTEMP`
+  echo "Cool Set to ${SETCOOL}f"
+fi
+
+# Set Setback Status
+if [ $CMD = "setsetback" ]; then
+  if [ ! ${2} ]; then
+    echo "usage: $0 setsetback Normal|Hold"
+    exit 1
+  fi
+  NEWMODE=$2
+  SETBACKMODE=`writeThermSetbackStatus $NEWMODE`
+  echo "Setback Set to $SETBACKMODE"
+fi
+
+# EOF
