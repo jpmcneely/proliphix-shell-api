@@ -519,6 +519,87 @@ function readThermAverageTemp {
   fi
 }
 
+function readThermConfigFilterReminderPending {
+  # OID4.2.9 - Filter Reminder Alarm Pending State
+  # In : No Input
+  # Out: State String
+  OID="OID4.2.9"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    1)
+      echo "No"
+      return 0
+      ;;
+    2)
+      echo "Yes"
+      return 0
+      ;;
+    *)
+      echo "ERR"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR"
+    return 1
+  fi
+}
+
+function readThermConfigLowTempPending {
+  # OID4.2.11 - Zone Low Temperature Alarm Pending State
+  # In : No Input
+  # Out: State String
+  OID="OID4.2.11"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    1)
+      echo "No"
+      return 0
+      ;;
+    2)
+      echo "Yes"
+      return 0
+      ;;
+    *)
+      echo "ERR"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR"
+    return 1
+  fi
+}
+
+function readThermConfigHighTempPending {
+  # OID4.2.13 - Zone High Temperature Alarm Pending State
+  # In : No Input
+  # Out: State String
+  OID="OID4.2.13"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    1)
+      echo "No"
+      return 0
+      ;;
+    2)
+      echo "Yes"
+      return 0
+      ;;
+    *)
+      echo "ERR"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR"
+    return 1
+  fi
+}
+
 function readThermSensorTemp {
   # OID4.3.2.1-3 - Current Sensor Temperature
   # In : Sensor Name
@@ -686,6 +767,51 @@ function writeThermSetbackStatus {
   setData $OID $setMode
   if [ $? -ne 1 ]; then
     readThermSetbackStatus
+    return 0
+  else
+    return 1
+  fi
+}
+
+function writeThermConfigFilterReminderPending {
+  # OID4.2.9 - Clear Filter Reminder Alarm
+  # In : No Input
+  # Out: State String
+  OID="OID4.2.9"
+  setClear=3
+  setData $OID $setClear
+  if [ $? -ne 1 ]; then
+    readThermConfigFilterReminderPending
+    return 0
+  else
+    return 1
+  fi
+}
+
+function writeThermConfigLowTempPending {
+  # OID4.2.11 - Clear Zone Low Temperature Alarm
+  # In : No Input
+  # Out: State String
+  OID="OID4.2.11"
+  setClear=3
+  setData $OID $setClear
+  if [ $? -ne 1 ]; then
+    readThermConfigLowTempPending
+    return 0
+  else
+    return 1
+  fi
+}
+
+function writeThermConfigHighTempPending {
+  # OID4.2.13 - Clear Zone High Temperature Alarm
+  # In : No Input
+  # Out: State String
+  OID="OID4.2.13"
+  setClear=3
+  setData $OID $setClear
+  if [ $? -ne 1 ]; then
+    readThermConfigHighTempPending
     return 0
   else
     return 1

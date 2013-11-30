@@ -22,13 +22,22 @@ if [ ! ${1} ]; then
   echo "usage: $0 COMMAND [OPTIONS]"
   echo " "
   echo "Available Commands:"
-  echo "    status      : View Full Status"
-  echo "    setname     : Set Device Name"
-  echo "    sethvacmode : Set HVAC Mode"
-  echo "    setfanmode  : Set Fan Mode"
-  echo "    setheat     : Set Heat SetPoint"
-  echo "    setcool     : Set Cool SetPoint"
-  echo "    setsetback  : Set Setback Status (Hold or Reset Manual Setpoints)"
+  echo "General:"
+  echo "    status        : View Full Status"
+  echo "Settings:"
+  echo "    setname       : Set Device Name"
+  echo "    sethvacmode   : Set HVAC Mode"
+  echo "    setfanmode    : Set Fan Mode"
+  echo "    setheat       : Set Heat SetPoint"
+  echo "    setcool       : Set Cool SetPoint"
+  echo "    setsetback    : Set Setback Status (Hold or Reset Manual Setpoints)"
+  echo "Alarms:"
+  echo "    lowtempalarm  : Get Zone Low Temp Alarm Status"
+  echo "    hightempalarm : Get Zone High Temp Alarm Status"
+  echo "    filteralarm   : Get Filter Reminder Alarm Status"
+  echo "    lowtempclear  : Clear Zone Low Temp Alarm"
+  echo "    hightempclear : Clear Zone High Temp Alarm"
+  echo "    filterclear   : Clear Filter Reminder Alarm"
   echo " "
   echo "Use $0 COMMAND for available options."
   echo " "
@@ -146,6 +155,54 @@ if [ $CMD = "setsetback" ]; then
   NEWMODE=$2
   SETBACKMODE=`writeThermSetbackStatus $NEWMODE`
   echo "Setback Set to $SETBACKMODE"
+fi
+
+# Get Filter Reminder Alarm Status
+if [ $CMD = "filteralarm" ]; then
+  readThermConfigFilterReminderPending
+fi
+
+# Get Zone Low Temp Alarm Status
+if [ $CMD = "lowtempalarm" ]; then
+  readThermConfigLowTempPending
+fi
+
+# Get Zone High Temp Alarm Status
+if [ $CMD = "hightempalarm" ]; then
+  readThermConfigHighTempPending
+fi
+
+# Clear Filter Reminder Alarm
+if [ $CMD = "filterclear" ]; then
+  # Do not send clear unless alarm is Yes
+  STATUS=`readThermConfigFilterReminderPending`
+  if [ $STATUS = "Yes" ]; then
+    writeThermConfigFilterReminderPending
+  else
+    echo "No"
+  fi
+fi
+
+# Clear Zone Low Temp Alarm
+if [ $CMD = "lowtempclear" ]; then
+  # Do not send clear unless alarm is Yes
+  STATUS=`readThermConfigLowTempPending`
+  if [ $STATUS = "Yes" ]; then
+    writeThermConfigLowTempPending
+  else
+    echo "No"
+  fi
+fi
+
+# Clear Zone High Temp Alarm
+if [ $CMD = "hightempclear" ]; then
+  # Do not send clear unless alarm is Yes
+  STATUS=`readThermConfigHighTempPending`
+  if [ $STATUS = "Yes" ]; then
+    writeThermConfigHighTempPending
+  else
+    echo "No"
+  fi
 fi
 
 # EOF
