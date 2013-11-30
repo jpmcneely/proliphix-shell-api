@@ -1,0 +1,35 @@
+Proliphix Shell API
+===================
+
+This code is an implementation of the Proliphix NT Thermostat API in
+shell (specifically BASH).
+
+The code grew from a desire to have a portable, simple implementation
+to use with a Proliphix NT20e thermostat.  The idea being that this
+could be used from within other BASH scripts, or with PHP, Perl, etc.
+as a system or exec.  The implementation is notably lacking in feature
+support for devices other than the NT20e.  This is because I do not
+have a test device for any other model.  However, the additional
+functions are small in number, and could easily be added by others.
+
+The implementation is not meant to be particularly efficient or elegant.
+It is only meant to provide the standard API to a Linux environment.
+
+The Proliphix API is, of course, property of Proliphix, Inc.  Any
+documents created by Proliphix for instructional or reference purposes
+are, no doubt, covered under copyright.  Such notices will appear in the
+original documentation.
+
+The implementation in shell is copyright by me, J.P. McNeely.  I have
+released the scripts under the GPL 2.0 license, a copy of which is
+included in the file named LICENSE.  Anyone who desires to do so may
+use this code, but only according to the terms specified in the 
+license (which is very permissive, and designed to promote legally 
+sharing code).  I leave it to the reader to examine the license
+BEFORE sharing the code further.  You will, no doubt, not find it 
+at all difficult to comply with the license unless your goal is to
+dishonestly claim ownership of my code.
+
+Suggestions for improvement are welcome!
+
+
