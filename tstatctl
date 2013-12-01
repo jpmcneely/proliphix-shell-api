@@ -10,10 +10,8 @@
 #
 # GPL 2.0 License - See LICENSE for redistribution requirements.
 
-# Authentication - Modify this for target device.
-IPADDR="192.168.100.70"
-USERID="admin"
-PASSWD="passw0rd"
+# Source the configuration
+. ./tstatconf.inc
 
 # Source the API Implementation
 . ./tstatapi.inc
@@ -32,6 +30,7 @@ if [ ! ${1} ]; then
   echo "    setcool         : Set Cool SetPoint"
   echo "    setsetback      : Set Setback Status (Hold or Reset Manual Setpoints)"
   echo "    setsensoroffset : Set Remote Sensor Temp Offset"
+  echo "    setsensorname   : Set Remote Sensor Name"
   echo "Alarms:"
   echo "    lowtempalarm  : Get Zone Low Temp Alarm Status"
   echo "    hightempalarm : Get Zone High Temp Alarm Status"
@@ -51,6 +50,7 @@ CMD=${1}
 if [ $CMD = "status" ]; then
   MODEL=`readSystemMimModelNumber`
   LOCALTEMP=`readThermSensorTemp Local`
+  RS1NAME=`readThermSensorName RS1`
   RS1TEMP=`readThermSensorTemp RS1`
   RS1OFFSET=`readThermSensorCorrection RS1`
   LOWTEMPALRM=`readCommonAlarmStatus LowTemp`
@@ -78,6 +78,7 @@ if [ $CMD = "status" ]; then
   echo "Fan Mode      : $CURFANMODE"
   echo "Fan State     : $CURFANSTATE"
   echo "Main Temp     : ${LOCALTEMP}f"
+  echo "RS1 Name      : $RS1NAME"
   echo "RS1 Temp      : ${RS1TEMP}f"
   if [ $RS1OFFSET != "0" ]; then
   echo "RS1 Offset    : ${RS1OFFSET}f"
@@ -220,6 +221,19 @@ if [ $CMD = "setsensoroffset" ]; then
   OFFSET=$3
   SENSOROFFSET=`writeThermSensorCorrection $SENSOR $OFFSET`
   echo "Sensor Correction for $SENSOR Set to $SENSOROFFSET"
+fi
+
+# Set Remote Sensor Name
+if [ $CMD = "setsensorname" ]; then
+  if [ ! ${3} ]; then
+    echo "usage: $0 setsensorname RS1|RS2 \"New+Name\""
+    echo "       NOTE: Replace space with plus (+)"
+    exit 1
+  fi
+  SENSOR=$2
+  NEWNAME=$3
+  writeThermSensorName $SENSOR $NEWNAME
+  echo "Sensor $SENSOR Name Set to $NEWNAME" | tr "+" " "
 fi
 
 # EOF

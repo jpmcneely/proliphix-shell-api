@@ -633,7 +633,7 @@ function readThermSensorTemp {
 
 function readThermSensorCorrection {
   # OID4.3.4.2-3 - Remote Sensor Correction
-  # In : Remote Sensor Name
+  # In : Remote Sensor ID
   # Out: Temp Offset in Fahrenheit
   if [ $1 ]; then
     case $1 in
@@ -656,6 +656,38 @@ function readThermSensorCorrection {
   getData $OID temp
   if [ $? -ne 1 ]; then
     echo $RTNDATA
+    return 0
+  else
+    echo "ERR"
+    return 1
+  fi
+}
+
+function readThermSensorName {
+  # OID4.3.5.2-3 - Remote Sensor Name
+  # In : Remote Sensor ID
+  # Out: Current Sensor Name String
+  if [ $1 ]; then
+    case $1 in
+    "RS1")
+      DEV=2
+      ;;
+    "RS2")
+      DEV=3
+      ;;
+    *)
+      echo "ERR"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR"
+    return 1
+  fi
+  OID="OID4.3.5.${DEV}"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
     return 0
   else
     echo "ERR"
@@ -882,6 +914,43 @@ function writeThermSensorCorrection {
   setData $OID $OFFSET
   if [ $? -ne 1 ]; then
     readThermSensorCorrection $1
+    return 0
+  else
+    return 1
+  fi
+}
+
+function writeThermSensorName {
+  # OID4.3.5.2-3 - Remote Sensor Name
+  # In : Sensor ID, Name - Replace ' ' (space) character with '+' (plus) character
+  #                        (ex: 'Zone+Two' sets to 'Zone Two')
+  # Out: Return status
+  if [ $1 ]; then
+    if [ $2 ]; then
+      case $1 in
+      "RS1")
+        DEV=2
+        ;;
+      "RS2")
+        DEV=3
+        ;;
+      *)
+        echo "ERR"
+        return 1
+        ;;
+      esac
+      newName=$2
+    else
+      echo "ERR"
+      return 1
+    fi
+  else
+    echo "ERR"
+    return 1
+  fi
+  OID="OID4.3.5.${DEV}"
+  setData $OID $newName
+  if [ $? -ne 1 ]; then
     return 0
   else
     return 1
