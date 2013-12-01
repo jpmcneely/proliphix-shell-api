@@ -695,6 +695,96 @@ function readThermSensorName {
   fi
 }
 
+function readThermSensorState {
+  # OID4.3.6.1-3 - Current Sensor State
+  # In : Sensor ID
+  # Out: State String
+  SENSOR=$1
+  case $SENSOR in
+  "Local")
+    DEV=1
+    ;;
+  "RS1")
+    DEV=2
+    ;;
+  "RS2")
+    DEV=3
+    ;;
+  *)
+    echo "ERR"
+    return 1
+    ;;
+  esac
+  OID="OID4.3.6.${DEV}"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    0)
+      echo "Not Present"
+      return 0
+      ;;
+    1)
+      echo "Disabled"
+      return 0
+      ;;
+    2)
+      echo "Enabled"
+      return 0
+      ;;
+    *)
+      echo "ERR"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR"
+    return 1
+  fi
+}
+
+function readThermSensorAverage {
+  # OID4.3.8.1-3 - Current Sensor Average Setting
+  # In : Sensor ID
+  # Out: State String
+  SENSOR=$1
+  case $SENSOR in
+  "Local")
+    DEV=1
+    ;;
+  "RS1")
+    DEV=2
+    ;;
+  "RS2")
+    DEV=3
+    ;;
+  *)
+    echo "ERR"
+    return 1
+    ;;
+  esac
+  OID="OID4.3.8.${DEV}"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    1)
+      echo "Disabled"
+      return 0
+      ;;
+    2)
+      echo "Enabled"
+      return 0
+      ;;
+    *)
+      echo "ERR"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR"
+    return 1
+  fi
+}
+
 # ------------------------------------------------------------------------------
 # Write Functions
 # These set read-write data.
@@ -953,6 +1043,109 @@ function writeThermSensorName {
   if [ $? -ne 1 ]; then
     return 0
   else
+    return 1
+  fi
+}
+
+function writeThermSensorState {
+  # OID4.3.6.2-3 - Set Sensor State
+  # In : Sensor_ID, State
+  # Out: State After Setting
+  if [ $1 ]; then
+    if [ $2 ]; then
+      case $1 in
+      "RS1")
+        DEV=2
+        ;;
+      "RS2")
+        DEV=3
+        ;;
+      *)
+        echo "ERR"
+        return 1
+        ;;
+      esac
+      RAWSTATE=$2
+    else
+      echo "ERR"
+      return 1
+    fi
+  else
+    echo "ERR"
+    return 1
+  fi
+  case $RAWSTATE in
+  "Disable")
+    STATE=1
+    ;;
+  "Enable")
+    STATE=2
+    ;;
+  *)
+    echo "ERR"
+    return 1
+    ;;
+  esac
+  OID="OID4.3.6.${DEV}"
+  setData $OID $STATE
+  if [ $? -ne 1 ]; then
+    readThermSensorState $1
+    return 0
+  else
+    echo "ERR"
+    return 1
+  fi
+}
+
+function writeThermSensorAverage {
+  # OID4.3.8.1-3 - Set Sensor Average Inclusion
+  # In : Sensor_ID, Setting
+  # Out: Setting Status
+  if [ $1 ]; then
+    if [ $2 ]; then
+      case $1 in
+      "Local")
+        DEV=1
+        ;;
+      "RS1")
+        DEV=2
+        ;;
+      "RS2")
+        DEV=3
+        ;;
+      *)
+        echo "ERR"
+        return 1
+        ;;
+      esac
+      RAWSET=$2
+    else
+      echo "ERR"
+      return 1
+    fi
+  else
+    echo "ERR"
+    return 1
+  fi
+  case $RAWSET in
+  "Disable")
+    STATE=1
+    ;;
+  "Enable")
+    STATE=2
+    ;;
+  *)
+    echo "ERR"
+    return 1
+    ;;
+  esac
+  OID="OID4.3.8.${DEV}"
+  setData $OID $STATE
+  if [ $? -ne 1 ]; then
+    readThermSensorAverage $1
+    return 0
+  else
+    echo "ERR"
     return 1
   fi
 }

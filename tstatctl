@@ -31,6 +31,8 @@ if [ ! ${1} ]; then
   echo "    setsetback      : Set Setback Status (Hold or Reset Manual Setpoints)"
   echo "    setsensoroffset : Set Remote Sensor Temp Offset"
   echo "    setsensorname   : Set Remote Sensor Name"
+  echo "    setsensorstate  : Set Sensor State"
+  echo "    setsensoravg    : Set Sensor Average Inclusion"
   echo "Alarms:"
   echo "    lowtempalarm  : Get Zone Low Temp Alarm Status"
   echo "    hightempalarm : Get Zone High Temp Alarm Status"
@@ -50,8 +52,11 @@ CMD=${1}
 if [ $CMD = "status" ]; then
   MODEL=`readSystemMimModelNumber`
   LOCALTEMP=`readThermSensorTemp Local`
+  LOCALAVG=`readThermSensorAverage Local`
   RS1NAME=`readThermSensorName RS1`
+  RS1STATE=`readThermSensorState RS1`
   RS1TEMP=`readThermSensorTemp RS1`
+  RS1AVG=`readThermSensorAverage RS1`
   RS1OFFSET=`readThermSensorCorrection RS1`
   LOWTEMPALRM=`readCommonAlarmStatus LowTemp`
   HIGHTEMPALRM=`readCommonAlarmStatus HighTemp`
@@ -78,8 +83,11 @@ if [ $CMD = "status" ]; then
   echo "Fan Mode      : $CURFANMODE"
   echo "Fan State     : $CURFANSTATE"
   echo "Main Temp     : ${LOCALTEMP}f"
+  echo "Main Averaged : $LOCALAVG"
   echo "RS1 Name      : $RS1NAME"
+  echo "RS1 State     : $RS1STATE"
   echo "RS1 Temp      : ${RS1TEMP}f"
+  echo "RS1 Averaged  : $RS1AVG"
   if [ $RS1OFFSET != "0" ]; then
   echo "RS1 Offset    : ${RS1OFFSET}f"
   fi
@@ -234,6 +242,30 @@ if [ $CMD = "setsensorname" ]; then
   NEWNAME=$3
   writeThermSensorName $SENSOR $NEWNAME
   echo "Sensor $SENSOR Name Set to $NEWNAME" | tr "+" " "
+fi
+
+# Set Sensor State
+if [ $CMD = "setsensorstate" ]; then
+  if [ ! ${3} ]; then
+    echo "usage: $0 setsensorstate RS1|RS2 Enable|Disable"
+    exit 1
+  fi
+  SENSOR=$2
+  STATE=$3
+  NEWSTATE=`writeThermSensorState $SENSOR $STATE`
+  echo "Sensor $SENSOR Set to $NEWSTATE"
+fi
+
+# Set Sensor Avg
+if [ $CMD = "setsensoravg" ]; then
+  if [ ! ${3} ]; then
+    echo "usage: $0 setsensoravg Local|RS1|RS2 Enable|Disable"
+    exit 1
+  fi
+  SENSOR=$2
+  STATE=$3
+  NEWSTATE=`writeThermSensorAverage $SENSOR $STATE`
+  echo "Sensor $SENSOR Average Inclusion Set to $NEWSTATE"
 fi
 
 # EOF
