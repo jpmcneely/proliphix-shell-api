@@ -55,7 +55,7 @@ function getData {
     return 0
     ;;
   *)
-    RTNDATA="ERR"
+    RTNDATA="ERR-$OID: Invalid getData VarType"
     return 1
     ;;
   esac
@@ -76,7 +76,7 @@ function readCommonDevName {
     echo "$RTNDATA"
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -97,7 +97,7 @@ function readCommonAlarmStatus {
     ALRMID=3
     ;;
   *)
-    RTNDATA="ERR"
+    RTNDATA="ERR-OID1.13.2.X - Invalid Alarm Filter Name: $0"
     return 1
     ;;
   esac
@@ -114,7 +114,7 @@ function readCommonAlarmStatus {
     RTNDATA="Red"
     ;;
   "ERR")
-    RTNDATA="ERR"
+    RTNDATA="ERR-$OID - Invalid Alarm Status: $0"
     return 1
     ;;
   esac
@@ -132,7 +132,7 @@ function readSystemUptime {
     echo $RTNDATA
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -147,7 +147,7 @@ function readSystemTimeSecs {
     echo $RTNDATA
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -162,7 +162,7 @@ function readSystemTime {
     date -u +"%Y-%m-%d %H:%M:%S" -d@${CURSECS}
     return 0
   else
-    echo "ERR"
+    echo "ERR-SystemTime - Failed Function Return: $0"
     return 1
   fi
 }
@@ -177,7 +177,7 @@ function readSystemMimModelNumber {
     echo $RTNDATA
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -207,12 +207,12 @@ function readThermHvacMode {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid Mode: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -262,12 +262,12 @@ function readThermHvacState {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid State: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -293,12 +293,12 @@ function readThermFanMode {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid Mode: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -324,12 +324,12 @@ function readThermFanState {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid State: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -344,7 +344,7 @@ function readThermSetbackHeat {
     echo $RTNDATA
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -359,7 +359,7 @@ function readThermSetbackCool {
     echo $RTNDATA
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -385,12 +385,12 @@ function readThermSetbackStatus {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid State: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -420,12 +420,12 @@ function readThermCurrentPeriod {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid Period: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -451,12 +451,12 @@ function readThermCurrentClass {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid Class: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -494,12 +494,12 @@ function readThermActivePeriod {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid Period: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -514,7 +514,7 @@ function readThermAverageTemp {
     echo $RTNDATA
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -536,12 +536,12 @@ function readThermConfigFilterReminderPending {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid State: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -563,12 +563,12 @@ function readThermConfigLowTempPending {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid State: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -590,12 +590,12 @@ function readThermConfigHighTempPending {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid State: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -616,7 +616,7 @@ function readThermSensorTemp {
     DEV=3
     ;;
   *)
-    echo "ERR"
+    echo "ERR-OID4.3.2.X - Invalid Sensor ID: $0"
     return 1
     ;;
   esac
@@ -626,7 +626,7 @@ function readThermSensorTemp {
     echo $RTNDATA
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -644,12 +644,12 @@ function readThermSensorCorrection {
       DEV=3
       ;;
     *)
-      echo "ERR"
+      echo "ERR-OID4.3.4.X - Invalid Sensor ID: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-OID4.3.4.X - Invalid Parameter Count: $0"
     return 1
   fi
   OID="OID4.3.4.${DEV}"
@@ -658,7 +658,7 @@ function readThermSensorCorrection {
     echo $RTNDATA
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -676,12 +676,12 @@ function readThermSensorName {
       DEV=3
       ;;
     *)
-      echo "ERR"
+      echo "ERR-OID4.3.5.X - Invalid Sensor ID: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-OID4.3.5.X - Invalid Parameter Count: $0"
     return 1
   fi
   OID="OID4.3.5.${DEV}"
@@ -690,7 +690,7 @@ function readThermSensorName {
     echo "$RTNDATA"
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -711,7 +711,7 @@ function readThermSensorState {
     DEV=3
     ;;
   *)
-    echo "ERR"
+    echo "ERR-OID4.3.6.X - Invalid Sensor ID: $0"
     return 1
     ;;
   esac
@@ -732,12 +732,12 @@ function readThermSensorState {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid State: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -758,7 +758,7 @@ function readThermSensorAverage {
     DEV=3
     ;;
   *)
-    echo "ERR"
+    echo "ERR-OID4.3.8.X - Invalid Sensor ID: $0"
     return 1
     ;;
   esac
@@ -775,12 +775,52 @@ function readThermSensorAverage {
       return 0
       ;;
     *)
-      echo "ERR"
+      echo "ERR-$OID - Invalid Setting: $0"
       return 1
       ;;
     esac
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermSensorType {
+  # OID4.3.9.2-3 - Current Remote Sensor Type
+  # In : Sensor ID
+  # Out: Type String
+  SENSOR=$1
+  case $SENSOR in
+  "RS1")
+    DEV=2
+    ;;
+  "RS2")
+    DEV=3
+    ;;
+  *)
+    echo "ERR-OID4.3.9.X - Invalid Sensor ID: $0"
+    return 1
+    ;;
+  esac
+  OID="OID4.3.9.${DEV}"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    1)
+      echo "Analog"
+      return 0
+      ;;
+    2)
+      echo "Thermistor"
+      return 0
+      ;;
+    *)
+      echo "ERR-$OID - Invalid Type: $0"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -801,6 +841,7 @@ function writeCommonDevName {
   if [ $? -ne 1 ]; then
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -825,7 +866,7 @@ function writeThermHvacMode {
     setMode=4
     ;;
   *)
-    echo "ERR"
+    echo "ERR-$OID - Invalid Mode: $0"
     return 1
     ;;
   esac
@@ -834,6 +875,7 @@ function writeThermHvacMode {
     readThermHvacMode 
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -855,7 +897,7 @@ function writeThermFanMode {
     setMode=3
     ;;
   *)
-    echo "ERR"
+    echo "ERR-$OID - Invalid Mode: $0"
     return 1
     ;;
   esac
@@ -864,6 +906,7 @@ function writeThermFanMode {
     readThermFanMode
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 } 
@@ -880,6 +923,7 @@ function writeThermSetbackHeat {
     readThermSetbackHeat
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -896,6 +940,7 @@ function writeThermSetbackCool {
     readThermSetbackCool
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -914,7 +959,7 @@ function writeThermSetbackStatus {
     setMode=2
     ;;
   *)
-    echo "ERR"
+    echo "ERR-OID4.1.9 - Invalid Mode: $0"
     return 1
     ;;
   esac
@@ -923,6 +968,7 @@ function writeThermSetbackStatus {
     readThermSetbackStatus
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -938,6 +984,7 @@ function writeThermConfigFilterReminderPending {
     readThermConfigFilterReminderPending
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -953,6 +1000,7 @@ function writeThermConfigLowTempPending {
     readThermConfigLowTempPending
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -968,6 +1016,7 @@ function writeThermConfigHighTempPending {
     readThermConfigHighTempPending
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -986,18 +1035,18 @@ function writeThermSensorCorrection {
         DEV=3
         ;;
       *)
-        echo "ERR"
+        echo "ERR-OID4.3.4.X - Invalid Sensor ID: $0"
         return 1
         ;;
       esac
       OFFSET=$2
       OFFSET=`echo "$OFFSET * 10" | bc | awk -F. '{print $1}'`
     else
-      echo "ERR"
+      echo "ERR-OID4.3.4.X - Invalid Parameter Count: $0"
       return 1
     fi
   else
-    echo "ERR"
+    echo "ERR-OID4.3.4.X - Invalid Parameter Count: $0"
     return 1
   fi
   OID="OID4.3.4.${DEV}"
@@ -1006,6 +1055,7 @@ function writeThermSensorCorrection {
     readThermSensorCorrection $1
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -1025,17 +1075,17 @@ function writeThermSensorName {
         DEV=3
         ;;
       *)
-        echo "ERR"
+        echo "ERR-OID4.3.5.X - Invalid Sensor ID: $0"
         return 1
         ;;
       esac
       newName=$2
     else
-      echo "ERR"
+      echo "ERR-OID4.3.5.X - Invalid Parameter Count: $0"
       return 1
     fi
   else
-    echo "ERR"
+    echo "ERR-OID4.3.5.X - Invalid Parameter Count: $0"
     return 1
   fi
   OID="OID4.3.5.${DEV}"
@@ -1043,6 +1093,7 @@ function writeThermSensorName {
   if [ $? -ne 1 ]; then
     return 0
   else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -1061,17 +1112,17 @@ function writeThermSensorState {
         DEV=3
         ;;
       *)
-        echo "ERR"
+        echo "ERR-OID4.3.6.X - Invalid Sensor ID: $0"
         return 1
         ;;
       esac
       RAWSTATE=$2
     else
-      echo "ERR"
+      echo "ERR-OID4.3.6.X - Invalid Parameter Count: $0"
       return 1
     fi
   else
-    echo "ERR"
+    echo "ERR-OID4.3.6.X - Invalid Parameter Count: $0"
     return 1
   fi
   case $RAWSTATE in
@@ -1082,7 +1133,7 @@ function writeThermSensorState {
     STATE=2
     ;;
   *)
-    echo "ERR"
+    echo "ERR-OID4.3.6.X - Invalid State: $0"
     return 1
     ;;
   esac
@@ -1092,7 +1143,7 @@ function writeThermSensorState {
     readThermSensorState $1
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -1114,17 +1165,17 @@ function writeThermSensorAverage {
         DEV=3
         ;;
       *)
-        echo "ERR"
+        echo "ERR-OID4.3.8.X - Invalid Sensor ID: $0"
         return 1
         ;;
       esac
       RAWSET=$2
     else
-      echo "ERR"
+      echo "ERR-OID4.3.8.X - Invalid Parameter Count: $0"
       return 1
     fi
   else
-    echo "ERR"
+    echo "ERR-OID4.3.8.X - Invalid Parameter CountL $0"
     return 1
   fi
   case $RAWSET in
@@ -1135,7 +1186,7 @@ function writeThermSensorAverage {
     STATE=2
     ;;
   *)
-    echo "ERR"
+    echo "ERR-OID4.3.8.X - Invalid Setting: $0"
     return 1
     ;;
   esac
@@ -1145,7 +1196,57 @@ function writeThermSensorAverage {
     readThermSensorAverage $1
     return 0
   else
-    echo "ERR"
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function writeThermSensorType {
+  # OID4.3.9.2-3 - Set Remote Sensor Type
+  # In : Sensor_ID, Type
+  # Out: Type After Setting
+  if [ $1 ]; then
+    if [ $2 ]; then
+      case $1 in
+      "RS1")
+        DEV=2
+        ;;
+      "RS2")
+        DEV=3
+        ;;
+      *)
+        echo "ERR-OID4.3.9.X - Invalid Sensor ID: $0"
+        return 1
+        ;;
+      esac
+      RAWTYPE=$2
+    else
+      echo "ERR-OID4.3.9.X - Invalid Parameter Count: $0"
+      return 1
+    fi
+  else
+    echo "ERR-OID4.3.9.X - Invalid Parameter Count: $0"
+    return 1
+  fi
+  case $RAWTYPE in
+  "Analog")
+    TYPE=1
+    ;;
+  "Thermistor")
+    TYPE=2
+    ;;
+  *)
+    echo "ERR-OID4.3.9.X - Invalid Type: $0"
+    return 1
+    ;;
+  esac
+  OID="OID4.3.9.${DEV}"
+  setData $OID $TYPE
+  if [ $? -ne 1 ]; then
+    readThermSensorType $1
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }

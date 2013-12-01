@@ -33,6 +33,7 @@ if [ ! ${1} ]; then
   echo "    setsensorname   : Set Remote Sensor Name"
   echo "    setsensorstate  : Set Sensor State"
   echo "    setsensoravg    : Set Sensor Average Inclusion"
+  echo "    setsensortype   : Set Remote Sensor Type"
   echo "Alarms:"
   echo "    lowtempalarm  : Get Zone Low Temp Alarm Status"
   echo "    hightempalarm : Get Zone High Temp Alarm Status"
@@ -58,6 +59,7 @@ if [ $CMD = "status" ]; then
   RS1TEMP=`readThermSensorTemp RS1`
   RS1AVG=`readThermSensorAverage RS1`
   RS1OFFSET=`readThermSensorCorrection RS1`
+  RS1TYPE=`readThermSensorType RS1`
   LOWTEMPALRM=`readCommonAlarmStatus LowTemp`
   HIGHTEMPALRM=`readCommonAlarmStatus HighTemp`
   FILTERALRM=`readCommonAlarmStatus Filter`
@@ -85,6 +87,7 @@ if [ $CMD = "status" ]; then
   echo "Main Temp     : ${LOCALTEMP}f"
   echo "Main Averaged : $LOCALAVG"
   echo "RS1 Name      : $RS1NAME"
+  echo "RS1 Type      : $RS1TYPE"
   echo "RS1 State     : $RS1STATE"
   echo "RS1 Temp      : ${RS1TEMP}f"
   echo "RS1 Averaged  : $RS1AVG"
@@ -266,6 +269,18 @@ if [ $CMD = "setsensoravg" ]; then
   STATE=$3
   NEWSTATE=`writeThermSensorAverage $SENSOR $STATE`
   echo "Sensor $SENSOR Average Inclusion Set to $NEWSTATE"
+fi
+
+# Set Sensor Type
+if [ $CMD = "setsensortype" ]; then
+  if [ ! ${3} ]; then
+    echo "usage: $0 setsensortype RS1|RS2 Analog|Thermistor"
+    exit 1
+  fi
+  SENSOR=$2
+  TYPE=$3
+  NEWTYPE=`writeThermSensorType $SENSOR $TYPE`
+  echo "Sensor $SENSOR Type Set to $NEWTYPE"
 fi
 
 # EOF
