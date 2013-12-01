@@ -23,14 +23,15 @@ if [ ! ${1} ]; then
   echo " "
   echo "Available Commands:"
   echo "General:"
-  echo "    status        : View Full Status"
+  echo "    status          : View Full Status"
   echo "Settings:"
-  echo "    setname       : Set Device Name"
-  echo "    sethvacmode   : Set HVAC Mode"
-  echo "    setfanmode    : Set Fan Mode"
-  echo "    setheat       : Set Heat SetPoint"
-  echo "    setcool       : Set Cool SetPoint"
-  echo "    setsetback    : Set Setback Status (Hold or Reset Manual Setpoints)"
+  echo "    setname         : Set Device Name"
+  echo "    sethvacmode     : Set HVAC Mode"
+  echo "    setfanmode      : Set Fan Mode"
+  echo "    setheat         : Set Heat SetPoint"
+  echo "    setcool         : Set Cool SetPoint"
+  echo "    setsetback      : Set Setback Status (Hold or Reset Manual Setpoints)"
+  echo "    setsensoroffset : Set Remote Sensor Temp Offset"
   echo "Alarms:"
   echo "    lowtempalarm  : Get Zone Low Temp Alarm Status"
   echo "    hightempalarm : Get Zone High Temp Alarm Status"
@@ -51,6 +52,7 @@ if [ $CMD = "status" ]; then
   MODEL=`readSystemMimModelNumber`
   LOCALTEMP=`readThermSensorTemp Local`
   RS1TEMP=`readThermSensorTemp RS1`
+  RS1OFFSET=`readThermSensorCorrection RS1`
   LOWTEMPALRM=`readCommonAlarmStatus LowTemp`
   HIGHTEMPALRM=`readCommonAlarmStatus HighTemp`
   FILTERALRM=`readCommonAlarmStatus Filter`
@@ -77,6 +79,9 @@ if [ $CMD = "status" ]; then
   echo "Fan State     : $CURFANSTATE"
   echo "Main Temp     : ${LOCALTEMP}f"
   echo "RS1 Temp      : ${RS1TEMP}f"
+  if [ $RS1OFFSET != "0" ]; then
+  echo "RS1 Offset    : ${RS1OFFSET}f"
+  fi
   echo "Avg Temp      : ${AVGTEMP}f"
   echo "Heat SetPoint : ${CURHEATSETPOINT}f"
   echo "Cool SetPoint : ${CURCOOLSETPOINT}f"
@@ -203,6 +208,18 @@ if [ $CMD = "hightempclear" ]; then
   else
     echo "No"
   fi
+fi
+
+# Set Remote Sensor Temp Offset
+if [ $CMD = "setsensoroffset" ]; then
+  if [ ! ${3} ]; then
+    echo "usage: $0 setsensoroffset RS1|RS2 DEGREES"
+    exit 1
+  fi
+  SENSOR=$2
+  OFFSET=$3
+  SENSOROFFSET=`writeThermSensorCorrection $SENSOR $OFFSET`
+  echo "Sensor Correction for $SENSOR Set to $SENSOROFFSET"
 fi
 
 # EOF

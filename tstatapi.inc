@@ -631,6 +631,38 @@ function readThermSensorTemp {
   fi
 }
 
+function readThermSensorCorrection {
+  # OID4.3.4.2-3 - Remote Sensor Correction
+  # In : Remote Sensor Name
+  # Out: Temp Offset in Fahrenheit
+  if [ $1 ]; then
+    case $1 in
+    "RS1")
+      DEV=2
+      ;;
+    "RS2")
+      DEV=3
+      ;;
+    *)
+      echo "ERR"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR"
+    return 1
+  fi
+  OID="OID4.3.4.${DEV}"
+  getData $OID temp
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR"
+    return 1
+  fi
+}
+
 # ------------------------------------------------------------------------------
 # Write Functions
 # These set read-write data.
@@ -812,6 +844,44 @@ function writeThermConfigHighTempPending {
   setData $OID $setClear
   if [ $? -ne 1 ]; then
     readThermConfigHighTempPending
+    return 0
+  else
+    return 1
+  fi
+}
+
+function writeThermSensorCorrection {
+  # OID4.3.4.2-3 - Set Remote Sensor Correction
+  # In : Sensor_Name Offset_in_Fahrenheit
+  # Out: Offset After Setting
+  if [ $1 ]; then
+    if [ $2 ]; then
+      case $1 in
+      "RS1")
+        DEV=2
+        ;;
+      "RS2")
+        DEV=3
+        ;;
+      *)
+        echo "ERR"
+        return 1
+        ;;
+      esac
+      OFFSET=$2
+      OFFSET=`echo "$OFFSET * 10" | bc | awk -F. '{print $1}'`
+    else
+      echo "ERR"
+      return 1
+    fi
+  else
+    echo "ERR"
+    return 1
+  fi
+  OID="OID4.3.4.${DEV}"
+  setData $OID $OFFSET
+  if [ $? -ne 1 ]; then
+    readThermSensorCorrection $1
     return 0
   else
     return 1
