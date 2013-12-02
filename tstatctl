@@ -34,6 +34,8 @@ if [ ! ${1} ]; then
   echo "    setsensorstate  : Set Sensor State"
   echo "    setsensoravg    : Set Sensor Average Inclusion"
   echo "    setsensortype   : Set Remote Sensor Type"
+  echo "    setusage        : Set Usage Minutes for HVAC/Fan States"
+  echo "    resetusage      : Set Last Usage Reset to Current Date/Time"
   echo "Alarms:"
   echo "    lowtempalarm  : Get Zone Low Temp Alarm Status"
   echo "    hightempalarm : Get Zone High Temp Alarm Status"
@@ -77,6 +79,14 @@ if [ $CMD = "status" ]; then
   CURHEATSETPOINT=`readThermSetbackHeat`
   CURCOOLSETPOINT=`readThermSetbackCool`
   CURSETBACKSTATUS=`readThermSetbackStatus`
+  HEAT1USAGE=`readThermHeat1Usage`
+  HEAT2USAGE=`readThermHeat2Usage`
+  HEAT3USAGE=`readThermHeat3Usage`
+  COOL1USAGE=`readThermCool1Usage`
+  COOL2USAGE=`readThermCool2Usage`
+  FANUSAGE=`readThermFanUsage`
+  USAGEOPTS=`readThermUsageOptions`
+  USAGERESET=`readThermLastUsageResetDateTime`
   echo " "
   echo "Name/Model    : $NAME / $MODEL"
   echo "Time          : $SYSTIME  Up: $UPTIME"
@@ -102,6 +112,9 @@ if [ $CMD = "status" ]; then
   echo "Sched Period  : $CURSCHEDPERIOD"
   echo "Active Period : $CURACTIVEPERIOD"
   echo "Alarm Status  : LowTemp: $LOWTEMPALRM / HighTemp: $HIGHTEMPALRM / Filter: $FILTERALRM"
+  echo "Usage         : Heat1: $HEAT1USAGE  Heat2: $HEAT2USAGE  Heat3: $HEAT3USAGE  Cool1: $COOL1USAGE  Cool2: $COOL2USAGE  Fan: $FANUSAGE"
+  echo "Usage Options : $USAGEOPTS"
+  echo "Usage Reset   : $USAGERESET"
   echo " "
 fi
 
@@ -281,6 +294,55 @@ if [ $CMD = "setsensortype" ]; then
   TYPE=$3
   NEWTYPE=`writeThermSensorType $SENSOR $TYPE`
   echo "Sensor $SENSOR Type Set to $NEWTYPE"
+fi
+
+# Set Usage
+if [ $CMD = "setusage" ]; then
+  if [ ! ${3} ]; then
+    echo "Usage: $0 setusage Heat1|Heat2|Heat3|Cool1|Cool2|Fan MINUTES"
+    exit 1
+  fi
+  INVAL=$2
+  INMIN=$3
+  case $INVAL in
+  "Heat1")
+    NEWHEAT1=`writeThermHeat1Usage $INMIN`
+    echo "Heat1 Usage Set to $NETHEAT1 Minutes"
+    ;;
+  "Heat2")
+    NEWHEAT2=`writeThermHeat2Usage $INMIN`
+    echo "Heat2 Usage Set to $NEWHEAT2 Minutes"
+    ;;
+  "Heat3")
+    NEWHEAT3=`writeThermHeat3Usage $INMIN`
+    echo "Heat3 Usage Set to $NEWHEAT3 Minutes"
+    ;;
+  "Cool1")
+    NEWCOOL1=`writeThermCool1Usage $INMIN`
+    echo "Cool1 Usage Set to $NEWCOOL1 Minutes"
+    ;;
+  "Cool2")
+    NEWCOOL2=`writeThermCool2Usage $INMIN`
+    echo "Cool2 Usage Set to $NEWCOOL2 Minutes"
+    ;;
+  "Fan")
+    NEWFAN=`writeThermFanUsage $INMIN`
+    echo "Fan Usage Set to $NEWFAN Minutes"
+    ;;
+  esac
+fi
+
+# Reset Last Usage
+if [ $CMD = "resetusage" ]; then
+  NEWLASTUSAGE=`writeThermLastUsageResetNow`
+  echo "Last Usage Reset Set to $NEWLASTUSAGE"
+  HEAT1=`writeThermHeat1Usage 0`
+  HEAT2=`writeThermHeat2Usage 0`
+  HEAT3=`writeThermHeat3Usage 0`
+  COOL1=`writeThermCool1Usage 0`
+  COOL2=`writeThermCool2Usage 0`
+  FAN=`writeThermFanUsage 0`
+  echo "Reset: Heat1: $HEAT1  Heat2: $HEAT2  Heat3: $HEAT3  Cool1: $COOL1  Cool2: $COOL2  Fan: $FAN"
 fi
 
 # EOF

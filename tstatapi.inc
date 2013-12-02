@@ -23,7 +23,6 @@ function setData {
   RTNDATAOID=`echo $RTNDATA | awk -F= '{print $1}'`
   RTNDATAVAL=`echo $RTNDATA | awk -F= '{print $2}' | tr -d "&" | tr "+" " "`
   RTNDATA="SET:$RTNDATAOID=$RTNDATAVAL"
-  #echo $RTNDATA
 }
 
 function getData {
@@ -36,7 +35,7 @@ function getData {
 
   RTNDATA=`curl -s --data ${OID}= http://${USERID}:${PASSWD}@${IPADDR}/get | tr "+" " "`
   if [ ! "$RTNDATA" ]; then
-    RTNDATA="NoResp"
+    RTNDATA="ERR-$OID Communication Failure (getData): $0"
     return 1
   fi
 
@@ -55,7 +54,7 @@ function getData {
     return 0
     ;;
   *)
-    RTNDATA="ERR-$OID: Invalid getData VarType"
+    RTNDATA="ERR-$OID: Invalid VarType (getData:Type=$TYP): $0"
     return 1
     ;;
   esac
@@ -156,7 +155,6 @@ function readSystemTime {
   # Calls OID2.5.1 - Currect System Time
   # In : No Input
   # Out: Currect Time YYYY-MM-DD HH:MM:SS
-
   CURSECS=`readSystemTimeSecs`
   if [ $CURSECS != "ERR" ]; then
     date -u +"%Y-%m-%d %H:%M:%S" -d@${CURSECS}
@@ -461,7 +459,7 @@ function readThermCurrentClass {
   fi
 }
 
-function readThermActivePeriod {
+function readThermActifePeriod {
   # OID4.1.12 - Current Active Period
   # In : No Input
   # Out: Active Period String
@@ -519,7 +517,7 @@ function readThermAverageTemp {
   fi
 }
 
-function readThermConfigFilterReminderPending {
+function readThermConfieFilterReminderPending {
   # OID4.2.9 - Filter Reminder Alarm Pending State
   # In : No Input
   # Out: State String
@@ -697,7 +695,7 @@ function readThermSensorName {
 
 function readThermSensorState {
   # OID4.3.6.1-3 - Current Sensor State
-  # In : Sensor ID
+  # In * Sensor ID
   # Out: State String
   SENSOR=$1
   case $SENSOR in
@@ -819,6 +817,140 @@ function readThermSensorType {
       return 1
       ;;
     esac
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermHeat1Usage {
+  # OID4.5.1 - HEAT1 State Usage in Minutes
+  # In : No Input
+  # Out: Usage in Minutes
+  OID="OID4.5.1"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermHeat2Usage {
+  # OID4.5.2 - HEAT2 State Usage in Minutes
+  # In : No Input
+  # Out: Usage in Minutes
+  OID="OID4.5.2"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermCool1Usage {
+  # OID4.5.3 - COOL1 State Usage in Minutes
+  # In : No Input
+  # Out: Usage in Minutes
+  OID="OID4.5.3"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermCool2Usage {
+  # OID4.5.4 - COOL2 State Usage in Minutes
+  # In : No Input
+  # Out: Usage in Minutes
+  OID="OID4.5.4"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermFanUsage {
+  # OID4.5.5 - Fan On Usage in Minutes
+  # In : No Input
+  # Out: Usage in Minutes
+  OID="OID4.5.5"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermLastUsageReset {
+  # OID4.5.6 - Last Reset Time in Seconds Since Jan 1 1970
+  # In : No Input
+  # Out: Time Since Reset in Epoch Seconds
+  OID="OID4.5.6"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermLastUsageResetDateTime {
+  # Based on OID4.5.6 - Last Reset Time in Date/Time Format
+  # In : No Input
+  # Out: Time Since Reset in Epoch Seconds
+  RESETSECS=`readThermLastUsageReset`
+  if [ $RESETSECS != "ERR" ]; then
+    date -u +"%Y-%m-%d %H:%M:%S" -d@${RESETSECS}
+    return 0
+  else
+    echo "ERR-ResetDateTime - Failed Function Return: $0"
+    return 1
+  fi
+}
+
+function readThermUsageOptions {
+  # OID4.5.8 - If 1, Include Heat1/Heat2 in Fan Usage Results
+  # In : No Input
+  # Out: Option Bit
+  OID="OID4.5.8"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermHeat3Usage {
+  # OID4.5.9 - HEAT3 (Aux) State Usage in Minutes
+  # In : No Input
+  # Out: Usage in Minutes
+  OID="OID4.5.9"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
   else
     echo "ERR-$OID - Failed Return Code: $0"
     return 1
@@ -1215,7 +1347,7 @@ function writeThermSensorType {
         DEV=3
         ;;
       *)
-        echo "ERR-OID4.3.9.X - Invalid Sensor ID: $0"
+        echo "ERR-OID4.3.9.X - Invalid Sensob ID: $0"
         return 1
         ;;
       esac
@@ -1247,6 +1379,162 @@ function writeThermSensorType {
     return 0
   else
     echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function writeThermHeat1Usage {
+  # OID4.5.1 - Set HEAT1 State Usage in Minutes
+  # In : Number of Minutes
+  # Out: Minutes After Setting
+  if [ $1 ]; then
+    OID="OID4.5.1"
+    setData $OID $1
+    if [ $? -ne 1 ]; then
+      readThermHeat1Usage
+      return 0
+    else
+      echo "ERR-$OID - Failed Return Code: $0"
+      return 1
+    fi
+  else
+    echo "ERR-$OID - Invalid Parameter Count: $0"
+    return 1
+  fi
+}
+
+function writeThermHeat2Usage {
+  # OID4.5.2 - Set HEAT2 State Usage in Minutes
+  # In : Number of Minutes
+  # Out: Minutes After Setting
+  if [ $1 ]; then
+    OID="OID4.5.2"
+    setData $OID $1
+    if [ $? -ne 1 ]; then
+      readThermHeat2Usage
+      return 0
+    else
+      echo "ERR-$OID - Failed Return Code: $0"
+      return 1
+    fi
+  else
+    echo "ERR-$OID - Invalid Parameter Count: $0"
+    return 1
+  fi
+}
+
+function writeThermCool1Usage {
+  # OID4.5.3 - Set COOL1 State Usage in Minutes
+  # In : Number of Minutes
+  # Out: Minutes After Setting
+  if [ $1 ]; then
+    OID="OID4.5.3"
+    setData $OID $1
+    if [ $? -ne 1 ]; then
+      readThermCool1Usage
+      return 0
+    else
+      echo "ERR-$OID - Failed Return Code: $0"
+      return 1
+    fi
+  else
+    echo "ERR-$OID - Invalid Parameter Count: $0"
+    return 1
+  fi
+}
+
+function writeThermCool2Usage {
+  # OID4.5.4 - Set COOL2 State Usage in Minutes
+  # In : Number of Minutes
+  # Out: Minutes After Setting
+  if [ $1 ]; then
+    OID="OID4.5.4"
+    setData $OID $1
+    if [ $? -ne 1 ]; then
+      readThermCool2Usage
+      return 0
+    else
+      echo "ERR-$OID - Failed Return Code: $0"
+      return 1
+    fi
+  else
+    echo "ERR-$OID - Invalid Parameter Count: $0"
+    return 1
+  fi
+}
+
+function writeThermFanUsage {
+  # OID4.5.5 - Set FAN State Usage in Minutes
+  # In : Number of Minutes
+  # Out: Minutes After Setting
+  if [ $1 ]; then
+    OID="OID4.5.5"
+    setData $OID $1
+    if [ $? -ne 1 ]; then
+      readThermFanUsage
+      return 0
+    else
+      echo "ERR-$OID - Failed Return Code: $0"
+      return 1
+    fi
+  else
+    echo "ERR-$OID - Invalid Parameter Count: $0"
+    return 1
+  fi
+}
+
+function writeThermLastUsageReset {
+  # OID4.5.6 - Set Last Usage Reset Time
+  # In : Date (YYYY-MM-DD HH:MM:SS)
+  # Out: Reset Date after Setting
+  OID="OID4.5.6"
+  if [ $2 ]; then
+    setData $OID $1 $2
+    if [ $? -ne 1 ]; then
+      readThermLastUsageResetDateTime
+      return 0
+    else
+      echo "ERR-$OID - Failed Return Code: $0"
+      return 1
+    fi
+  else
+    echo "ERR-$OID - Invalid Parameter Count: $0"
+    return 1
+  fi
+}
+
+function writeThermLastUsageResetNow {
+  # OID4.5.6 - Set Last Usage Reset Time
+  # In : No Input
+  # Out: Reset Date after Setting = Now
+  DATENOW=`date -u +"%s"`
+  OID="OID4.5.6"
+  setData $OID $DATENOW
+  if [ $? -ne 1 ]; then
+    readThermLastUsageResetDateTime
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function writeThermHeat3Usage {
+  # OID4.5.9 - Set HEAT3 (Aux) State Usage in Minutes
+  # In : Number of Minutes
+  # Out: Minutes After Setting
+  if [ $1 ]; then
+    OID="OID4.5.9"
+    setData $OID $1
+    if [ $? -ne 1 ]; then
+      readThermHeat3Usage
+      return 0
+    else
+      echo "ERR-$OID - Failed Return Code: $0"
+      return 1
+    fi
+  else
+    echo "ERR-$OID - Invalid Parameter Count: $0"
     return 1
   fi
 }
