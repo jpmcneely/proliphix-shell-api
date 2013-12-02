@@ -459,7 +459,7 @@ function readThermCurrentClass {
   fi
 }
 
-function readThermActifePeriod {
+function readThermActivePeriod {
   # OID4.1.12 - Current Active Period
   # In : No Input
   # Out: Active Period String
@@ -517,7 +517,7 @@ function readThermAverageTemp {
   fi
 }
 
-function readThermConfieFilterReminderPending {
+function readThermConfigFilterReminderPending {
   # OID4.2.9 - Filter Reminder Alarm Pending State
   # In : No Input
   # Out: State String
@@ -695,7 +695,7 @@ function readThermSensorName {
 
 function readThermSensorState {
   # OID4.3.6.1-3 - Current Sensor State
-  # In * Sensor ID
+  # In : Sensor ID
   # Out: State String
   SENSOR=$1
   case $SENSOR in
@@ -1347,7 +1347,7 @@ function writeThermSensorType {
         DEV=3
         ;;
       *)
-        echo "ERR-OID4.3.9.X - Invalid Sensob ID: $0"
+        echo "ERR-OID4.3.9.X - Invalid Sensor ID: $0"
         return 1
         ;;
       esac
