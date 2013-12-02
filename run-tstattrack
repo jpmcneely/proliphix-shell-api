@@ -3,7 +3,7 @@
 # Change the path to the proper directory
 TSTATPATH="/var/lib/asterisk/automation/bin"
 
-cd TSTATPATH
+cd $TSTATPATH
 ./tstattrack
 
 # EOF
