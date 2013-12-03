@@ -1814,6 +1814,36 @@ function readMacAddress {
   fi
 }
 
+function readUsername {
+  # OID2.3.3 - Read Username
+  # In : No Input
+  # Out: Username
+  OID="OID2.3.3"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readPassword {
+  # OID2.3.4 - Read Password
+  # In : No Input
+  # Out: Password
+  OID="OID2.3.4"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function readHWVer {
   # OID2.7.2 - Read Hardware Version
   # In : No Input
