@@ -54,18 +54,22 @@ CMD=${1}
 # Full Status
 if [ $CMD = "status" ]; then
   MODEL=`readSystemMimModelNumber`
+  SWVER=`readSWVer`
+  HWVER=`readHWVer`
+  SERIAL=`readSerialNo`
+  MACADDRESS=`readMacAddress`
+  IPADDRESS=`readIPAddress`
+  NETMASK=`readNetmask`
+  GATEWAY=`readGateway`
   LOCALTEMP=`readThermSensorTemp Local`
   LOCALAVG=`readThermSensorAverage Local`
-  RS1NAME=`readThermSensorName RS1`
   RS1STATE=`readThermSensorState RS1`
-  RS1TEMP=`readThermSensorTemp RS1`
-  RS1AVG=`readThermSensorAverage RS1`
-  RS1OFFSET=`readThermSensorCorrection RS1`
-  RS1TYPE=`readThermSensorType RS1`
+  RS2STATE=`readThermSensorState RS2`
   LOWTEMPALRM=`readCommonAlarmStatus LowTemp`
   HIGHTEMPALRM=`readCommonAlarmStatus HighTemp`
   FILTERALRM=`readCommonAlarmStatus Filter`
   NAME=`readCommonDevName`
+  SITENAME=`readSiteName`
   UPTIME=`readSystemUptime`
   SYSTIME=`readSystemTime`
   CURSCHEDPERIOD=`readThermCurrentPeriod`
@@ -87,8 +91,28 @@ if [ $CMD = "status" ]; then
   FANUSAGE=`readThermFanUsage`
   USAGEOPTS=`readThermUsageOptions`
   USAGERESET=`readThermLastUsageResetDateTime`
+
+  if [ $RS1STATE = "Enabled" ]; then
+    RS1NAME=`readThermSensorName RS1`
+    RS1TEMP=`readThermSensorTemp RS1`
+    RS1AVG=`readThermSensorAverage RS1`
+    RS1OFFSET=`readThermSensorCorrection RS1`
+    RS1TYPE=`readThermSensorType RS1`
+  fi
+
+  if [ $RS2STATE = "Enabled" ]; then
+    RS2NAME=`readThermSensorName RS2`
+    RS2TEMP=`readThermSensorTemp RS2`
+    RS2AVG=`readThermSensorAverage RS2`
+    RS2OFFSET=`readThermSensorCorrection RS2`
+    RS2TYPE=`readThermSensorType RS2`
+  fi
+
   echo " "
-  echo "Name/Model    : $NAME / $MODEL"
+  echo "Name/Site     : $NAME / $SITENAME"
+  echo "Versions      : Model: $MODEL  SWRev: $SWVER  HWRev: $HWVER  Serial: $SERIAL"
+  echo "MAC Address   : $MACADDRESS"
+  echo "Networking    : IP: $IPADDRESS  Netmask: $NETMASK  Gateway: $GATEWAY"
   echo "Time          : $SYSTIME  Up: $UPTIME"
   echo "HVAC Mode     : $CURMODE"
   echo "HVAC State    : $CURSTATE"
@@ -96,11 +120,20 @@ if [ $CMD = "status" ]; then
   echo "Fan State     : $CURFANSTATE"
   echo "Main Temp     : ${LOCALTEMP}f"
   echo "Main Averaged : $LOCALAVG"
+  echo "RS1 State     : $RS1STATE"
+  if [ $RS1STATE = "Enabled" ]; then
   echo "RS1 Name      : $RS1NAME"
   echo "RS1 Type      : $RS1TYPE"
-  echo "RS1 State     : $RS1STATE"
   echo "RS1 Temp      : ${RS1TEMP}f"
   echo "RS1 Averaged  : $RS1AVG"
+  fi
+  echo "RS2 State     : $RS2STATE"
+  if [ $RS2STATE = "Enabled" ]; then
+  echo "RS2 Name      : $RS2NAME"
+  echo "RS2 Type      : $RS2TYPE"
+  echo "RS2 Temp      : ${RS2TEMP}f"
+  echo "RS2 Averaged  : $RS2AVG"
+  fi
   if [ $RS1OFFSET != "0" ]; then
   echo "RS1 Offset    : ${RS1OFFSET}f"
   fi

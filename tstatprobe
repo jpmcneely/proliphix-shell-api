@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Version 1.0 - 2013-11-30
+# Copyright (C) 2013 - J.P. McNeely
+#
+# GPL 2.0 License - See LICENSE for redistribution requirements.
+
+# Source the configuration
+. ./tstatconf.inc
+
+# Source the API Implementation
+. ./tstatapi.inc
+
+if [ ! $1 ]; then
+  /bin/echo -ne "Enter OID: "
+  read OID
+else
+  OID=${1}
+fi
+
+OID="OID${OID}"
+getData $OID str
+echo "$OID : $RTNDATA"
+
+
+# EOF

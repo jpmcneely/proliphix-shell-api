@@ -1704,6 +1704,132 @@ function writeThermHeat3Usage {
 }
 
 # ------------------------------------------------------------------------------
+# Undocumented Function
+# These are functions found in the Web UI that are not in the API docs.
+# Due to the undocumented status, these are read-only.
+# ------------------------------------------------------------------------------
+
+function readSWVer {
+  # OID1.1 - Read Software Version
+  # In : No Input
+  # Out: Version
+  OID="OID1.1"
+  getData $OID str
+  if [ $? -ne 1 ]; then 
+    echo "$RTNDATA" | awk '{print $2}'
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readIPAddress {
+  # OID1.4 - Read IP Address
+  # In : No Input
+  # Out: IP Address
+  OID="OID1.4"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readNetmask {
+  # OID1.5 - Read Netmask
+  # In : No Input
+  # Out: Netmask
+  OID="OID1.5"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readGateway {
+  # OID1.6 - Read Gateway
+  # In : No Input
+  # Out: Gateway IP Address
+  OID="OID1.6"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readSerialNo {
+  # OID1.8 - Read Serial Number
+  # In : No Input
+  # Out: Serial Number
+  OID="OID1.8"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readSiteName {
+  # OID1.10.9 - Read Site Name
+  # In : No Input
+  # Out: Site Name
+  OID="OID1.10.9"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readMacAddress {
+  # OID1.15 - Read MAC Address
+  # In : No Input
+  # Out: MAC
+  OID="OID1.15"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readHWVer {
+  # OID2.7.2 - Read Hardware Version
+  # In : No Input
+  # Out: Version
+  OID="OID2.7.2"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+# ------------------------------------------------------------------------------
 # Utility Functions
 # Generally useful function.
 # ------------------------------------------------------------------------------
