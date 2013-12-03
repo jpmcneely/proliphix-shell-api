@@ -823,6 +823,170 @@ function readThermSensorType {
   fi
 }
 
+function readThermPeriodStart {
+  # OID4.4.1.3.1-3.1-4 - Schedule Period Start Value
+  # In : Schedule_Class, Chedule_Period
+  # Out: Start Time in Minutes (Min After Midnight)
+  OID="OID4.4.1.3"
+  CLASS=$1
+  PERIOD=$2
+  case $CLASS in
+  "In")
+    INCLASS=1
+    ;;
+  "Out")
+    INCLASS=2
+    ;;
+  "Away")
+    INCLASS=3
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Class: $0"
+    return 1
+    ;;
+  esac
+  case $PERIOD in
+  "Morning")
+    INPERIOD=1
+    ;;
+  "Day")
+    INPERIOD=2
+    ;;
+  "Evening")
+    INPERIOD=3
+    ;;
+  "Night")
+    INPERIOD=4
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Period: $0"
+    return 1
+    ;;
+  esac
+  OID="${OID}.${INCLASS}.${INPERIOD}"
+  getData ${OID} int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermPeriodStartHHMM {
+  # Based on OID4.4.1.3.1-3.1-4 - Schedule Period Start Value
+  # In : Schedule_Class, Chedule_Period
+  # Out: Start Time in HH:MM
+  CLASS=$1
+  PERIOD=$2
+  STARTTIMEMIN=`readThermPeriodStart $CLASS $PERIOD`
+  echo `toMilTime $STARTTIMEMIN`
+  return 0
+}
+
+function readThermPeriodSetbackHeat {
+  # OID4.4.1.4.1-3.1-4 - Schedule Period Heat Setback Value
+  # In : Schedule_Class, Chedule_Period
+  # Out: Heat Setback Temp
+  OID="OID4.4.1.4"
+  CLASS=$1
+  PERIOD=$2
+  case $CLASS in
+  "In")
+    INCLASS=1
+    ;;
+  "Out")
+    INCLASS=2
+    ;;
+  "Away")
+    INCLASS=3
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Class: $0"
+    return 1
+    ;;
+  esac
+  case $PERIOD in
+  "Morning")
+    INPERIOD=1
+    ;;
+  "Day")
+    INPERIOD=2
+    ;;
+  "Evening")
+    INPERIOD=3
+    ;;
+  "Night")
+    INPERIOD=4
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Period: $0"
+    return 1
+    ;;
+  esac
+  OID="${OID}.${INCLASS}.${INPERIOD}"
+  getData ${OID} temp
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermPeriodSetbackCool {
+  # OID4.4.1.5.1-3.1-4 - Schedule Period Cool Setback Value
+  # In : Schedule_Class, Chedule_Period
+  # Out: Cool Setback Temp
+  OID="OID4.4.1.5"
+  CLASS=$1
+  PERIOD=$2
+  case $CLASS in
+  "In")
+    INCLASS=1
+    ;;
+  "Out")
+    INCLASS=2
+    ;;
+  "Away")
+    INCLASS=3
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Class: $0"
+    return 1
+    ;;
+  esac
+  case $PERIOD in
+  "Morning")
+    INPERIOD=1
+    ;;
+  "Day")
+    INPERIOD=2
+    ;;
+  "Evening")
+    INPERIOD=3
+    ;;
+  "Night")
+    INPERIOD=4
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Period: $0"
+    return 1
+    ;;
+  esac
+  OID="${OID}.${INCLASS}.${INPERIOD}"
+  getData ${OID} temp
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function readThermHeat1Usage {
   # OID4.5.1 - HEAT1 State Usage in Minutes
   # In : No Input
@@ -1537,6 +1701,22 @@ function writeThermHeat3Usage {
     echo "ERR-$OID - Invalid Parameter Count: $0"
     return 1
   fi
+}
+
+# ------------------------------------------------------------------------------
+# Utility Functions
+# Generally useful function.
+# ------------------------------------------------------------------------------
+
+function toMilTime
+{
+  # Convert Minutes After Midnight to 24Hr Clock Time
+  MIN=$1
+  HOUR=$[$MIN / 60]
+  HMIN=$[$HOUR * 60]
+  RMIN=$[$MIN - $HMIN]
+  printf "%02d:" ${HOUR}
+  printf "%02d\n" ${RMIN}
 }
 
 # EOF

@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Version 1.0 - 2013-11-30
+# Copyright (C) 2013 - J.P. McNeely
+#
+# GPL 2.0 License - See LICENSE for redistribution requirements.
+
+# Source the configuration
+. ./tstatconf.inc
+
+# Source the API Implementation
+. ./tstatapi.inc
+
+if [ ! ${1} ]; then
+  echo "usage: $0 COMMAND [OPTIONS]"
+  echo " "
+  echo "Available Commands:"
+  echo "  showperiodstart : Show schedule period start time"
+  echo "  showperiodheat  : Show heat setback for schedule period"
+  echo "  showperiodcool  : Show cool setback for schedule period"
+  echo " "
+  exit 1
+fi
+
+CMD=${1}
+
+# Show Period Start
+if [ $CMD = "showperiodstart" ]; then
+  if [ ! ${3} ]; then
+    echo "usage: $0 showperiodstart In|Out|Away Morning|Day|Evening|Night"
+    exit 1
+  fi
+  CLASS=$2
+  PERIOD=$3
+  PERIODSTART=`readThermPeriodStartHHMM $CLASS $PERIOD`
+  echo "$CLASS:$PERIOD:$PERIODSTART"
+fi
+
+# Show Period Heat Setback
+if [ $CMD = "showperiodheat" ]; then
+  if [ ! ${3} ]; then
+    echo "usage: $0 showperiodheat In|Out|Away Morning|Day|Evening|Night"
+    exit 1
+  fi
+  CLASS=$2
+  PERIOD=$3
+  PERIODHEAT=`readThermPeriodSetbackHeat $CLASS $PERIOD`
+  echo "$CLASS:$PERIOD:$PERIODHEAT"
+fi
+
+# Show Period Cool Setback
+if [ $CMD = "showperiodcool" ]; then
+  if [ ! ${3} ]; then
+    echo "usage: $0 showperiodcool In|Out|Away Morning|Day|Evening|Night"
+    exit 1
+  fi
+  CLASS=$2
+  PERIOD=$3
+  PERIODCOOL=`readThermPeriodSetbackCool $CLASS $PERIOD`
+  echo "$CLASS:$PERIOD:$PERIODCOOL"
+fi
+
+# EOF
