@@ -1800,6 +1800,125 @@ function writeThermSensorType {
   fi
 }
 
+function writeThermPeriodStart {
+  # OID4.4.1.3.1-3.1-4 - Set Schedule Period Start Value
+  # In : Schedule_Class, Schedule_Period Start_Minutes_After_Midnight
+  # Out: Return Code
+  OID="OID4.4.1.3"
+  CLASS=$1
+  PERIOD=$2
+  MINUTES=$3
+  case $CLASS in
+  "In")
+    INCLASS=1
+    ;;
+  "Out")
+    INCLASS=2
+    ;;
+  "Away")
+    INCLASS=3
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Class: $0"
+    return 1
+    ;;
+  esac
+  case $PERIOD in
+  "Morning")
+    INPERIOD=1
+    ;;
+  "Day")
+    INPERIOD=2
+    ;;
+  "Evening")
+    INPERIOD=3
+    ;;
+  "Night")
+    INPERIOD=4
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Period: $0"
+    return 1
+    ;;
+  esac
+  OID="${OID}.${INCLASS}.${INPERIOD}"
+  if [ $MINUTES -lt 1 -o $MINUTES -gt 1439 ]; then
+    echo "ERR-$OID - Invalid Minutes: $0"
+    return 1
+  fi
+  setData ${OID} $MINUTES
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function writeThermPeriodStartHHMM {
+  # Based on OID4.4.1.3.1-3.1-4 - Set Schedule Period Start Value
+  # In : Schedule_Class, Schedule_Period, Start Time in HH:MM
+  # Out: Return Code
+  CLASS=$1
+  PERIOD=$2
+  STARTTIME=$3
+  STARTTIMEMIN=`milTimeToMin $STARTTIME`
+  STARTTIMEMIN=`writeThermPeriodStart $CLASS $PERIOD $STARTTIMEMIN`
+  return 0
+}
+
+function writeThermPeriodSetbackHeat {
+  # OID4.4.1.4.1-3.1-4 - Schedule Period Heat Setback Value
+  # In : Schedule_Class, Schedule_Period, Heat_Setback_Temp
+  # Out: Return Code
+  OID="OID4.4.1.4"
+  CLASS=$1
+  PERIOD=$2
+  SETHEAT=$3
+  NEWHEAT=`tempToDeciDegrees $SETHEAT`
+  case $CLASS in
+  "In")
+    INCLASS=1
+    ;;
+  "Out")
+    INCLASS=2
+    ;;
+  "Away")
+    INCLASS=3
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Class: $0"
+    return 1
+    ;;
+  esac
+  case $PERIOD in
+  "Morning")
+    INPERIOD=1
+    ;;
+  "Day")
+    INPERIOD=2
+    ;;
+  "Evening")
+    INPERIOD=3
+    ;;
+  "Night")
+    INPERIOD=4
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Period: $0"
+    return 1
+    ;;
+  esac
+  OID="${OID}.${INCLASS}.${INPERIOD}"
+  setData ${OID} $NEWHEAT
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function writeThermHeat1Usage {
   # OID4.5.1 - Set HEAT1 State Usage in Minutes
   # In : Number of Minutes
@@ -2258,13 +2377,20 @@ function minToMilTime {
   printf "%02d:%02d\n" ${HOUR} ${RMIN}
 }
 
-function milTimeToMin
+function milTimeToMin {
   # Convert HH:MM to Minutes after Midnight
   HOUR=`echo $1 | awk -F: '{print $1}'`
   MIN=`echo $1 | awk -F: '{print $2}'`
   RHOUR=$[$HOUR * 60]
   TMIN=$[$RHOUR + $MIN]
   echo $TMIN
+}
+
+function tempToDeciDegrees {
+  # Convert fahrenheit temp to deci-degrees
+  TEMP=$1
+  DECITEMP=$[$TEMP * 10]
+  printf "%d\n" $DECITEMP
 }
 
 # EOF
