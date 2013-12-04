@@ -835,7 +835,7 @@ function readThermSensorType {
 
 function readThermPeriodStart {
   # OID4.4.1.3.1-3.1-4 - Schedule Period Start Value
-  # In : Schedule_Class, Chedule_Period
+  # In : Schedule_Class, Schedule_Period
   # Out: Start Time in Minutes (Min After Midnight)
   OID="OID4.4.1.3"
   CLASS=$1
@@ -886,7 +886,7 @@ function readThermPeriodStart {
 
 function readThermPeriodStartHHMM {
   # Based on OID4.4.1.3.1-3.1-4 - Schedule Period Start Value
-  # In : Schedule_Class, Chedule_Period
+  # In : Schedule_Class, Schedule_Period
   # Out: Start Time in HH:MM
   CLASS=$1
   PERIOD=$2
@@ -897,7 +897,7 @@ function readThermPeriodStartHHMM {
 
 function readThermPeriodSetbackHeat {
   # OID4.4.1.4.1-3.1-4 - Schedule Period Heat Setback Value
-  # In : Schedule_Class, Chedule_Period
+  # In : Schedule_Class, Schedule_Period
   # Out: Heat Setback Temp
   OID="OID4.4.1.4"
   CLASS=$1
@@ -948,7 +948,7 @@ function readThermPeriodSetbackHeat {
 
 function readThermPeriodSetbackCool {
   # OID4.4.1.5.1-3.1-4 - Schedule Period Cool Setback Value
-  # In : Schedule_Class, Chedule_Period
+  # In : Schedule_Class, Schedule_Period
   # Out: Cool Setback Temp
   OID="OID4.4.1.5"
   CLASS=$1
@@ -991,6 +991,66 @@ function readThermPeriodSetbackCool {
   if [ $? -ne 1 ]; then
     echo $RTNDATA
     return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermDefaultClassId {
+  # OID4.4.3.2.X
+  # In : Day Name
+  # Out: Class String
+  OID="OID4.4.3.2"
+  DAY=$1
+  case $DAY in
+  "Sunday")
+    DAYIDX=1
+    ;;
+  "Monday")
+    DAYIDX=2
+    ;;
+  "Tuesday")
+    DAYIDX=3
+    ;;
+  "Wednesday")
+    DAYIDX=4
+    ;;
+  "Thursday")
+    DAYIDX=5
+    ;;
+  "Friday")
+    DAYIDX=6
+    ;;
+  "Saturday")
+    DAYIDX=7
+    ;;
+  *)
+    echo "ERR-$OID.${DAYIDX} - Invalid Day Name: $0"
+    return 1
+    ;;
+  esac
+  OID="${OID}.${DAYIDX}"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    1)
+      echo "In"
+      return 0
+      ;;
+    2)
+      echo "Out"
+      return 0
+      ;;
+    3)
+      echo "Away"
+      return 0
+      ;;
+    *)
+      echo "ERR-$OID - Invalid Class: $0"
+      return 1
+      ;;
+    esac
   else
     echo "ERR-$OID - Failed Return Code: $0"
     return 1

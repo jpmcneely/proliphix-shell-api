@@ -18,6 +18,7 @@ if [ ! ${1} ]; then
   echo "  showperiodstart : Show schedule period start time"
   echo "  showperiodheat  : Show heat setback for schedule period"
   echo "  showperiodcool  : Show cool setback for schedule period"
+  echo "  showdefaultclass: Show default schedule class for day"
   echo " "
   exit 1
 fi
@@ -58,6 +59,17 @@ if [ $CMD = "showperiodcool" ]; then
   PERIOD=$3
   PERIODCOOL=`readThermPeriodSetbackCool $CLASS $PERIOD`
   echo "$CLASS:$PERIOD:$PERIODCOOL"
+fi
+
+# Show Default Schedule Class
+if [ $CMD = "showdefaultclass" ]; then
+  if [ ! ${2} ]; then
+    echo "usage: $0 showdefaultclass Monday|Tuesday|Wednesday|Thursday|Friday|Saturday"
+    exit 1
+  fi
+  DAYNAME=$2
+  DFLTCLASS=`readThermDefaultClassId $DAYNAME`
+  echo "$DAYNAME:$DFLTCLASS"
 fi
 
 # EOF
