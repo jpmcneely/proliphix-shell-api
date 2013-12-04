@@ -13,6 +13,9 @@
 # Source the configuration
 . ./tstatconf.inc
 
+# Source the database configuration
+. ./tstatdb.inc
+
 # Source the API Implementation
 . ./tstatapi.inc
 

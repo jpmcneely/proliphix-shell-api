@@ -8,6 +8,9 @@
 # Source the configuration
 . ./tstatconf.inc
 
+# Source the database configuration
+. ./tstatdb.inc
+
 # Source the API Implementation
 . ./tstatapi.inc
 
@@ -15,13 +18,15 @@ if [ ! ${1} ]; then
   echo "usage: $0 COMMAND [OPTIONS]"
   echo " "
   echo "Available Commands:"
+  echo "  listclass       : List details for schedule class"
+  echo "  listweekly      : List weekly schedule defaults"
+  echo "  listspecial     : List special schedule days"
+  echo ""
   echo "  showperiodstart : Show schedule period start time"
   echo "  showperiodheat  : Show heat setback for schedule period"
   echo "  showperiodcool  : Show cool setback for schedule period"
   echo "  showdefaultclass: Show default schedule class for day"
-  echo "  showweeklysched : Show default weekly schedule"
-  echo "  showspecialday  : Show Special Day schedule"
-  echo "  showspecialall  : Show all Special Day schedules"
+  echo "  showspecial     : Show special day schedule"
   echo " "
   exit 1
 fi
@@ -64,6 +69,29 @@ if [ $CMD = "showperiodcool" ]; then
   echo "$CLASS:$PERIOD:$PERIODCOOL"
 fi
 
+# List Schedule Class
+if [ $CMD = "listclass" ]; then
+  if [ ! ${2} ]; then
+    echo "usage: $0 listclass In|Out|Away"
+    exit 1
+  fi
+  CLASS=$2
+  echo ""
+  echo "Schedule Class: $CLASS"
+  echo ""
+  echo " Period    Start    Heat    Cool"
+  echo "================================="
+  for PERIOD in Morning Day Evening Night
+  do
+    PERSTART=`readThermPeriodStartHHMM $CLASS $PERIOD`
+    PERHEAT=`readThermPeriodSetbackHeat $CLASS $PERIOD`
+    PERCOOL=`readThermPeriodSetbackCool $CLASS $PERIOD`
+    printf " %-8s  %-5s  %6s  %6s\n" $PERIOD $PERSTART $PERHEAT $PERCOOL
+  done
+  echo "================================="
+  echo ""
+fi
+
 # Show Default Schedule Class
 if [ $CMD = "showdefaultclass" ]; then
   if [ ! ${2} ]; then
@@ -75,25 +103,25 @@ if [ $CMD = "showdefaultclass" ]; then
   echo "$DAYNAME:$DFLTCLASS"
 fi
 
-# Show Deafult Weekly Schedule
-if [ $CMD = "showweeklysched" ]; then
+# List Default Weekly Schedule
+if [ $CMD = "listweekly" ]; then
   echo ""
   echo "Default Weekly Schedule"
+  echo ""
   echo "======================="
   for DAYNAME in Sunday Monday Tuesday Wednesday Thursday Friday Saturday
   do
     CLASS=`readThermDefaultClassId $DAYNAME`
-    SHORTDAY=`echo $DAYNAME | cut -c -3`
-    echo "    $SHORTDAY : $CLASS"
+    printf "  %-10s : %-5s\n" $DAYNAME $CLASS
   done
   echo "======================="
   echo ""
 fi
 
 # Show Special Day Schedule
-if [ $CMD = "showspecialday" ]; then
+if [ $CMD = "showspecial" ]; then
   if [ ! ${2} ]; then
-    echo "usage: $0 showspecialday SPECIAL_DAY_NUMBER (1-20)"
+    echo "usage: $0 showspecial SPECIAL_DAY_NUMBER (1-20)"
     exit 1
   fi
   SDIDX=$2
@@ -107,15 +135,20 @@ if [ $CMD = "showspecialday" ]; then
     SDYEAR=`readThermScheduleSpecialYear $SDIDX`
     SDDUR=`readThermScheduleSpecialDuration $SDIDX`
     SDCLASS=`readThermScheduleSpecialClassId $SDIDX`
-    echo "SpecialDay ${SDIDX} : StartDay: $SDSTARTDAY  Month: $SDMONTH  Year: $SDYEAR  Duration: $SDDUR Day(s)  Class: $SDCLASS"
+    echo "${SDIDX}:$SDSTARTDAY:$SDMONTH:$SDYEAR:$SDDUR:$SDCLASS"
   else
-    echo "SpecialDay $SDIDX : Not Defined"
+    echo "$SDIDX:Not Defined"
   fi
 fi
 
-# Show All Special Day Schedules
-if [ $CMD = "showspecialall" ]; then
+# List Special Day Schedules
+if [ $CMD = "listspecial" ]; then
   SDIDX=1
+  echo ""
+  echo "Special Schedule Days"
+  echo ""
+  echo " Idx  Day  Month         Year   Dur     Class"
+  echo "=============================================="
   while [ $SDIDX -le 20 ]
   do
     SDSTARTDAY=`readThermScheduleSpecialDay $SDIDX`
@@ -124,10 +157,12 @@ if [ $CMD = "showspecialall" ]; then
       SDYEAR=`readThermScheduleSpecialYear $SDIDX`
       SDDUR=`readThermScheduleSpecialDuration $SDIDX`
       SDCLASS=`readThermScheduleSpecialClassId $SDIDX`
-      echo "SpecialDay ${SDIDX} : StartDay: $SDSTARTDAY  Month: $SDMONTH  Year: $SDYEAR  Duration: $SDDUR Day(s)  Class: $SDCLASS"
+      printf "  %-3s  %-2s  %-12s  %-6s  %-3s    %-5s\n" ${SDIDX} $SDSTARTDAY $SDMONTH $SDYEAR $SDDUR $SDCLASS
     fi
     SDIDX=$[$SDIDX + 1]
   done
+  echo "=============================================="
+  echo ""
 fi
 
 # EOF
