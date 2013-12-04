@@ -20,7 +20,7 @@ if [ ! ${1} ]; then
   echo "Available Commands:"
   echo "General:"
   echo "    listclass       : List details for schedule class"
-  echo "    listweekly      : List weekly schedule defaults"
+  echo "    listdefaults    : List schedule default classes"
   echo "    listspecial     : List special schedule days"
   echo "    showperiodstart : Show schedule period start time"
   echo "    showperiodheat  : Show heat setback for schedule period"
@@ -31,7 +31,7 @@ if [ ! ${1} ]; then
   echo "    setperiodstart  : Set schedule period start time"
   echo "    setperiodheat   : Set schedule period heat setback temperature"
   echo "    setperiodcool   : Set schedule period cool setback temperature"
-  echo "    setweeklydefault: Set weekly default schedule"
+  echo "    setdefaultclass : Set default schedule class for day"
   echo " "
   exit 1
 fi
@@ -108,18 +108,18 @@ if [ $CMD = "showdefaultclass" ]; then
   echo "$DAYNAME:$DFLTCLASS"
 fi
 
-# List Default Weekly Schedule
-if [ $CMD = "listweekly" ]; then
+# List Default Schedule Classes
+if [ $CMD = "listdefaults" ]; then
   echo ""
-  echo "Default Weekly Schedule"
+  echo "Default Schedule Class"
   echo ""
-  echo "======================="
+  echo "======================"
   for DAYNAME in Sunday Monday Tuesday Wednesday Thursday Friday Saturday
   do
     CLASS=`readThermDefaultClassId $DAYNAME`
     printf "  %-10s : %-5s\n" $DAYNAME $CLASS
   done
-  echo "======================="
+  echo "======================"
   echo ""
 fi
 
@@ -220,5 +220,22 @@ if [ $CMD = "setperiodcool" ]; then
     echo "ERROR: Failed to set period cool setback"
   fi
 fi
+
+# Set Default Schedule Class
+if [ $CMD = "setdefaultclass" ]; then
+  if [ ! $3 ]; then
+    echo "usage: $0 setdefaultclass Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday In|Out|Away"
+    exit 1
+  fi
+  DAYNAME=$2
+  CLASS=$3
+  writeThermDefaultClassId $DAYNAME $CLASS
+  if [ $? -ne 1 ]; then
+    echo "Default Schedule Class for $DAYNAME set to $CLASS"
+  else
+    "ERROR: Failed to set default schedule class"
+  fi
+fi
+
 
 # EOF
