@@ -19,6 +19,7 @@ if [ ! ${1} ]; then
   echo "  showperiodheat  : Show heat setback for schedule period"
   echo "  showperiodcool  : Show cool setback for schedule period"
   echo "  showdefaultclass: Show default schedule class for day"
+  echo "  showweeklysched : Show default weekly schedule"
   echo "  showspecialday  : Show Special Day Schedule"
   echo " "
   exit 1
@@ -71,6 +72,21 @@ if [ $CMD = "showdefaultclass" ]; then
   DAYNAME=$2
   DFLTCLASS=`readThermDefaultClassId $DAYNAME`
   echo "$DAYNAME:$DFLTCLASS"
+fi
+
+# Show Deafult Weekly Schedule
+if [ $CMD = "showweeklysched" ]; then
+  echo ""
+  echo "Default Weekly Schedule"
+  echo "======================="
+  for DAYNAME in Sunday Monday Tuesday Wednesday Thursday Friday Saturday
+  do
+    CLASS=`readThermDefaultClassId $DAYNAME`
+    SHORTDAY=`echo $DAYNAME | cut -c -3`
+    echo "    $SHORTDAY : $CLASS"
+  done
+  echo "======================="
+  echo ""
 fi
 
 # Show Special Day Schedule
