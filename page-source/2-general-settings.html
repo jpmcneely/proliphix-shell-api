@@ -1,0 +1,1163 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Thermostat Main Floor - General Settings</title>
+<!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+<style type="text/css">
+html,body, div, table, th, tr, tbody {
+
+	margin: 0px;
+
+	padding: 0px;
+
+	font-size: 100%;
+
+	border: none;
+
+}
+
+body {
+
+	font-family: verdana, sans-serif;
+
+	font-size: 10pt; 
+
+	background-color:white;
+
+	color: #03a;
+
+	text-align: center; /* IE5/Win centering */
+
+	height: 100%;
+
+        padding-left: 10px;
+
+}
+
+/* Outer */
+
+#content {
+
+	width: 629px;
+
+	margin-top: 10px;
+
+	margin-left: auto;
+
+	margin-right: auto;
+
+	text-align: left; /* Uncenter inherited from body */
+
+}
+
+/* Main content */
+
+#body {
+
+	text-align: left;
+
+	border-left: solid #C6202E 8px;
+
+	padding-left: 5px; /* in addition to border-left */
+
+
+
+	margin-left: 108px;
+
+	margin-left: 91px;
+
+}
+
+html>body #body {
+
+    margin-left:105px; 
+
+    margin-left:88px; 
+
+    padding-left: 8px;}
+
+/* Left Navigation Bar */
+
+#navbar {
+
+	position: relative;
+
+	float: left;
+
+	display: inline;
+
+
+
+	width: 102px;
+
+	width: 85px;
+
+	height: 100%;
+
+}
+
+/* Mozilla reads this, overriding what's above */
+
+html>body #navbar {
+
+  width:82px;
+
+}
+
+A:hover {
+
+ text-decoration: underline;
+
+}
+
+#header A, #header A:link, #header A:visited
+
+{
+
+color: white;
+
+text-decoration: none;
+
+}
+
+#header A:hover
+
+{ color: #FFCC33; border-bottom: solid 1px #FFCC33; }  
+
+H1, .head, .modnum
+
+{ 
+
+	padding: 2px;
+
+	font-size: 110%;
+
+	background: #FFCC33;  
+
+	text-align: left;
+
+    font-weight: bold;
+
+}
+
+.modnum
+
+{
+
+	margin: 0px 0px;
+
+	text-align: center;
+
+	margin-bottom: 5px;
+
+}
+
+H2 
+
+{ font-size:110%; }
+
+H3
+
+{ 
+
+font-size: 100%;
+
+margin-top: 15px;
+
+margin-bottom: 2px;
+
+text-decoration: underline;
+
+}
+
+P
+
+{ margin: 3px; }
+
+#navbar A, #navbar A:link, #navbar A:visited
+
+{ 
+
+text-decoration: none;
+
+color: white;
+
+}
+
+#navbar A:hover
+
+{ 
+
+	color: #FFCC33; 
+
+} 
+
+/* Outer */
+
+#navbar .tab {
+
+}
+
+
+
+#navbar .tabcontainer {
+
+  padding: 0px 0px;
+
+  text-align: center;
+
+  font-weight: bold;
+
+  font-family: sans-serif;
+
+  font-variant: small-caps;
+
+
+
+  /* Unselected */
+
+  background: #207ebf;
+
+}
+
+
+
+/* Outer Selected */
+
+#navbar .selected {
+
+}
+
+
+
+/* Inner Selected */
+
+#navbar .selected .tabcontainer {
+
+  background: #C6202E;
+
+}
+
+
+
+#navbar .spacer {
+
+    font-size: 0;
+
+    height: 2px;
+
+}
+
+
+
+.rtop,.rbottom{display:block}
+
+.rtop *,.rbottom *{display:block;height: 1px;overflow: hidden}
+
+.r1{margin: 0 5px}
+
+.r2{margin: 0 3px}
+
+.r3{margin: 0 2px}
+
+.r4{margin: 0 1px;height: 2px}
+
+
+
+.rs1{margin: 0 2px}
+
+.rs2{margin: 0 1px}
+
+
+
+
+
+TABLE.config 
+
+{ 
+
+	empty-cells: show;
+
+	width: 505px;
+
+}
+
+html>body .config {width:507px;}
+
+
+
+.config TD
+
+{ 
+
+	padding: 3px; 
+
+	background: white;
+
+	border-bottom: solid 1px #bbe;
+
+}
+
+TD.box { background: #c8e0f0; }
+
+TD.function { width: 30%; }
+
+TD.status { background: #c8e0f0; width: 35%; text-align: center; } 
+
+TD.control { width: 35%; text-align: center; }
+
+TD.alarm { border-left: solid 1px #bbe; width: 35%; text-align: center; } 
+
+TD.alarmhdr { width: 35%; text-align: center; font-weight:bold} 
+
+TD.i2p { width: 35%; text-align: left;}
+
+TD.sectionhead { 
+
+	padding-top: 4px;
+
+	font-size: 110%;
+
+	font-weight: bold;
+
+	font-style: italic;
+
+	border-bottom: solid 1px #03a;
+
+}
+
+TD.date
+
+{ 
+
+padding-top: 6px;
+
+font-size: 100%;
+
+font-weight: bold;
+
+font-style: italic;
+
+border-bottom: solid 1px #03a;
+
+}
+
+TABLE.setback2
+
+{
+
+background: #aaaaaa;
+
+margin-top: 19px;
+
+}
+
+TABLE.setback
+
+{ 
+
+background: #03a;
+
+width: 495px;
+
+margin-top: 19px;}
+
+TABLE.spec
+
+{ background: #03a; 
+
+padding: 0px;}
+
+.setback TD
+
+{ font-size:90%; 
+
+background: #99c;
+
+font-weight: bold;
+
+margin: 3px; padding: 3px;
+
+}
+
+.setback TD, TD.setback 
+
+{ 
+
+	font-size:90%; 
+
+	background: #fff;
+
+	margin: 3px; padding: 3px;
+
+}
+
+.setback TD 
+
+{	
+
+	border: none;
+
+	background: white 
+
+}
+
+.spec TD, TD.spec
+
+{ border: solid 1px #03a; }
+
+TH.sb_day { background: #dddddd; }  
+
+TD.spechead { background: #dddddd; font-weight: bold; }
+
+#today { font-weight: bold; border: solid 3px #03a; }
+
+TD.hd_time { background: #dddddd; } 
+
+TD.sbunused, .sbunused {  background: white; } 
+
+TD.sb1, .sb1 { text-align: center; background: #c8e0f0; font-weight: bold;} 
+
+TD.sb2, .sb2 { text-align: center; background: #ffe071; font-weight: bold;}
+
+TD.sb3, .sb3 { text-align: center; background: #ff9080; font-weight: bold;}
+
+TD.sb4, .sb4 { background: #aaf; }
+
+TD.sb5, .sb5 { width: 90px; text-align: center; background: #ff9080; font-weight: bold;}
+
+TD.sbtemp { font-weight: bold; background: #ccc; }
+
+TD.mon_name { background: #cdcdff;  }
+
+.opt, .optsel { margin: 1px; padding: 1px; border: solid 1px #03a; }
+
+.opt { color: #03a; background: #c8e0f0; }
+
+.optsel { color: #c8e0f0; background: #03a; }
+
+
+
+#day { font-size: 100%; margin:0; padding:0; color: #03a; text-decoration: none; }
+
+#specday { border: solid 1px red; }
+
+#spectoday { border: solid 3px red; }
+
+form, input {
+
+	margin: 0px;
+
+	padding: 0px;
+
+}
+
+
+
+
+</style>
+<!-- <script type="text/javascript" src="com.js"></script> -->
+<script type="text/javascript">
+function td(x,c,span,other)
+{
+t = "<td"
+if (c) t += " class=" + c
+if (span) t += " colspan=" + span
+if (other) t += " " + other
+if (!x) x = "&nbsp;"
+t += ">" + x + "</td>"
+return t
+}
+
+function tr(x) { return "<tr>" + x + "</tr>" }
+
+function printTitle(t, n)
+{
+wln ("<tr><th colspan=2 class=head>" + t + "</th><th class=head style='text-align:right;'>" + n + "</th></tr>")
+}
+
+function printSect(s,d)
+{
+if (d)
+wln ("<tr><td colspan=1 class=sectionhead>"+s+"</td><td colspan=2 class=date style='text-align:right;'>"+d+"</td></tr>");
+else
+wln ("<tr><td colspan=3 class=sectionhead>"+s+"</td></tr>")
+}
+
+function printFSC(f,s,c)
+{
+fc = "function"
+if (f == "")
+{ f = "&nbsp;"; fc = null; }
+
+wln ("<tr>" + td(f, fc) + td(s,"status") + td(c,"control") + "</tr>")
+}
+
+function printFC2(f,c)
+{ wln (tr(td(f,"function") + td (c, "control", 2))) }
+
+function printFS2(f,s)
+{ wln (tr(td(f,"function") + td (s, "status", 2))) }
+
+function printRefreshSubmit()
+{
+printFSC("", linkbuttonGet('location.href', 'Refresh'), "<input type=submit name='submit' value='Submit'>")
+}
+
+function printNavLine(c,ref,ref2,ref3,ref4,ref5,ref6)
+{
+if (location.href.indexOf('?') != -1) {
+var page = location.href.substring( location.href.lastIndexOf('\/')+1,location.href.indexOf('?'));
+}
+else {
+var page = location.href.substring( location.href.lastIndexOf('\/')+1);
+}
+var tabname = "tab";
+if( ref == page || ref2 == page || ref3 == page || ref4 == page || ref5 == page || ref6 == page)
+tabname += " selected";
+else
+tabname += " roundbox";
+wln('<div class="' + tabname + '">');
+wln('<div class="tabcontainer">');
+wln("<a href='" + ref + "'>"+ c + "</a>" + "</div>")
+wln('</div>');
+wln("<div class=\"spacer\"></div>");
+}
+
+function bodyStart(a,n)
+{
+wln("<div id=body>")
+if (a != "")
+{
+wln("<form method='post' action='" + a + "' name='" + n + "'>")
+}
+wln("<table id=maintable class=config cellspacing=0>")
+}
+function printHead(admin,mg,v,m)
+{
+wln("<div id=navbar>")
+wln("<div class='modnum'>" + m + v + "</div>");
+printNavLine("Status &<br> Control", "index.shtml")
+printNavLine("General<br>Settings", "settings.shtml")
+printNavLine("Setback<br>Schedules", "schedule.shtml", "weekly.shtml", "schhome.shtml", "schwork.shtml","schvac.shtml","specdays.shtml")
+if (mg&1)
+{
+wln('<div class="spacer" style="height: 10px"></div>');
+if (admin==2) 
+{
+printNavLine("Network Settings", "network.shtml")
+printNavLine("Advanced<br>Settings", "adv.shtml")
+if (mg & 2) {
+printNavLine("Sensor<br>Settings", "sensors.shtml")
+}
+printNavLine("Remote<br>Access", "adv2.shtml", "ch");
+printNavLine("Installer<br>Info", "installer.shtml");
+}
+}
+else
+{
+printNavLine("Network Settings", "network.shtml")
+printNavLine("Advanced<br>Settings", "adv.shtml")
+if (mg & 2) {
+printNavLine("Sensor<br>Settings", "sensors.shtml")
+}
+printNavLine("Remote<br>Access", "adv2.shtml", "ch")
+}
+printNavLine("Usage<br>Counters", "usage.shtml")
+printNavLine("Password<br>Settings", "admin.shtml")
+if (admin!=1) {
+printNavLine("Logout", "logout")
+}
+
+wln("</div>")
+Rounded("div.roundbox", "transparent", "#207ebf");
+Rounded("div.selected", "transparent", "#C6202E");
+}
+function wln(m) { document.writeln(m); }
+function htmlTitle(n, t)
+{ document.title = "Thermostat " + n + " - " + t; }
+function bodyEnd()
+{ wln("</table></form></div>") }
+function bodyEndNoForm(tail)
+{
+wln("</table>")
+if (tail != "")
+{ wln(tail) }
+wln("</div>")
+}
+function addOpt(n, val , i, opt0, opt1)
+{
+el = document.forms[0].elements[n]
+el.options[i] = new Option(opt1, opt0, opt0 == parseInt(val), opt0 == parseInt(val))
+el.value = val
+}
+function addOpts(n, val ,opts)
+{
+el = document.forms[0].elements[n]
+for (var i=0; i<opts.length; i++)
+{
+el.options[i] = new Option(opts[i][1], opts[i][0], opts[i][0] == parseInt(val), opts[i][0] == parseInt(val))
+}
+el.value = val
+}
+function makeSelect(n,opts)
+{
+if (!opts) opts = ""
+return "<select name='" + n + "' " + opts + "></select>"
+}
+function makeCheck(n,v,s)
+{
+return "<input type=checkbox name='" + n + "' value='" + v + "'> " + s;
+}
+function makeInput(n,v,size,msize,cf)
+{
+if (v)
+v = ' value="' + v + '"'
+else
+v = ""
+
+if (msize) {
+mlen = msize;
+}
+else {
+mlen = size;
+}
+return "<input name='" + n + "' size=" + size + " maxlength=" + mlen + " onChange='" + cf + "' + " + v + ">";
+}
+function makePwInput(n,size,onChange,onf)
+{
+return "<input type=password name='" + n + "' id='" + n + "' size=" + size + " maxlength=" + size +
+" onchange=" + onChange + " onfocus=" + onf + " >";
+}
+function linkbutton(href,label)
+{ wln (linkbuttonGet(href,label)) }
+function linkbuttonGet(href,label)
+{ return "<input type=button value='"+label+"' onclick='location.href=" + href + "'>" }
+function getArg (name) {
+args = location.search.slice(1).split('&')
+if (args == "") return ''
+r = ''
+for (var i = 0; i < args.length; i++) {
+if (args[i].slice(0,args[i].indexOf('=')) == name) {
+r = args[i].slice(args[i].indexOf('=')+1);
+break;
+}
+}
+return (r.length > 0 ? unescape(r).split(',') : '')
+}
+function rndCmp(x,y)
+{
+return (Math.round(x/10) * 10) == (Math.round(y/10) * 10);
+
+}
+function hc_options(tSc,h,c,he,ce,hi,ci,start,inc,end,astart,ainc,aend,os)
+{
+if (tSc==2) {
+start = astart
+inc = ainc
+end = aend
+}
+for (j=os; j<end; j++) {
+dd = start
+if (tSc==2) {
+dd = (start*9/5)+32
+}
+dd *= 10;
+dd = Math.round(dd);
+if (he) {
+h.options[j] = new Option(start, dd, dd == hi, dd == hi)
+}
+if (ce) {
+c.options[j] = new Option(start, dd, dd == ci, dd == ci)
+}
+start += inc
+}
+}
+function chtime(secs)
+{
+now = new Date();
+d2 = new Date( 1000*(secs+(60*now.getTimezoneOffset())) );
+da = d2.toLocaleDateString() + " " + d2.toLocaleTimeString();
+return da;
+}
+
+
+function NiftyCheck()
+{
+if(!document.getElementById || !document.createElement)
+return(false);
+var b=navigator.userAgent.toLowerCase();
+if(b.indexOf("msie 5")>0 && b.indexOf("opera")==-1)
+return(false);
+return(true);
+}
+
+function Rounded(selector,bk,color,size){
+var i;
+var v=getElementsBySelector(selector);
+var l=v.length;
+for(i=0;i<l;i++){
+AddTop(v[i],bk,color,size);
+AddBottom(v[i],bk,color,size);
+}
+}
+
+function AddTop(el,bk,color,size){
+var i;
+var d=document.createElement("b");
+var cn="r";
+var lim=4;
+if(size && size=="small"){ cn="rs"; lim=2}
+d.className="rtop";
+d.style.backgroundColor=bk;
+for(i=1;i<=lim;i++){
+var x=document.createElement("b");
+x.className=cn + i;
+x.style.backgroundColor=color;
+d.appendChild(x);
+}
+el.insertBefore(d,el.firstChild);
+}
+
+function AddBottom(el,bk,color,size){
+var i;
+var d=document.createElement("b");
+var cn="r";
+var lim=4;
+if(size && size=="small"){ cn="rs"; lim=2}
+d.className="rbottom";
+d.style.backgroundColor=bk;
+for(i=lim;i>0;i--){
+var x=document.createElement("b");
+x.className=cn + i;
+x.style.backgroundColor=color;
+d.appendChild(x);
+}
+el.appendChild(d,el.firstChild);
+}
+
+function getElementsBySelector(selector){
+var i;
+var s=[];
+var selid="";
+var selclass="";
+var tag=selector;
+var objlist=[];
+if(selector.indexOf(" ")>0){  
+s=selector.split(" ");
+var fs=s[0].split("#");
+if(fs.length==1) return(objlist);
+return(document.getElementById(fs[1]).getElementsByTagName(s[1]));
+}
+if(selector.indexOf("#")>0){ 
+s=selector.split("#");
+tag=s[0];
+selid=s[1];
+}
+if(selid!=""){
+objlist.push(document.getElementById(selid));
+return(objlist);
+}
+if(selector.indexOf(".")>0){  
+s=selector.split(".");
+tag=s[0];
+selclass=s[1];
+}
+var v=document.getElementsByTagName(tag);  
+if(selclass=="")
+return(v);
+for(i=0;i<v.length;i++){
+if(v[i].className.match(selclass)){
+objlist.push(v[i]);
+}
+}
+return(objlist);
+}
+
+function printStatusHead(admin,m,v)
+{
+wln("<div id=navbar>")
+wln(tr("<div class='modnum'>" + m + v + "</div>"))
+printNavLine("Status", "status.shtml")
+printNavLine("Login", "index.shtml")
+
+wln("</div>")
+Rounded("div.roundbox", "transparent", "#207ebf");
+Rounded("div.selected", "transparent", "#C6202E");
+}
+
+</script>
+<script type="text/javascript">
+
+var mimGrade = parseInt("2");
+var pro = (mimGrade&1==1)
+var extRelay = (mimGrade&8)
+var humidity = (mimGrade&4)
+var n_bl = "OID2.2.4"
+var n_low = "OID4.2.11"
+var n_high = "OID4.2.13"
+var n_hum = "OID4.2.17"
+var n_ts = "OID4.1.21";
+var ssn = 0;
+var n_sn = "OID1.10.9";
+var cScale = 0;
+
+var time_modified = false;
+
+var ts = "F";
+var tSc = parseInt("1")
+if ( tSc == 2) {
+ts = "C"
+}
+
+if (parseInt("2") < 2)
+{
+location.href="status.shtml"
+}
+
+function chScale()
+{
+cScale = 1;
+}
+function myLoad()
+{
+location.href="settings.shtml";
+}
+
+function calctime()
+{
+ds = document.settings['datetime'].value
+d = new Date(Date.parse(ds) );
+
+e = new Date(d.getFullYear(),0,1,d.getHours(),d.getMinutes(),d.getSeconds());
+
+secs = d.getTime() / 1000 - d.getTimezoneOffset() * 60;
+if (isNaN(secs))
+{ alert ("Invalid time/date string: " + ds); return false; }
+
+if (e.getTimezoneOffset() > d.getTimezoneOffset()) {
+secs -= 3600;
+}
+
+document.settings['OID2.5.1'].value = secs;
+
+if (!document.settings['datetimesync'].checked)
+document.getElementById('OID2.5.1').disabled = true;
+
+document.getElementById('datetime').disabled = true;
+document.getElementById('datetimesync').disabled = true;
+document.getElementById('usdst').disabled = true;
+
+if (ssn==0) {
+document.forms[0].elements[n_sn].disabled = true;
+}
+
+if (cScale) {
+document.settings.action = "wait.shtml";
+}
+
+return true;
+}
+
+function sync()
+{
+if (time_modified == true)
+return;
+var now = new Date();
+document.settings['datetime'].value = now.toLocaleString();
+timerId = self.setTimeout("sync()", 1000);
+}
+
+function usdstf()
+{
+var value;
+
+if (!document.settings['usdst'].checked) {
+value = 1;
+}
+else {
+value = 2;
+}
+document.settings['OID2.5.2'].value = value;
+}
+
+
+function stopsync()
+{
+time_modified = true;
+document.settings['datetimesync'].checked = true
+}
+
+function alarmThresh(n, v, na, vas, s1, s2, s3,al,start,inc,endc,astart,ainc,aendc,label,vs)
+{
+if (v >= 10000) {
+vs = "Disabled";
+label = "";
+}
+
+printFSC(s1 + " Limit", vs + label, makeSelect(n,null)+label)
+var el = document.settings.elements[n]
+el.options[0] = new Option("Disable", 10000, v>=1000, v>=1000);
+hc_options(tSc,el,el,1,0,v,v,start,inc,endc,astart,ainc,aendc,1);
+el.value = v
+if (vs == "Disabled")
+el.selectedIndex = 0
+
+if (al!=1) {
+printFSC("&nbsp;&nbsp;&nbsp;" + s2 + " Dismiss", "<span style='color:#c6202e'>Alarm</span>", makeCheck(na,3,s3 + " Repaired"))
+}
+}
+
+function alarmThreshHumidity(n, v, na, vas, s1, s2, s3,al,start,inc,end,label)
+{
+vs = v
+if (v == 0) {
+vs = "Disabled";
+label = "";
+}
+
+printFSC(s1 + " Limit", vs + label, makeSelect(n,null)+label)
+var el = document.settings.elements[n];
+el.options[0] = new Option("Disable", 0, v==0, v==0);
+for (j=1; j<end; j++) {
+el.options[j] = new Option(start, start, v == start, v == start)
+start += inc
+}
+
+el.value = v
+if (vs == "Disabled")
+el.selectedIndex = 0
+
+if (al!=1) {
+printFSC("&nbsp;&nbsp;&nbsp;" + s2 + " Dismiss", "<span style='color:#c6202e'>Alarm</span>", makeCheck(na,3,s3 + " Repaired"))
+}
+}
+
+function csn()
+{
+ssn = 1;
+}
+function changeLockout()
+{
+var n_val = 1
+val = document.forms[0].elements["BL"];
+if (val.value == 1) {
+document.forms[0].elements["SPO"].disabled = true;
+document.getElementById("spo_f").style.color = "gray";
+document.getElementById("spo_s").style.color = "gray";
+}
+else {
+document.forms[0].elements["SPO"].disabled = false;
+document.getElementById("spo_f").style.color = "";
+document.getElementById("spo_s").style.color = "";
+n_val = document.forms[0].elements["SPO"].value;
+}
+document.forms[0].elements[n_bl].value = n_val;
+}
+</script>
+</head>
+
+<body>
+
+<center>
+<div id=content>
+
+<script type="text/javascript">
+printHead(parseInt("2"), parseInt("2"),"e", "NT20")
+
+bodyStart("settings.shtml", "settings")
+printTitle("General Settings", "Main Floor")
+
+hEnable = parseInt("1")
+
+al1 = parseInt("1");
+al2 = parseInt("1");
+if (hEnable==3)
+al3 = parseInt("1");
+else
+al3 = 0
+
+filter = parseInt("1");
+if (al1==3 || al2==3 || al3==3 || filter == 3) {
+printSect("Sending clear alarm/reminder signal, please wait...")
+self.setTimeout("myLoad()", 2000);
+}
+else {
+printSect ("Zone Name")
+n = "OID1.2";
+v = "Main Floor";
+printFSC("Device Name", v, makeInput(n,v,13,13,"csn()"));
+
+v = "Joezekistan"
+printFSC("Site Name", v, makeInput(n_sn,v,25,25,"csn()"));
+
+printSect("Thermostat")
+
+sn = "8E42E294"
+printFSC("Serial Number",sn)
+
+
+sv = "therm_rev_2 3.0.5";
+hv = "H.04";
+var sa = sv.split(" ");
+printFSC("SW Ver / HW Rev", "SW " + sa[1] + " / HW " + hv,"")
+
+printFSC("Temperature Scale","Fahrenheit",makeSelect(n_ts,"onChange=chScale()"));
+addOpts(n_ts,parseInt("1"),[[1,"Fahrenheit"],[2,"Celsius"]]);
+
+if (pro) {
+n = "OID2.2.1"
+vs = "Delay"
+v = parseInt("1");
+printFSC("Backlight", vs, makeSelect(n, null))
+addOpts(n,v,[[1, "Delay"], [3, "Off"]])
+}
+
+n = "OID2.2.3"
+v = parseInt("28");
+printFSC("Display Contrast", v, makeSelect(n,null))
+var el = document.settings.elements[n]
+var zindex=0;
+for (var x=20; x <= 40; x+=2)
+el.options[zindex++] = new Option(x,x,(x)==v,(x)==v)
+
+el.value = v
+
+if (pro) {
+n = "BL"
+v = parseInt("1");
+t_v = v;
+if (v==1) {
+vs = "Disabled";
+}
+else {
+vs = "Enabled";
+v = 2;
+}
+printFSC("Button Lockout", vs, makeSelect(n,"onChange=changeLockout()"))
+addOpts(n,v,[[1, "Disable"], [2, "Enable"]])
+
+t_v2 = t_v;
+n = "SPO"
+if (t_v == 1) {
+mv = 0;
+t_v = 2;
+}
+else {
+mv = t_v-2;
+if (tSc==2) {
+mv = mv/2;
+}
+}
+wln("<input type=hidden value=" + t_v2 + " name='OID2.2.4'>")
+
+printFSC("&nbsp;&nbsp;&nbsp;<span id=\"spo_f\"> Set Point Override</span>",
+"<span id=\"spo_s\">" + (mv) + "&deg;"+ts+"</span>",
+makeSelect(n, "onChange=changeLockout()")+"&deg;"+ts)
+for (i=0;i < 21;i++) {
+if (tSc==2) {
+addOpt(n,t_v,i,i+2,i*.5);
+}
+else {
+addOpt(n,t_v,i,i+2,i);
+}
+}
+if (t_v2==1) {
+document.forms[0].elements[n].disabled = true;
+document.getElementById("spo_f").style.color = "gray";
+document.getElementById("spo_s").style.color = "gray";
+}
+}
+
+printSect("Alarms")
+al = parseInt("1");
+n = "OID4.2.7"
+v = parseInt("350")
+vas = "Green"
+alarmThresh(n,v,n_low,vas,"Low Temp","Low Temp","Condition",al,200,-1,232,93,-.5,257,"&deg;"+ts,
+"35.0")
+
+al = parseInt("1");
+n = "OID4.2.12"
+v = parseInt("950")
+vas = "Green"
+alarmThresh(n,v,n_high,vas,"High Temp","High Temp","Condition",al,200,-1,232,93,-.5,257,"&deg;"+ts,
+"95.0")
+
+if (hEnable==3) {
+al = parseInt("1");
+n = "OID4.2.16"
+v = parseInt("0");
+vas = "Green"
+alarmThreshHumidity(n,v,n_hum,vas,"High Humidity","High Humidity","Condition",al,90,-5,18,"%")
+}
+n = "OID4.2.18"
+iv = parseInt("90");
+if (iv==0) {
+ivs = "Disabled"
+}
+else {
+ivs = iv + " Runtime Days"
+}
+printFSC("Filter Reminder", ivs , makeSelect(n,null) + " Runtime Days")
+addOpts(n,iv,[[0,"Disable"],[10,"10"],[30,"30"],[60,"60"],[90,"90"],[120,"120"],[240,"240"],[365,"365"]])
+if (iv != 0){
+vfr = parseInt("1386058243");
+if (vfr != 0) {
+fanU = parseInt("522");
+var days = new Number(fanU/1440);
+v = parseInt("1");
+color = "#03a";
+if (v==2) {
+color = "#c6202e";
+}
+printFSC("Filter Usage", "<span style='color:" + color + "'> " + days.toFixed(1) + " Runtime Days</span>", "")
+
+l = new Date();
+s = vfr + 60 * l.getTimezoneOffset();
+var t = new Date(s * 1000)
+n2 = "OID4.2.9"
+printFSC("Filter Last Replaced", t.toDateString(), makeCheck(n2,3,"Filter Replaced"))
+}
+}
+
+v = parseInt("1386142908");
+var da = new Date();
+offset = da.getTimezoneOffset();
+now = new Date((v+offset*60)*1000);
+printSect("Date and Time",now.toLocaleString() + "<input type=hidden id='OID2.5.1' name='OID2.5.1' value=0 >" +
+"<input type=hidden name='OID2.5.2' value=\"2\" >");
+
+printFS2("Set Date and Time", "<input type=text name=datetime id=datetime value='' onfocus='stopsync()' size=50> <BR>" +
+"<input type=checkbox name=datetimesync id=datetimesync onclick='sync()'> <i>Set Thermostat Time  </i>" +
+"<input type=checkbox name=usdst id=usdst onclick='usdstf()'> <i>US DST</i>")
+
+v = parseInt("1386142908");
+now = new Date();
+
+
+if ( v < 1073000000.0  ) {
+document.settings['datetimesync'].checked = true;
+}
+
+v = parseInt("2");
+if (v==2) {
+document.settings['usdst'].checked = true;
+}
+
+printFSC("", linkbuttonGet('location.href', 'Refresh'), "<input type=submit name='submit' value='Submit' onclick=calctime()>")
+
+sync();
+}
+bodyEnd()
+
+</script>
+
+<div style="clear: left;"></div>
+
+</div>
+</center>
+</body>
+</html>
+

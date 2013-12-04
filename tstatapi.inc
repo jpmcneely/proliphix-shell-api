@@ -1943,6 +1943,60 @@ function readHWVer {
   fi
 }
 
+function readThermTempScale {
+  # OID4.1.21
+  # In : No Input
+  # Out: Temperature Scale
+  OID="OID4.1.21"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    1)
+      echo "Fahrenheit"
+      return 0
+      ;;
+    2)
+      echo "Celsius"
+      return 0
+      ;;
+    *)
+      echo "ERR-$OID - Invalid Temp Scale"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermTempScaleTag {
+  # OID4.1.21
+  # In : No Input
+  # Out: Temperature Scale Tag
+  OID="OID4.1.21"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    1)
+      echo "F"
+      return 0
+      ;;
+    2)
+      echo "C"
+      return 0
+      ;;
+    *)
+      echo "ERR-$OID - Invalid Temp Scale"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 # ------------------------------------------------------------------------------
 # Utility Functions
 # Generally useful function.

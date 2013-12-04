@@ -63,6 +63,8 @@ if [ $CMD = "status" ]; then
   IPADDRESS=`readIPAddress`
   NETMASK=`readNetmask`
   GATEWAY=`readGateway`
+  TEMPSCALE=`readThermTempScale`
+  TEMPSCALETAG=`readThermTempScaleTag`
   LOCALTEMP=`readThermSensorTemp Local`
   LOCALAVG=`readThermSensorAverage Local`
   RS1STATE=`readThermSensorState RS1`
@@ -92,7 +94,7 @@ if [ $CMD = "status" ]; then
   COOL2USAGE=`readThermCool2Usage`
   FANUSAGE=`readThermFanUsage`
   USAGEOPTS=`readThermUsageOptions`
-  USAGERESET=`readThermLastUsageResetDateTime`
+  USAGERESET=`readThermLastUsageReset`
 
   if [ $RS1STATE = "Enabled" ]; then
     RS1NAME=`readThermSensorName RS1`
@@ -117,32 +119,33 @@ if [ $CMD = "status" ]; then
   echo "Networking    : IP: $IPADDRESS  Netmask: $NETMASK  Gateway: $GATEWAY"
   echo "Customer ID   : $CUSTID"
   echo "Time          : $SYSTIME  Up: $UPTIME"
+  echo "Temp Scale    : $TEMPSCALE"
   echo "HVAC Mode     : $CURMODE"
   echo "HVAC State    : $CURSTATE"
   echo "Fan Mode      : $CURFANMODE"
   echo "Fan State     : $CURFANSTATE"
-  echo "Main Temp     : ${LOCALTEMP}f"
+  echo "Main Temp     : ${LOCALTEMP}${TEMPSCALETAG}"
   echo "Main Averaged : $LOCALAVG"
   echo "RS1 State     : $RS1STATE"
   if [ $RS1STATE = "Enabled" ]; then
   echo "RS1 Name      : $RS1NAME"
   echo "RS1 Type      : $RS1TYPE"
-  echo "RS1 Temp      : ${RS1TEMP}f"
+  echo "RS1 Temp      : ${RS1TEMP}${TEMPSCALETAG}"
   echo "RS1 Averaged  : $RS1AVG"
   fi
   echo "RS2 State     : $RS2STATE"
   if [ $RS2STATE = "Enabled" ]; then
   echo "RS2 Name      : $RS2NAME"
   echo "RS2 Type      : $RS2TYPE"
-  echo "RS2 Temp      : ${RS2TEMP}f"
+  echo "RS2 Temp      : ${RS2TEMP}${TEMPSCALETAG}"
   echo "RS2 Averaged  : $RS2AVG"
   fi
   if [ $RS1OFFSET != "0" ]; then
   echo "RS1 Offset    : ${RS1OFFSET}f"
   fi
-  echo "Avg Temp      : ${AVGTEMP}f"
-  echo "Heat SetPoint : ${CURHEATSETPOINT}f"
-  echo "Cool SetPoint : ${CURCOOLSETPOINT}f"
+  echo "Avg Temp      : ${AVGTEMP}${TEMPSCALETAG}"
+  echo "Heat SetPoint : ${CURHEATSETPOINT}${TEMPSCALETAG}"
+  echo "Cool SetPoint : ${CURCOOLSETPOINT}${TEMPSCALETAG}"
   echo "Setback Status: $CURSETBACKSTATUS"
   echo "Sched Class   : $CURSCHEDCLASS"
   echo "Sched Period  : $CURSCHEDPERIOD"
@@ -154,7 +157,7 @@ if [ $CMD = "status" ]; then
   echo " "
 fi
 
-# Set Device Name
+# Reset the System
 if [ $CMD = "reset" ]; then
   RTNCODE=`writeSystemReset`
   if [ $? -ne 1 ]; then

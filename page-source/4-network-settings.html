@@ -1,0 +1,1005 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Thermostat Main Floor - Network Settings</title>
+<!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+<style type="text/css">
+html,body, div, table, th, tr, tbody {
+
+	margin: 0px;
+
+	padding: 0px;
+
+	font-size: 100%;
+
+	border: none;
+
+}
+
+body {
+
+	font-family: verdana, sans-serif;
+
+	font-size: 10pt; 
+
+	background-color:white;
+
+	color: #03a;
+
+	text-align: center; /* IE5/Win centering */
+
+	height: 100%;
+
+        padding-left: 10px;
+
+}
+
+/* Outer */
+
+#content {
+
+	width: 629px;
+
+	margin-top: 10px;
+
+	margin-left: auto;
+
+	margin-right: auto;
+
+	text-align: left; /* Uncenter inherited from body */
+
+}
+
+/* Main content */
+
+#body {
+
+	text-align: left;
+
+	border-left: solid #C6202E 8px;
+
+	padding-left: 5px; /* in addition to border-left */
+
+
+
+	margin-left: 108px;
+
+	margin-left: 91px;
+
+}
+
+html>body #body {
+
+    margin-left:105px; 
+
+    margin-left:88px; 
+
+    padding-left: 8px;}
+
+/* Left Navigation Bar */
+
+#navbar {
+
+	position: relative;
+
+	float: left;
+
+	display: inline;
+
+
+
+	width: 102px;
+
+	width: 85px;
+
+	height: 100%;
+
+}
+
+/* Mozilla reads this, overriding what's above */
+
+html>body #navbar {
+
+  width:82px;
+
+}
+
+A:hover {
+
+ text-decoration: underline;
+
+}
+
+#header A, #header A:link, #header A:visited
+
+{
+
+color: white;
+
+text-decoration: none;
+
+}
+
+#header A:hover
+
+{ color: #FFCC33; border-bottom: solid 1px #FFCC33; }  
+
+H1, .head, .modnum
+
+{ 
+
+	padding: 2px;
+
+	font-size: 110%;
+
+	background: #FFCC33;  
+
+	text-align: left;
+
+    font-weight: bold;
+
+}
+
+.modnum
+
+{
+
+	margin: 0px 0px;
+
+	text-align: center;
+
+	margin-bottom: 5px;
+
+}
+
+H2 
+
+{ font-size:110%; }
+
+H3
+
+{ 
+
+font-size: 100%;
+
+margin-top: 15px;
+
+margin-bottom: 2px;
+
+text-decoration: underline;
+
+}
+
+P
+
+{ margin: 3px; }
+
+#navbar A, #navbar A:link, #navbar A:visited
+
+{ 
+
+text-decoration: none;
+
+color: white;
+
+}
+
+#navbar A:hover
+
+{ 
+
+	color: #FFCC33; 
+
+} 
+
+/* Outer */
+
+#navbar .tab {
+
+}
+
+
+
+#navbar .tabcontainer {
+
+  padding: 0px 0px;
+
+  text-align: center;
+
+  font-weight: bold;
+
+  font-family: sans-serif;
+
+  font-variant: small-caps;
+
+
+
+  /* Unselected */
+
+  background: #207ebf;
+
+}
+
+
+
+/* Outer Selected */
+
+#navbar .selected {
+
+}
+
+
+
+/* Inner Selected */
+
+#navbar .selected .tabcontainer {
+
+  background: #C6202E;
+
+}
+
+
+
+#navbar .spacer {
+
+    font-size: 0;
+
+    height: 2px;
+
+}
+
+
+
+.rtop,.rbottom{display:block}
+
+.rtop *,.rbottom *{display:block;height: 1px;overflow: hidden}
+
+.r1{margin: 0 5px}
+
+.r2{margin: 0 3px}
+
+.r3{margin: 0 2px}
+
+.r4{margin: 0 1px;height: 2px}
+
+
+
+.rs1{margin: 0 2px}
+
+.rs2{margin: 0 1px}
+
+
+
+
+
+TABLE.config 
+
+{ 
+
+	empty-cells: show;
+
+	width: 505px;
+
+}
+
+html>body .config {width:507px;}
+
+
+
+.config TD
+
+{ 
+
+	padding: 3px; 
+
+	background: white;
+
+	border-bottom: solid 1px #bbe;
+
+}
+
+TD.box { background: #c8e0f0; }
+
+TD.function { width: 30%; }
+
+TD.status { background: #c8e0f0; width: 35%; text-align: center; } 
+
+TD.control { width: 35%; text-align: center; }
+
+TD.alarm { border-left: solid 1px #bbe; width: 35%; text-align: center; } 
+
+TD.alarmhdr { width: 35%; text-align: center; font-weight:bold} 
+
+TD.i2p { width: 35%; text-align: left;}
+
+TD.sectionhead { 
+
+	padding-top: 4px;
+
+	font-size: 110%;
+
+	font-weight: bold;
+
+	font-style: italic;
+
+	border-bottom: solid 1px #03a;
+
+}
+
+TD.date
+
+{ 
+
+padding-top: 6px;
+
+font-size: 100%;
+
+font-weight: bold;
+
+font-style: italic;
+
+border-bottom: solid 1px #03a;
+
+}
+
+TABLE.setback2
+
+{
+
+background: #aaaaaa;
+
+margin-top: 19px;
+
+}
+
+TABLE.setback
+
+{ 
+
+background: #03a;
+
+width: 495px;
+
+margin-top: 19px;}
+
+TABLE.spec
+
+{ background: #03a; 
+
+padding: 0px;}
+
+.setback TD
+
+{ font-size:90%; 
+
+background: #99c;
+
+font-weight: bold;
+
+margin: 3px; padding: 3px;
+
+}
+
+.setback TD, TD.setback 
+
+{ 
+
+	font-size:90%; 
+
+	background: #fff;
+
+	margin: 3px; padding: 3px;
+
+}
+
+.setback TD 
+
+{	
+
+	border: none;
+
+	background: white 
+
+}
+
+.spec TD, TD.spec
+
+{ border: solid 1px #03a; }
+
+TH.sb_day { background: #dddddd; }  
+
+TD.spechead { background: #dddddd; font-weight: bold; }
+
+#today { font-weight: bold; border: solid 3px #03a; }
+
+TD.hd_time { background: #dddddd; } 
+
+TD.sbunused, .sbunused {  background: white; } 
+
+TD.sb1, .sb1 { text-align: center; background: #c8e0f0; font-weight: bold;} 
+
+TD.sb2, .sb2 { text-align: center; background: #ffe071; font-weight: bold;}
+
+TD.sb3, .sb3 { text-align: center; background: #ff9080; font-weight: bold;}
+
+TD.sb4, .sb4 { background: #aaf; }
+
+TD.sb5, .sb5 { width: 90px; text-align: center; background: #ff9080; font-weight: bold;}
+
+TD.sbtemp { font-weight: bold; background: #ccc; }
+
+TD.mon_name { background: #cdcdff;  }
+
+.opt, .optsel { margin: 1px; padding: 1px; border: solid 1px #03a; }
+
+.opt { color: #03a; background: #c8e0f0; }
+
+.optsel { color: #c8e0f0; background: #03a; }
+
+
+
+#day { font-size: 100%; margin:0; padding:0; color: #03a; text-decoration: none; }
+
+#specday { border: solid 1px red; }
+
+#spectoday { border: solid 3px red; }
+
+form, input {
+
+	margin: 0px;
+
+	padding: 0px;
+
+}
+
+
+
+
+</style>
+<!-- <script type="text/javascript" src="com.js"></script> -->
+<script type="text/javascript">
+function td(x,c,span,other)
+{
+t = "<td"
+if (c) t += " class=" + c
+if (span) t += " colspan=" + span
+if (other) t += " " + other
+if (!x) x = "&nbsp;"
+t += ">" + x + "</td>"
+return t
+}
+
+function tr(x) { return "<tr>" + x + "</tr>" }
+
+function printTitle(t, n)
+{
+wln ("<tr><th colspan=2 class=head>" + t + "</th><th class=head style='text-align:right;'>" + n + "</th></tr>")
+}
+
+function printSect(s,d)
+{
+if (d)
+wln ("<tr><td colspan=1 class=sectionhead>"+s+"</td><td colspan=2 class=date style='text-align:right;'>"+d+"</td></tr>");
+else
+wln ("<tr><td colspan=3 class=sectionhead>"+s+"</td></tr>")
+}
+
+function printFSC(f,s,c)
+{
+fc = "function"
+if (f == "")
+{ f = "&nbsp;"; fc = null; }
+
+wln ("<tr>" + td(f, fc) + td(s,"status") + td(c,"control") + "</tr>")
+}
+
+function printFC2(f,c)
+{ wln (tr(td(f,"function") + td (c, "control", 2))) }
+
+function printFS2(f,s)
+{ wln (tr(td(f,"function") + td (s, "status", 2))) }
+
+function printRefreshSubmit()
+{
+printFSC("", linkbuttonGet('location.href', 'Refresh'), "<input type=submit name='submit' value='Submit'>")
+}
+
+function printNavLine(c,ref,ref2,ref3,ref4,ref5,ref6)
+{
+if (location.href.indexOf('?') != -1) {
+var page = location.href.substring( location.href.lastIndexOf('\/')+1,location.href.indexOf('?'));
+}
+else {
+var page = location.href.substring( location.href.lastIndexOf('\/')+1);
+}
+var tabname = "tab";
+if( ref == page || ref2 == page || ref3 == page || ref4 == page || ref5 == page || ref6 == page)
+tabname += " selected";
+else
+tabname += " roundbox";
+wln('<div class="' + tabname + '">');
+wln('<div class="tabcontainer">');
+wln("<a href='" + ref + "'>"+ c + "</a>" + "</div>")
+wln('</div>');
+wln("<div class=\"spacer\"></div>");
+}
+
+function bodyStart(a,n)
+{
+wln("<div id=body>")
+if (a != "")
+{
+wln("<form method='post' action='" + a + "' name='" + n + "'>")
+}
+wln("<table id=maintable class=config cellspacing=0>")
+}
+function printHead(admin,mg,v,m)
+{
+wln("<div id=navbar>")
+wln("<div class='modnum'>" + m + v + "</div>");
+printNavLine("Status &<br> Control", "index.shtml")
+printNavLine("General<br>Settings", "settings.shtml")
+printNavLine("Setback<br>Schedules", "schedule.shtml", "weekly.shtml", "schhome.shtml", "schwork.shtml","schvac.shtml","specdays.shtml")
+if (mg&1)
+{
+wln('<div class="spacer" style="height: 10px"></div>');
+if (admin==2) 
+{
+printNavLine("Network Settings", "network.shtml")
+printNavLine("Advanced<br>Settings", "adv.shtml")
+if (mg & 2) {
+printNavLine("Sensor<br>Settings", "sensors.shtml")
+}
+printNavLine("Remote<br>Access", "adv2.shtml", "ch");
+printNavLine("Installer<br>Info", "installer.shtml");
+}
+}
+else
+{
+printNavLine("Network Settings", "network.shtml")
+printNavLine("Advanced<br>Settings", "adv.shtml")
+if (mg & 2) {
+printNavLine("Sensor<br>Settings", "sensors.shtml")
+}
+printNavLine("Remote<br>Access", "adv2.shtml", "ch")
+}
+printNavLine("Usage<br>Counters", "usage.shtml")
+printNavLine("Password<br>Settings", "admin.shtml")
+if (admin!=1) {
+printNavLine("Logout", "logout")
+}
+
+wln("</div>")
+Rounded("div.roundbox", "transparent", "#207ebf");
+Rounded("div.selected", "transparent", "#C6202E");
+}
+function wln(m) { document.writeln(m); }
+function htmlTitle(n, t)
+{ document.title = "Thermostat " + n + " - " + t; }
+function bodyEnd()
+{ wln("</table></form></div>") }
+function bodyEndNoForm(tail)
+{
+wln("</table>")
+if (tail != "")
+{ wln(tail) }
+wln("</div>")
+}
+function addOpt(n, val , i, opt0, opt1)
+{
+el = document.forms[0].elements[n]
+el.options[i] = new Option(opt1, opt0, opt0 == parseInt(val), opt0 == parseInt(val))
+el.value = val
+}
+function addOpts(n, val ,opts)
+{
+el = document.forms[0].elements[n]
+for (var i=0; i<opts.length; i++)
+{
+el.options[i] = new Option(opts[i][1], opts[i][0], opts[i][0] == parseInt(val), opts[i][0] == parseInt(val))
+}
+el.value = val
+}
+function makeSelect(n,opts)
+{
+if (!opts) opts = ""
+return "<select name='" + n + "' " + opts + "></select>"
+}
+function makeCheck(n,v,s)
+{
+return "<input type=checkbox name='" + n + "' value='" + v + "'> " + s;
+}
+function makeInput(n,v,size,msize,cf)
+{
+if (v)
+v = ' value="' + v + '"'
+else
+v = ""
+
+if (msize) {
+mlen = msize;
+}
+else {
+mlen = size;
+}
+return "<input name='" + n + "' size=" + size + " maxlength=" + mlen + " onChange='" + cf + "' + " + v + ">";
+}
+function makePwInput(n,size,onChange,onf)
+{
+return "<input type=password name='" + n + "' id='" + n + "' size=" + size + " maxlength=" + size +
+" onchange=" + onChange + " onfocus=" + onf + " >";
+}
+function linkbutton(href,label)
+{ wln (linkbuttonGet(href,label)) }
+function linkbuttonGet(href,label)
+{ return "<input type=button value='"+label+"' onclick='location.href=" + href + "'>" }
+function getArg (name) {
+args = location.search.slice(1).split('&')
+if (args == "") return ''
+r = ''
+for (var i = 0; i < args.length; i++) {
+if (args[i].slice(0,args[i].indexOf('=')) == name) {
+r = args[i].slice(args[i].indexOf('=')+1);
+break;
+}
+}
+return (r.length > 0 ? unescape(r).split(',') : '')
+}
+function rndCmp(x,y)
+{
+return (Math.round(x/10) * 10) == (Math.round(y/10) * 10);
+
+}
+function hc_options(tSc,h,c,he,ce,hi,ci,start,inc,end,astart,ainc,aend,os)
+{
+if (tSc==2) {
+start = astart
+inc = ainc
+end = aend
+}
+for (j=os; j<end; j++) {
+dd = start
+if (tSc==2) {
+dd = (start*9/5)+32
+}
+dd *= 10;
+dd = Math.round(dd);
+if (he) {
+h.options[j] = new Option(start, dd, dd == hi, dd == hi)
+}
+if (ce) {
+c.options[j] = new Option(start, dd, dd == ci, dd == ci)
+}
+start += inc
+}
+}
+function chtime(secs)
+{
+now = new Date();
+d2 = new Date( 1000*(secs+(60*now.getTimezoneOffset())) );
+da = d2.toLocaleDateString() + " " + d2.toLocaleTimeString();
+return da;
+}
+
+
+function NiftyCheck()
+{
+if(!document.getElementById || !document.createElement)
+return(false);
+var b=navigator.userAgent.toLowerCase();
+if(b.indexOf("msie 5")>0 && b.indexOf("opera")==-1)
+return(false);
+return(true);
+}
+
+function Rounded(selector,bk,color,size){
+var i;
+var v=getElementsBySelector(selector);
+var l=v.length;
+for(i=0;i<l;i++){
+AddTop(v[i],bk,color,size);
+AddBottom(v[i],bk,color,size);
+}
+}
+
+function AddTop(el,bk,color,size){
+var i;
+var d=document.createElement("b");
+var cn="r";
+var lim=4;
+if(size && size=="small"){ cn="rs"; lim=2}
+d.className="rtop";
+d.style.backgroundColor=bk;
+for(i=1;i<=lim;i++){
+var x=document.createElement("b");
+x.className=cn + i;
+x.style.backgroundColor=color;
+d.appendChild(x);
+}
+el.insertBefore(d,el.firstChild);
+}
+
+function AddBottom(el,bk,color,size){
+var i;
+var d=document.createElement("b");
+var cn="r";
+var lim=4;
+if(size && size=="small"){ cn="rs"; lim=2}
+d.className="rbottom";
+d.style.backgroundColor=bk;
+for(i=lim;i>0;i--){
+var x=document.createElement("b");
+x.className=cn + i;
+x.style.backgroundColor=color;
+d.appendChild(x);
+}
+el.appendChild(d,el.firstChild);
+}
+
+function getElementsBySelector(selector){
+var i;
+var s=[];
+var selid="";
+var selclass="";
+var tag=selector;
+var objlist=[];
+if(selector.indexOf(" ")>0){  
+s=selector.split(" ");
+var fs=s[0].split("#");
+if(fs.length==1) return(objlist);
+return(document.getElementById(fs[1]).getElementsByTagName(s[1]));
+}
+if(selector.indexOf("#")>0){ 
+s=selector.split("#");
+tag=s[0];
+selid=s[1];
+}
+if(selid!=""){
+objlist.push(document.getElementById(selid));
+return(objlist);
+}
+if(selector.indexOf(".")>0){  
+s=selector.split(".");
+tag=s[0];
+selclass=s[1];
+}
+var v=document.getElementsByTagName(tag);  
+if(selclass=="")
+return(v);
+for(i=0;i<v.length;i++){
+if(v[i].className.match(selclass)){
+objlist.push(v[i]);
+}
+}
+return(objlist);
+}
+
+function printStatusHead(admin,m,v)
+{
+wln("<div id=navbar>")
+wln(tr("<div class='modnum'>" + m + v + "</div>"))
+printNavLine("Status", "status.shtml")
+printNavLine("Login", "index.shtml")
+
+wln("</div>")
+Rounded("div.roundbox", "transparent", "#207ebf");
+Rounded("div.selected", "transparent", "#C6202E");
+}
+
+</script>
+<script type="text/javascript">
+
+var mimGrade = parseInt("2");
+var pro = (mimGrade&1==1)
+var n_reset = "OID1.9"
+
+
+if ( parseInt("2") != 2 ) {
+location.href="status.shtml"
+}
+
+var n_ipmode = ""
+var n_ipaddr = ""
+var n_subnet = ""
+var n_gway   = ""
+var n_net="OID1.11.3"
+var n_mask="OID1.11.4"
+var n_hport = "OID2.3.1"
+var n_bport = "OID1.12"
+
+function chksec()
+{
+document.getElementById('OID1.11.5').value = 0;
+
+if ( pro ) {
+document.forms[0].elements[n_net].disabled = true;
+document.forms[0].elements[n_mask].disabled = true;
+document.getElementById('nm').style.color = "gray";
+document.getElementById('na').style.color = "gray";
+document.getElementById('nav').style.color = "gray";
+document.getElementById('nmv').style.color = "gray";
+document.getElementById('sudef').disabled = false;
+}
+document.getElementById('slocal').disabled = false;
+
+var val = 0;
+if ( document.getElementById('slocal').checked )
+val |= 2;
+
+if ( pro && document.getElementById('sudef').checked ) {
+val |= 4;
+document.forms[0].elements[n_net].disabled = false;
+document.forms[0].elements[n_mask].disabled = false;
+document.getElementById('nm').style.color = "";
+document.getElementById('na').style.color = "";
+document.getElementById('nmv').style.color = "";
+document.getElementById('nav').style.color = "";
+}
+
+document.getElementById('OID1.11.5').value = val;
+}
+
+function ipExtras(v)
+{
+
+if ( document.forms[0].elements[n_ipmode].value == "2" ) {
+
+disableExtras = true
+} else if ( document.forms[0].elements[n_ipmode].value == "3" ) {
+
+disableExtras = false
+}
+if ( n_ipaddr != "" ) {
+document.forms[0].elements[n_ipaddr].disabled = disableExtras
+}
+if ( n_subnet != "" ) {
+document.forms[0].elements[n_subnet].disabled = disableExtras
+}
+if ( n_gway != "" ) {
+document.forms[0].elements[n_gway].disabled = disableExtras
+}
+
+if ( (ipmode != document.forms[0].elements[n_ipmode].value) ||
+(port != document.forms[0].elements[n_hport].value) ||
+(document.forms[0].elements[n_ipmode].value == "3" &&
+((addr != document.forms[0].elements[n_ipaddr].value) ||
+(subnet != document.forms[0].elements[n_subnet].value) ||
+(gway != document.forms[0].elements[n_gway].value))) ) {
+document.forms[0].elements[n_reset].value = 2;
+} else {
+document.forms[0].elements[n_reset].value = 1;
+}
+}
+
+</script>
+</head>
+
+<body>
+
+<center>
+<div id=content>
+
+<script type="text/javascript">
+printHead(parseInt("2"), parseInt("2"),"e", "NT20")
+
+bodyStart("network.shtml")
+
+printTitle("Network Settings", "Main Floor")
+printSect("Addressing")
+printFSC("MAC Address", "00:11:49:00:79:18", "")
+
+n_ipmode = "OID1.7"
+ipmode = "3"
+printFSC("IP Address Method", "Static",
+"<select name=" + n_ipmode + " onChange=ipExtras()> </select>")
+addOpts(n_ipmode, ipmode, [[2, "DHCP"], [3, "Static"]])
+
+addr = "192.168.100.70"
+n_ipaddr = "OID1.4"
+printFSC("IP Address", addr, "<input name=" + n_ipaddr + " onChange=ipExtras() size=15 maxlength=15 value='" + addr + "'>")
+if (ipmode == 2) {
+document.forms[0].elements[n_ipaddr].disabled = true
+}
+
+subnet = "255.255.255.0"
+n_subnet = "OID1.5"
+printFSC("Subnet Mask", subnet, "<input name=" + n_subnet + " onChange=ipExtras() size=15 maxlength=15 value='" + subnet + "'>")
+if (ipmode == 2) {
+document.forms[0].elements[n_subnet].disabled = true
+}
+
+gway = "192.168.100.254"
+n_gway = "OID1.6"
+printFSC("Gateway", gway, "<input name=" + n_gway + " onChange=ipExtras() size=15 maxlength=15 value='" + gway + "'>")
+if (ipmode == 2) {
+document.forms[0].elements[n_gway].disabled = true
+}
+printSect("Firewall Settings")
+n = "OID1.10.11"
+v = "8081"
+printFSC("Inbound Port", v, makeInput (n,v,7))
+
+printSect("Web Server")
+port = "80"
+printFSC("HTTP Port", port, "<input name=" + n_hport + " onChange=ipExtras() size=7 maxlength=7 value='" + port + "'>")
+
+printSect("LAN Auto-Discovery")
+port = "0"
+printFSC("Broadcast Port<sup>1</sup>", port, "<input name=" + n_bport + " onChange=ipExtras() size=7 maxlength=7 value='" + port + "'>")
+
+printSect("Security" + "<input type=hidden value=\"2\" name='OID1.11.5' id='OID1.11.5'>")
+
+vstate = parseInt("2")
+vss = "Disabled"
+if (vstate) {
+vss = "In Use"
+}
+var c =  "<i>Local Subnet</i> <input type=checkbox name=slocal id=slocal onclick='chksec()'>";
+
+if (pro) {
+c += "<br><i>User Defined</i> <input type=checkbox name=sudef id=sudef onclick='chksec()'>";
+}
+
+wln ("<tr> <span id=test>" + td("Access Filter", "function") + td(vss,"status") + td(c,"",1,"align=\"center\"") + "</span></tr>");
+if ( pro ) {
+v="0.0.0.0";
+printFSC("<span id=na> Network Address </span>", "<span id=nav> " + v + " </span>", "<input name=" + n_net + " size=15 maxlength=15 value='" + v + "'>");
+v="0.0.0.0";
+printFSC("<span id=nm> Network Mask </span>", "<span id=nmv> " + v + " </span>", "<input name=" + n_mask + " size=15 maxlength=15 value='" + v + "'>");
+
+if (vstate & 4) {
+document.getElementById('sudef').checked = true;
+document.forms[0].elements[n_net].disabled = false;
+document.forms[0].elements[n_mask].disabled = false;
+document.getElementById('nm').style.color = "";
+document.getElementById('na').style.color = "";
+document.getElementById('nav').style.color = "";
+document.getElementById('nmv').style.color = "";
+} else {
+document.forms[0].elements[n_net].disabled = true;
+document.forms[0].elements[n_mask].disabled = true;
+document.getElementById('nm').style.color = "gray";
+document.getElementById('na').style.color = "gray";
+document.getElementById('nav').style.color = "gray";
+document.getElementById('nmv').style.color = "gray";
+}
+}
+
+if (vstate & 2) {
+document.getElementById('slocal').checked = true;
+}
+
+if (pro) {
+printSect("Syslog Setup");
+nlog_addr = "OID1.14.5";
+log_addr = "0.0.0.0";
+printFSC("Address", log_addr, "<input name=" + nlog_addr + " onChange=ipExtras() size=16 maxlength=16 value='" + log_addr + "'>");
+nlog_port = "OID1.14.6";
+slog_port = "514";
+printFSC("Port", slog_port, "<input name=" + nlog_port + " onChange=ipExtras() size=7 maxlength=7 value='" + slog_port + "'>");
+
+n = "OID1.14.7";
+v = parseInt("1");
+ivs = v + " min(s)";
+printFSC("Repeat Interval", ivs , makeSelect(n,null) + " min(s)");
+addOpts(n,v,[[1,"1"],[5,"5"],[30,"30"],[60,"60"]]);
+}
+
+wln("<input type=hidden value=1 name='OID1.9'>")
+
+printRefreshSubmit()
+
+wln("</tbody></table>")
+wln("<tr><td><br><SUP>1</SUP>Set Discovery Port to 0 to disable.</td></tr>");
+bodyEnd()
+
+</script>
+
+<div style="clear: left;"></div>
+
+</div>
+</center>
+</body>
+</html>
+

@@ -1,0 +1,1186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Thermostat Main Floor - Setback Schedules</title>
+<!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+<style type="text/css">
+html,body, div, table, th, tr, tbody {
+
+	margin: 0px;
+
+	padding: 0px;
+
+	font-size: 100%;
+
+	border: none;
+
+}
+
+body {
+
+	font-family: verdana, sans-serif;
+
+	font-size: 10pt; 
+
+	background-color:white;
+
+	color: #03a;
+
+	text-align: center; /* IE5/Win centering */
+
+	height: 100%;
+
+        padding-left: 10px;
+
+}
+
+/* Outer */
+
+#content {
+
+	width: 629px;
+
+	margin-top: 10px;
+
+	margin-left: auto;
+
+	margin-right: auto;
+
+	text-align: left; /* Uncenter inherited from body */
+
+}
+
+/* Main content */
+
+#body {
+
+	text-align: left;
+
+	border-left: solid #C6202E 8px;
+
+	padding-left: 5px; /* in addition to border-left */
+
+
+
+	margin-left: 108px;
+
+	margin-left: 91px;
+
+}
+
+html>body #body {
+
+    margin-left:105px; 
+
+    margin-left:88px; 
+
+    padding-left: 8px;}
+
+/* Left Navigation Bar */
+
+#navbar {
+
+	position: relative;
+
+	float: left;
+
+	display: inline;
+
+
+
+	width: 102px;
+
+	width: 85px;
+
+	height: 100%;
+
+}
+
+/* Mozilla reads this, overriding what's above */
+
+html>body #navbar {
+
+  width:82px;
+
+}
+
+A:hover {
+
+ text-decoration: underline;
+
+}
+
+#header A, #header A:link, #header A:visited
+
+{
+
+color: white;
+
+text-decoration: none;
+
+}
+
+#header A:hover
+
+{ color: #FFCC33; border-bottom: solid 1px #FFCC33; }  
+
+H1, .head, .modnum
+
+{ 
+
+	padding: 2px;
+
+	font-size: 110%;
+
+	background: #FFCC33;  
+
+	text-align: left;
+
+    font-weight: bold;
+
+}
+
+.modnum
+
+{
+
+	margin: 0px 0px;
+
+	text-align: center;
+
+	margin-bottom: 5px;
+
+}
+
+H2 
+
+{ font-size:110%; }
+
+H3
+
+{ 
+
+font-size: 100%;
+
+margin-top: 15px;
+
+margin-bottom: 2px;
+
+text-decoration: underline;
+
+}
+
+P
+
+{ margin: 3px; }
+
+#navbar A, #navbar A:link, #navbar A:visited
+
+{ 
+
+text-decoration: none;
+
+color: white;
+
+}
+
+#navbar A:hover
+
+{ 
+
+	color: #FFCC33; 
+
+} 
+
+/* Outer */
+
+#navbar .tab {
+
+}
+
+
+
+#navbar .tabcontainer {
+
+  padding: 0px 0px;
+
+  text-align: center;
+
+  font-weight: bold;
+
+  font-family: sans-serif;
+
+  font-variant: small-caps;
+
+
+
+  /* Unselected */
+
+  background: #207ebf;
+
+}
+
+
+
+/* Outer Selected */
+
+#navbar .selected {
+
+}
+
+
+
+/* Inner Selected */
+
+#navbar .selected .tabcontainer {
+
+  background: #C6202E;
+
+}
+
+
+
+#navbar .spacer {
+
+    font-size: 0;
+
+    height: 2px;
+
+}
+
+
+
+.rtop,.rbottom{display:block}
+
+.rtop *,.rbottom *{display:block;height: 1px;overflow: hidden}
+
+.r1{margin: 0 5px}
+
+.r2{margin: 0 3px}
+
+.r3{margin: 0 2px}
+
+.r4{margin: 0 1px;height: 2px}
+
+
+
+.rs1{margin: 0 2px}
+
+.rs2{margin: 0 1px}
+
+
+
+
+
+TABLE.config 
+
+{ 
+
+	empty-cells: show;
+
+	width: 505px;
+
+}
+
+html>body .config {width:507px;}
+
+
+
+.config TD
+
+{ 
+
+	padding: 3px; 
+
+	background: white;
+
+	border-bottom: solid 1px #bbe;
+
+}
+
+TD.box { background: #c8e0f0; }
+
+TD.function { width: 30%; }
+
+TD.status { background: #c8e0f0; width: 35%; text-align: center; } 
+
+TD.control { width: 35%; text-align: center; }
+
+TD.alarm { border-left: solid 1px #bbe; width: 35%; text-align: center; } 
+
+TD.alarmhdr { width: 35%; text-align: center; font-weight:bold} 
+
+TD.i2p { width: 35%; text-align: left;}
+
+TD.sectionhead { 
+
+	padding-top: 4px;
+
+	font-size: 110%;
+
+	font-weight: bold;
+
+	font-style: italic;
+
+	border-bottom: solid 1px #03a;
+
+}
+
+TD.date
+
+{ 
+
+padding-top: 6px;
+
+font-size: 100%;
+
+font-weight: bold;
+
+font-style: italic;
+
+border-bottom: solid 1px #03a;
+
+}
+
+TABLE.setback2
+
+{
+
+background: #aaaaaa;
+
+margin-top: 19px;
+
+}
+
+TABLE.setback
+
+{ 
+
+background: #03a;
+
+width: 495px;
+
+margin-top: 19px;}
+
+TABLE.spec
+
+{ background: #03a; 
+
+padding: 0px;}
+
+.setback TD
+
+{ font-size:90%; 
+
+background: #99c;
+
+font-weight: bold;
+
+margin: 3px; padding: 3px;
+
+}
+
+.setback TD, TD.setback 
+
+{ 
+
+	font-size:90%; 
+
+	background: #fff;
+
+	margin: 3px; padding: 3px;
+
+}
+
+.setback TD 
+
+{	
+
+	border: none;
+
+	background: white 
+
+}
+
+.spec TD, TD.spec
+
+{ border: solid 1px #03a; }
+
+TH.sb_day { background: #dddddd; }  
+
+TD.spechead { background: #dddddd; font-weight: bold; }
+
+#today { font-weight: bold; border: solid 3px #03a; }
+
+TD.hd_time { background: #dddddd; } 
+
+TD.sbunused, .sbunused {  background: white; } 
+
+TD.sb1, .sb1 { text-align: center; background: #c8e0f0; font-weight: bold;} 
+
+TD.sb2, .sb2 { text-align: center; background: #ffe071; font-weight: bold;}
+
+TD.sb3, .sb3 { text-align: center; background: #ff9080; font-weight: bold;}
+
+TD.sb4, .sb4 { background: #aaf; }
+
+TD.sb5, .sb5 { width: 90px; text-align: center; background: #ff9080; font-weight: bold;}
+
+TD.sbtemp { font-weight: bold; background: #ccc; }
+
+TD.mon_name { background: #cdcdff;  }
+
+.opt, .optsel { margin: 1px; padding: 1px; border: solid 1px #03a; }
+
+.opt { color: #03a; background: #c8e0f0; }
+
+.optsel { color: #c8e0f0; background: #03a; }
+
+
+
+#day { font-size: 100%; margin:0; padding:0; color: #03a; text-decoration: none; }
+
+#specday { border: solid 1px red; }
+
+#spectoday { border: solid 3px red; }
+
+form, input {
+
+	margin: 0px;
+
+	padding: 0px;
+
+}
+
+
+
+
+</style>
+<!-- <script type="text/javascript" src="com.js"></script> -->
+<script type="text/javascript">
+function td(x,c,span,other)
+{
+t = "<td"
+if (c) t += " class=" + c
+if (span) t += " colspan=" + span
+if (other) t += " " + other
+if (!x) x = "&nbsp;"
+t += ">" + x + "</td>"
+return t
+}
+
+function tr(x) { return "<tr>" + x + "</tr>" }
+
+function printTitle(t, n)
+{
+wln ("<tr><th colspan=2 class=head>" + t + "</th><th class=head style='text-align:right;'>" + n + "</th></tr>")
+}
+
+function printSect(s,d)
+{
+if (d)
+wln ("<tr><td colspan=1 class=sectionhead>"+s+"</td><td colspan=2 class=date style='text-align:right;'>"+d+"</td></tr>");
+else
+wln ("<tr><td colspan=3 class=sectionhead>"+s+"</td></tr>")
+}
+
+function printFSC(f,s,c)
+{
+fc = "function"
+if (f == "")
+{ f = "&nbsp;"; fc = null; }
+
+wln ("<tr>" + td(f, fc) + td(s,"status") + td(c,"control") + "</tr>")
+}
+
+function printFC2(f,c)
+{ wln (tr(td(f,"function") + td (c, "control", 2))) }
+
+function printFS2(f,s)
+{ wln (tr(td(f,"function") + td (s, "status", 2))) }
+
+function printRefreshSubmit()
+{
+printFSC("", linkbuttonGet('location.href', 'Refresh'), "<input type=submit name='submit' value='Submit'>")
+}
+
+function printNavLine(c,ref,ref2,ref3,ref4,ref5,ref6)
+{
+if (location.href.indexOf('?') != -1) {
+var page = location.href.substring( location.href.lastIndexOf('\/')+1,location.href.indexOf('?'));
+}
+else {
+var page = location.href.substring( location.href.lastIndexOf('\/')+1);
+}
+var tabname = "tab";
+if( ref == page || ref2 == page || ref3 == page || ref4 == page || ref5 == page || ref6 == page)
+tabname += " selected";
+else
+tabname += " roundbox";
+wln('<div class="' + tabname + '">');
+wln('<div class="tabcontainer">');
+wln("<a href='" + ref + "'>"+ c + "</a>" + "</div>")
+wln('</div>');
+wln("<div class=\"spacer\"></div>");
+}
+
+function bodyStart(a,n)
+{
+wln("<div id=body>")
+if (a != "")
+{
+wln("<form method='post' action='" + a + "' name='" + n + "'>")
+}
+wln("<table id=maintable class=config cellspacing=0>")
+}
+function printHead(admin,mg,v,m)
+{
+wln("<div id=navbar>")
+wln("<div class='modnum'>" + m + v + "</div>");
+printNavLine("Status &<br> Control", "index.shtml")
+printNavLine("General<br>Settings", "settings.shtml")
+printNavLine("Setback<br>Schedules", "schedule.shtml", "weekly.shtml", "schhome.shtml", "schwork.shtml","schvac.shtml","specdays.shtml")
+if (mg&1)
+{
+wln('<div class="spacer" style="height: 10px"></div>');
+if (admin==2) 
+{
+printNavLine("Network Settings", "network.shtml")
+printNavLine("Advanced<br>Settings", "adv.shtml")
+if (mg & 2) {
+printNavLine("Sensor<br>Settings", "sensors.shtml")
+}
+printNavLine("Remote<br>Access", "adv2.shtml", "ch");
+printNavLine("Installer<br>Info", "installer.shtml");
+}
+}
+else
+{
+printNavLine("Network Settings", "network.shtml")
+printNavLine("Advanced<br>Settings", "adv.shtml")
+if (mg & 2) {
+printNavLine("Sensor<br>Settings", "sensors.shtml")
+}
+printNavLine("Remote<br>Access", "adv2.shtml", "ch")
+}
+printNavLine("Usage<br>Counters", "usage.shtml")
+printNavLine("Password<br>Settings", "admin.shtml")
+if (admin!=1) {
+printNavLine("Logout", "logout")
+}
+
+wln("</div>")
+Rounded("div.roundbox", "transparent", "#207ebf");
+Rounded("div.selected", "transparent", "#C6202E");
+}
+function wln(m) { document.writeln(m); }
+function htmlTitle(n, t)
+{ document.title = "Thermostat " + n + " - " + t; }
+function bodyEnd()
+{ wln("</table></form></div>") }
+function bodyEndNoForm(tail)
+{
+wln("</table>")
+if (tail != "")
+{ wln(tail) }
+wln("</div>")
+}
+function addOpt(n, val , i, opt0, opt1)
+{
+el = document.forms[0].elements[n]
+el.options[i] = new Option(opt1, opt0, opt0 == parseInt(val), opt0 == parseInt(val))
+el.value = val
+}
+function addOpts(n, val ,opts)
+{
+el = document.forms[0].elements[n]
+for (var i=0; i<opts.length; i++)
+{
+el.options[i] = new Option(opts[i][1], opts[i][0], opts[i][0] == parseInt(val), opts[i][0] == parseInt(val))
+}
+el.value = val
+}
+function makeSelect(n,opts)
+{
+if (!opts) opts = ""
+return "<select name='" + n + "' " + opts + "></select>"
+}
+function makeCheck(n,v,s)
+{
+return "<input type=checkbox name='" + n + "' value='" + v + "'> " + s;
+}
+function makeInput(n,v,size,msize,cf)
+{
+if (v)
+v = ' value="' + v + '"'
+else
+v = ""
+
+if (msize) {
+mlen = msize;
+}
+else {
+mlen = size;
+}
+return "<input name='" + n + "' size=" + size + " maxlength=" + mlen + " onChange='" + cf + "' + " + v + ">";
+}
+function makePwInput(n,size,onChange,onf)
+{
+return "<input type=password name='" + n + "' id='" + n + "' size=" + size + " maxlength=" + size +
+" onchange=" + onChange + " onfocus=" + onf + " >";
+}
+function linkbutton(href,label)
+{ wln (linkbuttonGet(href,label)) }
+function linkbuttonGet(href,label)
+{ return "<input type=button value='"+label+"' onclick='location.href=" + href + "'>" }
+function getArg (name) {
+args = location.search.slice(1).split('&')
+if (args == "") return ''
+r = ''
+for (var i = 0; i < args.length; i++) {
+if (args[i].slice(0,args[i].indexOf('=')) == name) {
+r = args[i].slice(args[i].indexOf('=')+1);
+break;
+}
+}
+return (r.length > 0 ? unescape(r).split(',') : '')
+}
+function rndCmp(x,y)
+{
+return (Math.round(x/10) * 10) == (Math.round(y/10) * 10);
+
+}
+function hc_options(tSc,h,c,he,ce,hi,ci,start,inc,end,astart,ainc,aend,os)
+{
+if (tSc==2) {
+start = astart
+inc = ainc
+end = aend
+}
+for (j=os; j<end; j++) {
+dd = start
+if (tSc==2) {
+dd = (start*9/5)+32
+}
+dd *= 10;
+dd = Math.round(dd);
+if (he) {
+h.options[j] = new Option(start, dd, dd == hi, dd == hi)
+}
+if (ce) {
+c.options[j] = new Option(start, dd, dd == ci, dd == ci)
+}
+start += inc
+}
+}
+function chtime(secs)
+{
+now = new Date();
+d2 = new Date( 1000*(secs+(60*now.getTimezoneOffset())) );
+da = d2.toLocaleDateString() + " " + d2.toLocaleTimeString();
+return da;
+}
+
+
+function NiftyCheck()
+{
+if(!document.getElementById || !document.createElement)
+return(false);
+var b=navigator.userAgent.toLowerCase();
+if(b.indexOf("msie 5")>0 && b.indexOf("opera")==-1)
+return(false);
+return(true);
+}
+
+function Rounded(selector,bk,color,size){
+var i;
+var v=getElementsBySelector(selector);
+var l=v.length;
+for(i=0;i<l;i++){
+AddTop(v[i],bk,color,size);
+AddBottom(v[i],bk,color,size);
+}
+}
+
+function AddTop(el,bk,color,size){
+var i;
+var d=document.createElement("b");
+var cn="r";
+var lim=4;
+if(size && size=="small"){ cn="rs"; lim=2}
+d.className="rtop";
+d.style.backgroundColor=bk;
+for(i=1;i<=lim;i++){
+var x=document.createElement("b");
+x.className=cn + i;
+x.style.backgroundColor=color;
+d.appendChild(x);
+}
+el.insertBefore(d,el.firstChild);
+}
+
+function AddBottom(el,bk,color,size){
+var i;
+var d=document.createElement("b");
+var cn="r";
+var lim=4;
+if(size && size=="small"){ cn="rs"; lim=2}
+d.className="rbottom";
+d.style.backgroundColor=bk;
+for(i=lim;i>0;i--){
+var x=document.createElement("b");
+x.className=cn + i;
+x.style.backgroundColor=color;
+d.appendChild(x);
+}
+el.appendChild(d,el.firstChild);
+}
+
+function getElementsBySelector(selector){
+var i;
+var s=[];
+var selid="";
+var selclass="";
+var tag=selector;
+var objlist=[];
+if(selector.indexOf(" ")>0){  
+s=selector.split(" ");
+var fs=s[0].split("#");
+if(fs.length==1) return(objlist);
+return(document.getElementById(fs[1]).getElementsByTagName(s[1]));
+}
+if(selector.indexOf("#")>0){ 
+s=selector.split("#");
+tag=s[0];
+selid=s[1];
+}
+if(selid!=""){
+objlist.push(document.getElementById(selid));
+return(objlist);
+}
+if(selector.indexOf(".")>0){  
+s=selector.split(".");
+tag=s[0];
+selclass=s[1];
+}
+var v=document.getElementsByTagName(tag);  
+if(selclass=="")
+return(v);
+for(i=0;i<v.length;i++){
+if(v[i].className.match(selclass)){
+objlist.push(v[i]);
+}
+}
+return(objlist);
+}
+
+function printStatusHead(admin,m,v)
+{
+wln("<div id=navbar>")
+wln(tr("<div class='modnum'>" + m + v + "</div>"))
+printNavLine("Status", "status.shtml")
+printNavLine("Login", "index.shtml")
+
+wln("</div>")
+Rounded("div.roundbox", "transparent", "#207ebf");
+Rounded("div.selected", "transparent", "#C6202E");
+}
+
+</script>
+<script type="text/javascript">
+
+var mimGrade = parseInt("2");
+var pro = (mimGrade&1==1)
+
+if (parseInt("2") < 2)
+{
+location.href="status.shtml"
+}
+
+var spec_days =
+[ [0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1],
+[0, 0, 0, 0, 1] 
+ ]
+
+var start = new Array(3)
+var heat = new Array(3)
+var cool = new Array(3)
+var week = new Array(7)
+var cn = new Array(3)
+var period = new Array(4)
+
+for (var c=1; c<=3 ; c++)
+{
+start[c] = new Array(4)
+heat[c] = new Array(4)
+cool[c] = new Array(4)
+}
+
+start[1][1] = "360"
+heat[1][1] = "65.0"
+cool[1][1] = "74.0"
+start[1][2] = "600"
+heat[1][2] = "62.0"
+cool[1][2] = "74.0"
+start[1][3] = "1050"
+heat[1][3] = "64.0"
+cool[1][3] = "74.0"
+start[1][4] = "1380"
+heat[1][4] = "60.0"
+cool[1][4] = "74.0"
+
+start[2][1] = "360"
+heat[2][1] = "64.0"
+cool[2][1] = "74.0"
+start[2][2] = "600"
+heat[2][2] = "56.0"
+cool[2][2] = "85.0"
+start[2][3] = "1020"
+heat[2][3] = "64.0"
+cool[2][3] = "74.0"
+start[2][4] = "1380"
+heat[2][4] = "56.0"
+cool[2][4] = "74.0"
+
+start[3][1] = "360"
+heat[3][1] = "55.0"
+cool[3][1] = "85.0"
+start[3][2] = "480"
+heat[3][2] = "55.0"
+cool[3][2] = "85.0"
+start[3][3] = "1020"
+heat[3][3] = "55.0"
+cool[3][3] = "85.0"
+start[3][4] = "1320"
+heat[3][4] = "55.0"
+cool[3][4] = "85.0"
+
+week[1] = "1"
+week[2] = "2"
+week[3] = "2"
+week[4] = "2"
+week[5] = "2"
+week[6] = "2"
+week[7] = "1"
+
+cn[1] = "In";
+cn[2] = "Out";
+cn[3] = "Away";
+
+period[1]="Morn"
+period[2]="Day"
+period[3]="Eve"
+period[4]="Night"
+
+var monthname = new Array(12)
+monthname = ["January", "February", "March", "April",
+"May", "June", "July", "August", "September", "October",
+"November", "December"]
+
+function timestr(start)
+{
+hour = parseInt(start / 60);
+min = (parseInt((start % 60) / 15)) * 15;
+
+if (hour == 0)
+{
+hour = 12
+ampm = "am"
+}
+else if (hour < 12)
+{ ampm = "am" }
+else if (hour == 12)
+{ ampm = "pm" }
+else
+{
+hour = hour - 12
+ampm = "pm"
+}
+
+if (min < 10)
+min = "0" + min;
+return (hour +":" + min + " " + ampm)
+}
+
+function wday(day) {
+wln ("<th class='sb_day' width=80>" + day + "</th>")
+}
+
+function showday(d,c, id)
+{
+wln ("<td class=sb" + c)
+if (id) wln (" id=" + id)
+wln ("> <center> "+ "<a href='specdays.shtml?month=" + (parseInt(mon)+1) + "&day=" + d + "&year=" + year + "' id=day>"
++ "<b>" + d + "</b>" + "</a> </td>")
+}
+
+function gotodate()
+{
+m = parseInt(document.gotoform.gomonth.value) + 1
+location.href="schedule.shtml?month=" + m + "&year=" + document.gotoform.goyear.value
+}
+
+function funcHdr(d)
+{
+wln("<tr><td colspan=3 style='border-bottom:none'><p>" + d)
+}
+
+function tableStart(c, cs, s)
+{
+wln("<p style='margin:0px;'><table class='" + c + "' cellspacing=" + cs)
+if (s)
+{ wln(" style='" + s + ";'") }
+wln("><tbody>")
+}
+
+function tableEnd()
+{
+wln("</tbody></table>")
+}
+
+function dayRow()
+{
+wln("<tr>")
+wday("Sun")
+wday("Mon")
+wday("Tue")
+wday("Wed")
+wday("Thu")
+wday("Fri")
+wday("Sat")
+wln("</tr>")
+}
+
+function dayClassButton(c, v, h)
+{
+wln("<td class=\"" + c + "\" align=center colspan=3>")
+linkbutton('"' + h + '"', v)
+wln("</td>");
+}
+
+function dayClassHdr()
+{
+wln("<td class='hd_time'> Time </td> <td class='hd_time'> Heat </td> <td class='hd_time'> Cool </td>")
+}
+
+</script>
+</head>
+
+<body>
+
+<center>
+<div id="content">
+
+<script type="text/javascript">
+
+printHead(parseInt("2"), parseInt("2"),"e", "NT20")
+
+bodyStart("","")
+
+printTitle("Setback Scheduling", "Main Floor")
+
+printSect("Day Class Schedules")
+
+funcHdr("")
+
+tableStart("setback",1, "margin-top:5px")
+wln("<tr>")
+wln("<td style='border-style:none'></td>")
+dayClassButton("sb1", cn[1], "schhome.shtml")
+dayClassButton("sb2", cn[2], "schwork.shtml")
+dayClassButton("sb3", cn[3], "schvac.shtml")
+wln("</tr>")
+wln("<tr>")
+wln("<td class='hd_time'>Period</td>")
+dayClassHdr()
+dayClassHdr()
+dayClassHdr()
+wln("</tr>")
+
+for (var p=1; p<=4; p++)
+{
+wln("<tr>")
+wln("<td>" + period[p] + "</td>")
+for (var c=1; c<=3; c++)
+{
+wln("<td>" + timestr(start[c][p]) + "</td><td class=sb" + c + ">" + heat[c][p] + "</td><td class=sb" + c + ">" + cool[c][p] + "</td>")
+}
+wln("</tr>")
+}
+tableEnd()
+
+printSect("Default Weekly Schedule")
+
+funcHdr("")
+
+tableStart("setback", 1, "margin-top:5px")
+dayRow()
+for (var d=1; d<=7; d++)
+{
+wln("<td class=sb" + week[d] + ">" + cn[week[d]].substr(0,5) + "</td>")
+}
+wln("</tr></tbody></table>")
+linkbutton('"weekly.shtml"', "Edit Weekly Schedule")
+wln("</td></tr>")
+
+printSect("Calendar View")
+
+funcHdr("")
+
+today=new Date()
+mon=getArg("month")
+if (mon == "")
+mon=today.getMonth()
+else
+mon = mon-1
+year=getArg("year")
+if (year == "") year=today.getFullYear()
+d = new Date(year, mon, 1, 12)
+weekday = d.getDay()
+if (mon == 0)
+{ prevmon = 11; prevyear = parseInt(year) -1; }
+else
+{ prevmon = parseInt(mon)-1; prevyear = year; }
+if (mon == 11)
+{ nextmon = 0; nextyear = parseInt(year) + 1; }
+else
+{ nextmon = parseInt(mon)+1; nextyear = year; }
+
+tableStart("setback", 1, "margin-top:5px")
+wln("<tr><th class='sb_day' colspan=2>")
+linkbutton('"schedule.shtml?month=' + (prevmon+1) + "&year=" + prevyear + '"', "&lt;&lt")
+wln("</th>")
+wln(" <th class='sb_day' colspan=3>"+monthname[mon]+"<BR>" + year + "</th>")
+wln("<th class='sb_day' colspan=2>")
+linkbutton('"schedule.shtml?month=' + (nextmon+1) + "&year=" + nextyear + '"', "&gt;&gt")
+wln("</th></tr>")
+
+dayRow()
+
+for (i=0; i<weekday; i++)
+wln("<td>&nbsp;</td>")
+
+if (d.getMonth() == today.getMonth() && d.getFullYear() == today.getFullYear())
+thismonth = true
+else
+thismonth = false
+
+sstart = new Array(spec_days.length)
+send = new Array(spec_days.length)
+for (s=0; s<spec_days.length; s++)
+{
+sd = spec_days[s][0]
+if (sd > 0)
+{
+sm = spec_days[s][1]
+if (sm == 0) sm = d.getMonth()+1
+sy = spec_days[s][2]
+if (sy == 0) sy = d.getFullYear()
+sl = spec_days[s][3]
+
+sstart[s] = new Date(sy, sm-1, sd).getTime()
+send[s] = sstart[s] + sl* 86400000
+}
+else
+{ sstart[s] = 0; send[s] = 0; }
+}
+showntoday = false
+shownspec = false
+while (d.getMonth() == mon)
+{
+if (weekday == 0)
+{ wln ("<tr>"); }
+
+c = week[weekday+1]
+if (d.getDate() == today.getDate() && thismonth)
+{ id = "today"; showntoday = true; }
+else
+id = null
+
+secs = d.getTime()
+for (s=0; s<spec_days.length; s++)
+{
+if (sstart[s] > 0 && sstart[s] <= secs && secs < send[s])
+{
+shownspec = true
+c = spec_days[s][4]
+if (!id)
+id = "specday"
+else
+id = "spectoday"
+}
+}
+showday(d.getDate(), c, id)
+
+if (weekday == 6)
+{ wln ("</tr>"); weekday = 0; }
+else
+{ weekday = weekday + 1}
+
+d = new Date(d.getTime() + 86400000)
+}
+if (weekday != 0)
+{
+for (i=weekday; i<7; i++)
+wln("<td>&nbsp;</td>")
+}
+tableEnd()
+
+wln("<p><form name='gotoform'>")
+wln("<input type=button name='Goto' value='Goto month' onclick='gotodate()'>")
+wln("<select name=gomonth>")
+for (m=0; m<12; m++) wln ("<option value=" + m + ">" + monthname[m])
+thisYear = parseInt(today.getFullYear());
+nextYear = thisYear + 1;
+yearAfter = nextYear + 1;
+wln("</select><select name=goyear><option value=" + thisYear + ">" + thisYear + "<option value=" + nextYear + ">" + nextYear + "<option value=" + yearAfter + ">" + yearAfter + "</select>")
+document.gotoform.gomonth.value = today.getMonth()
+document.gotoform.goyear.value = today.getFullYear()
+wln("</form>")
+linkbutton('"specdays.shtml"', "Edit Special Days")
+if (shownspec)
+{ wln("<p>Special days highlighted in red."); }
+
+wln("</tr>")
+
+wln("</tr></td>")
+
+bodyEndNoForm("")
+
+</script>
+
+<div style="clear: left;"></div>
+
+</div>
+
+</center></body></html>
+
