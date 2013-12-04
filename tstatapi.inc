@@ -53,6 +53,15 @@ function getData {
     RTNDATA=`echo "scale = 1; $RTNDATA / 10.0" | bc`
     return 0
     ;;
+  "date")
+    RTNDATA=`echo $RTNDATA | awk -F= '{print $2}' | tr -d "&"`
+    RTNDATA=`date -u +"%Y-%m-%d %H:%M:%S" -d@${RTNDATA}`
+    return 0
+    ;;
+  "raw")
+    echo $RTNDATA
+    return 0
+    ;;
   *)
     RTNDATA="ERR-$OID: Invalid VarType (getData:Type=$TYP): $0"
     return 1
@@ -152,15 +161,16 @@ function readSystemTimeSecs {
 }
 
 function readSystemTime {
-  # Calls OID2.5.1 - Currect System Time
+  # OID2.5.1 - Current System Time
   # In : No Input
   # Out: Currect Time YYYY-MM-DD HH:MM:SS
-  CURSECS=`readSystemTimeSecs`
-  if [ $CURSECS != "ERR" ]; then
-    date -u +"%Y-%m-%d %H:%M:%S" -d@${CURSECS}
+  OID="OID2.5.1"
+  getData $OID date
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
     return 0
   else
-    echo "ERR-SystemTime - Failed Function Return: $0"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -1062,7 +1072,7 @@ function readThermFanUsage {
   fi
 }
 
-function readThermLastUsageReset {
+function readThermLastUsageResetSecs {
   # OID4.5.6 - Last Reset Time in Seconds Since Jan 1 1970
   # In : No Input
   # Out: Time Since Reset in Epoch Seconds
@@ -1077,16 +1087,17 @@ function readThermLastUsageReset {
   fi
 }
 
-function readThermLastUsageResetDateTime {
-  # Based on OID4.5.6 - Last Reset Time in Date/Time Format
+function readThermLastUsageReset {
+  # OID4.5.6 - Last Reset Time in Date/Time Format
   # In : No Input
-  # Out: Time Since Reset in Epoch Seconds
-  RESETSECS=`readThermLastUsageReset`
-  if [ $RESETSECS != "ERR" ]; then
-    date -u +"%Y-%m-%d %H:%M:%S" -d@${RESETSECS}
+  # Out: Date/Time String
+  OID="OID4.5.6"
+  getData $OID date
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
     return 0
   else
-    echo "ERR-ResetDateTime - Failed Function Return: $0"
+    echo "ERR-$OID - Failed Return Code: $0"
     return 1
   fi
 }
@@ -1671,11 +1682,10 @@ function writeThermLastUsageResetNow {
   # OID4.5.6 - Set Last Usage Reset Time
   # In : No Input
   # Out: Reset Date after Setting = Now
-  DATENOW=`date -u +"%s"`
   OID="OID4.5.6"
-  setData $OID $DATENOW
+  setData $OID `dateEpoch`
   if [ $? -ne 1 ]; then
-    readThermLastUsageResetDateTime
+    readThermLastUsageReset
     return 0
   else
     echo "ERR-$OID - Failed Return Code: $0"
@@ -1784,6 +1794,80 @@ function readSerialNo {
   fi
 }
 
+function writeSystemReset {
+  # OID1.9 - Reset the System
+  # In : No Input
+  # Out: Return Code
+  OID="OID1.9"
+  setData $OID 2
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readRemoteAccessServerAddress {
+  # OID1.10.3 - Remote Access Server IP
+  # In : No Input
+  # Out: Server Address
+  OID="OID1.10.3"
+  getData $OID str
+    if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readRemoteAccessServerPort {
+  # OID1.10.4 - Remote Access Server Port
+  # In : No Input
+  # Out: Server Port
+  OID="OID1.10.4"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readRemoteAccessInterval {
+  # OID1.10.5 - RA Check Interval in Minutes
+  # In : No Input
+  # Out: Minutes
+  OID="OID1.10.5"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readCustomerID {
+  # OID1.10.10 - Customer ID
+  # In : No Input
+  # Out: Customer ID
+  OID="OID1.10.10"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function readSiteName {
   # OID1.10.9 - Read Site Name
   # In : No Input
@@ -1863,6 +1947,11 @@ function readHWVer {
 # Utility Functions
 # Generally useful function.
 # ------------------------------------------------------------------------------
+
+function dateEpoch {
+  # Return current UTC date/time in seconds since Jan 1 1970
+  date -u +"%s"
+}
 
 function toMilTime
 {

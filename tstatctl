@@ -22,6 +22,7 @@ if [ ! ${1} ]; then
   echo "Available Commands:"
   echo "General:"
   echo "    status          : View Full Status"
+  echo "    reset           : Reset the System"
   echo "Settings:"
   echo "    setname         : Set Device Name"
   echo "    sethvacmode     : Set HVAC Mode"
@@ -57,6 +58,7 @@ if [ $CMD = "status" ]; then
   SWVER=`readSWVer`
   HWVER=`readHWVer`
   SERIAL=`readSerialNo`
+  CUSTID=`readCustomerID`
   MACADDRESS=`readMacAddress`
   IPADDRESS=`readIPAddress`
   NETMASK=`readNetmask`
@@ -113,6 +115,7 @@ if [ $CMD = "status" ]; then
   echo "Versions      : Model: $MODEL  SWRev: $SWVER  HWRev: $HWVER  Serial: $SERIAL"
   echo "MAC Address   : $MACADDRESS"
   echo "Networking    : IP: $IPADDRESS  Netmask: $NETMASK  Gateway: $GATEWAY"
+  echo "Customer ID   : $CUSTID"
   echo "Time          : $SYSTIME  Up: $UPTIME"
   echo "HVAC Mode     : $CURMODE"
   echo "HVAC State    : $CURSTATE"
@@ -149,6 +152,16 @@ if [ $CMD = "status" ]; then
   echo "Usage Options : $USAGEOPTS"
   echo "Usage Reset   : $USAGERESET"
   echo " "
+fi
+
+# Set Device Name
+if [ $CMD = "reset" ]; then
+  RTNCODE=`writeSystemReset`
+  if [ $? -ne 1 ]; then
+    echo "System Reset in Progress"
+  else
+    echo "ERROR: System Reset Failed"
+  fi
 fi
 
 # Set Device Name
