@@ -19,6 +19,7 @@ if [ ! ${1} ]; then
   echo "  showperiodheat  : Show heat setback for schedule period"
   echo "  showperiodcool  : Show cool setback for schedule period"
   echo "  showdefaultclass: Show default schedule class for day"
+  echo "  showspecialday  : Show Special Day Schedule"
   echo " "
   exit 1
 fi
@@ -70,6 +71,25 @@ if [ $CMD = "showdefaultclass" ]; then
   DAYNAME=$2
   DFLTCLASS=`readThermDefaultClassId $DAYNAME`
   echo "$DAYNAME:$DFLTCLASS"
+fi
+
+# Show Special Day Schedule
+if [ $CMD = "showspecialday" ]; then
+  if [ ! ${2} ]; then
+    echo "usage: $0 showspecialday SPECIAL_DAY_NUMBER (1-20)"
+    exit 1
+  fi
+  SDIDX=$2
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERROR: Invalid Special Day Number"
+    exit 1
+  fi
+  SDSTARTDAY=`readThermScheduleSpecialDay $SDIDX`
+  SDMONTH=`readThermScheduleSpecialMonth $SDIDX`
+  SDYEAR=`readThermScheduleSpecialYear $SDIDX`
+  SDDUR=`readThermScheduleSpecialDuration $SDIDX`
+  SDCLASS=`readThermScheduleSpecialClassId $SDIDX`
+  echo "SpecialDay ${SDIDX} : StartDay: $SDSTARTDAY  Month: $SDMONTH  Year: $SDYEAR  Duration: $SDDUR Day(s)  Class: $SDCLASS"
 fi
 
 # EOF

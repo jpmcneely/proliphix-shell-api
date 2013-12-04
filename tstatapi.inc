@@ -1057,6 +1057,188 @@ function readThermDefaultClassId {
   fi
 }
 
+function readThermScheduleSpecialDay {
+  # OID4.4.4.2.X
+  # In : Special_Day_Index
+  # Out: Start Day of the Month
+  OID="OID4.4.4.2"
+  SDIDX=$1
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  OID="$OID.$SDIDX"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermScheduleSpecialMonth {
+  # OID4.4.4.3.X
+  # In : Special_Day_Index
+  # Out: Start Month (1-12 - 0 for Every Month)
+  OID="OID4.4.4.3"
+  SDIDX=$1
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  OID="$OID.$SDIDX"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    0)
+      echo "Every"
+      return 0
+      ;;
+    1)
+      echo "January"
+      return 0
+      ;;
+    2)
+      echo "February"
+      return 0
+      ;;
+    3)
+      echo "March"
+      return 0
+      ;;
+    4)
+      echo "April"
+      return 0
+      ;;
+    5)
+      echo "May"
+      return 0
+      ;;
+    6)
+      echo "June"
+      return 0
+      ;;
+    7)
+      echo "July"
+      return 0
+      ;;
+    8)
+      echo "August"
+      return 0
+      ;;
+    9)
+      echo "September"
+      return 0
+      ;;
+    10)
+      echo "October"
+      return 0
+      ;;
+    11)
+      echo "November"
+      return 0
+      ;;
+    12)
+      echo "December"
+      return 0
+      ;;
+    *)
+      echo "ERR-$OID - Invalid Month: $0"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermScheduleSpecialYear {
+  # OID4.4.4.4.X
+  # In : Special_Day_Index
+  # Out: Year (0 for Every Year)
+  OID="OID4.4.4.4"
+  SDIDX=$1
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  OID="$OID.$SDIDX"
+  getData $OID str
+  if [ $? -ne 1 ]; then
+    if [ $RTNDATA = "0" ]; then
+      echo "Every"
+      return 0
+    else
+      echo "$RTNDATA"
+      return 0
+    fi
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermScheduleSpecialDuration {
+  # OID4.4.4.5.X
+  # In : Special_Day_Index
+  # Out: Duration in Days (1-240)
+  OID="OID4.4.4.5"
+  SDIDX=$1
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  OID="$OID.$SDIDX"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo "$RTNDATA"
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermScheduleSpecialClassId {
+  # OID4.4.4.6.X
+  # In : Special_Day_Index
+  # Out: Class String
+  OID="OID4.4.4.6"
+  SDIDX=$1
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  OID="$OID.$SDIDX"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    case $RTNDATA in
+    1)
+      echo "In"
+      return 0
+      ;;
+    2)
+      echo "Out"
+      return 0
+      ;;
+    3)
+      echo "Away"
+      return 0
+      ;;
+    *)
+      echo "ERR-$OID - Invalid Class: $0"
+      return 1
+      ;;
+    esac
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function readThermHeat1Usage {
   # OID4.5.1 - HEAT1 State Usage in Minutes
   # In : No Input
