@@ -85,11 +85,15 @@ if [ $CMD = "showspecialday" ]; then
     exit 1
   fi
   SDSTARTDAY=`readThermScheduleSpecialDay $SDIDX`
-  SDMONTH=`readThermScheduleSpecialMonth $SDIDX`
-  SDYEAR=`readThermScheduleSpecialYear $SDIDX`
-  SDDUR=`readThermScheduleSpecialDuration $SDIDX`
-  SDCLASS=`readThermScheduleSpecialClassId $SDIDX`
-  echo "SpecialDay ${SDIDX} : StartDay: $SDSTARTDAY  Month: $SDMONTH  Year: $SDYEAR  Duration: $SDDUR Day(s)  Class: $SDCLASS"
+  if [ $SDSTARTDAY -gt 0 ]; then
+    SDMONTH=`readThermScheduleSpecialMonth $SDIDX`
+    SDYEAR=`readThermScheduleSpecialYear $SDIDX`
+    SDDUR=`readThermScheduleSpecialDuration $SDIDX`
+    SDCLASS=`readThermScheduleSpecialClassId $SDIDX`
+    echo "SpecialDay ${SDIDX} : StartDay: $SDSTARTDAY  Month: $SDMONTH  Year: $SDYEAR  Duration: $SDDUR Day(s)  Class: $SDCLASS"
+  else
+    echo "SpecialDay $SDIDX : Not Defined"
+  fi
 fi
 
 # EOF
