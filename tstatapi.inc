@@ -163,7 +163,7 @@ function readSystemTimeSecs {
 function readSystemTime {
   # OID2.5.1 - Current System Time
   # In : No Input
-  # Out: Currect Time YYYY-MM-DD HH:MM:SS
+  # Out: Current Time YYYY-MM-DD HH:MM:SS
   OID="OID2.5.1"
   getData $OID date
   if [ $? -ne 1 ]; then
@@ -891,7 +891,7 @@ function readThermPeriodStartHHMM {
   CLASS=$1
   PERIOD=$2
   STARTTIMEMIN=`readThermPeriodStart $CLASS $PERIOD`
-  echo `toMilTime $STARTTIMEMIN`
+  echo `minToMilTime $STARTTIMEMIN`
   return 0
 }
 
@@ -998,7 +998,7 @@ function readThermPeriodSetbackCool {
 }
 
 function readThermDefaultClassId {
-  # OID4.4.3.2.X
+  # OID4.4.3.2.1-7 - Schedule Default Class ID
   # In : Day Name
   # Out: Class String
   OID="OID4.4.3.2"
@@ -1058,7 +1058,7 @@ function readThermDefaultClassId {
 }
 
 function readThermScheduleSpecialDay {
-  # OID4.4.4.2.X
+  # OID4.4.4.2.1-20 - Schedule Special Day of Month
   # In : Special_Day_Index
   # Out: Start Day of the Month
   OID="OID4.4.4.2"
@@ -1079,7 +1079,7 @@ function readThermScheduleSpecialDay {
 }
 
 function readThermScheduleSpecialMonth {
-  # OID4.4.4.3.X
+  # OID4.4.4.3.1-20 - Schedule Special Month
   # In : Special_Day_Index
   # Out: Start Month (1-12 - 0 for Every Month)
   OID="OID4.4.4.3"
@@ -1156,7 +1156,7 @@ function readThermScheduleSpecialMonth {
 }
 
 function readThermScheduleSpecialYear {
-  # OID4.4.4.4.X
+  # OID4.4.4.4.1-20 - Schedule Special Year
   # In : Special_Day_Index
   # Out: Year (0 for Every Year)
   OID="OID4.4.4.4"
@@ -1182,7 +1182,7 @@ function readThermScheduleSpecialYear {
 }
 
 function readThermScheduleSpecialDuration {
-  # OID4.4.4.5.X
+  # OID4.4.4.5.1-20 - Schedule Special Day Duration in Days
   # In : Special_Day_Index
   # Out: Duration in Days (1-240)
   OID="OID4.4.4.5"
@@ -1203,7 +1203,7 @@ function readThermScheduleSpecialDuration {
 }
 
 function readThermScheduleSpecialClassId {
-  # OID4.4.4.6.X
+  # OID4.4.4.6.1-20 - Schedule Special Day Class ID
   # In : Special_Day_Index
   # Out: Class String
   OID="OID4.4.4.6"
@@ -1925,7 +1925,7 @@ function writeThermLastUsageResetNow {
   # In : No Input
   # Out: Reset Date after Setting = Now
   OID="OID4.5.6"
-  setData $OID `dateEpoch`
+  setData $OID `nowToEpoch`
   if [ $? -ne 1 ]; then
     readThermLastUsageReset
     return 0
@@ -2244,20 +2244,27 @@ function readThermTempScaleTag {
 # Generally useful function.
 # ------------------------------------------------------------------------------
 
-function dateEpoch {
+function nowToEpoch {
   # Return current UTC date/time in seconds since Jan 1 1970
   date -u +"%s"
 }
 
-function toMilTime
-{
+function minToMilTime {
   # Convert Minutes After Midnight to 24Hr Clock Time
   MIN=$1
   HOUR=$[$MIN / 60]
   HMIN=$[$HOUR * 60]
   RMIN=$[$MIN - $HMIN]
-  printf "%02d:" ${HOUR}
-  printf "%02d\n" ${RMIN}
+  printf "%02d:%02d\n" ${HOUR} ${RMIN}
+}
+
+function milTimeToMin
+  # Convert HH:MM to Minutes after Midnight
+  HOUR=`echo $1 | awk -F: '{print $1}'`
+  MIN=`echo $1 | awk -F: '{print $2}'`
+  RHOUR=$[$HOUR * 60]
+  TMIN=$[$RHOUR + $MIN]
+  echo $TMIN
 }
 
 # EOF
