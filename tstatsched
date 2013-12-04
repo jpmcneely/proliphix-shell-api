@@ -18,15 +18,20 @@ if [ ! ${1} ]; then
   echo "usage: $0 COMMAND [OPTIONS]"
   echo " "
   echo "Available Commands:"
-  echo "  listclass       : List details for schedule class"
-  echo "  listweekly      : List weekly schedule defaults"
-  echo "  listspecial     : List special schedule days"
-  echo ""
-  echo "  showperiodstart : Show schedule period start time"
-  echo "  showperiodheat  : Show heat setback for schedule period"
-  echo "  showperiodcool  : Show cool setback for schedule period"
-  echo "  showdefaultclass: Show default schedule class for day"
-  echo "  showspecial     : Show special day schedule"
+  echo "General:"
+  echo "    listclass       : List details for schedule class"
+  echo "    listweekly      : List weekly schedule defaults"
+  echo "    listspecial     : List special schedule days"
+  echo "    showperiodstart : Show schedule period start time"
+  echo "    showperiodheat  : Show heat setback for schedule period"
+  echo "    showperiodcool  : Show cool setback for schedule period"
+  echo "    showdefaultclass: Show default schedule class for day"
+  echo "    showspecial     : Show special day schedule"
+  echo "Settings:"
+  echo "    setperiodstart  : Set schedule period start time"
+  echo "    setperiodheat   : Set schedule period heat setback temperature"
+  echo "    setperiodcool   : Set schedule period cool setback temperature"
+  echo "    setweeklydefault: Set weekly default schedule"
   echo " "
   exit 1
 fi
@@ -163,6 +168,57 @@ if [ $CMD = "listspecial" ]; then
   done
   echo "=============================================="
   echo ""
+fi
+
+# Set Period Start
+if [ $CMD = "setperiodstart" ]; then
+  if [ ! $4 ]; then
+    echo "usage: $0 setperiodstart In|Out|Away Morning|Day|Evening|Night START_TIME"
+    exit 1
+  fi
+  CLASS=$2
+  PERIOD=$3
+  STARTTIME=$4
+  writeThermPeriodStartHHMM $CLASS $PERIOD $STARTTIME
+  if [ $? -ne 1 ]; then
+    echo "Start Time for Class: $CLASS Period: $PERIOD set to $STARTTIME"
+  else
+    echo "ERROR: Failed to set period start time"
+  fi
+fi
+
+# Set Period Heat Setback
+if [ $CMD = "setperiodheat" ]; then
+  if [ ! $4 ]; then
+    echo "usage: $0 setperiodheat  In|Out|Away Morning|Day|Evening|Night TEMPERATURE"
+    exit 1
+  fi
+  CLASS=$2
+  PERIOD=$3
+  SETHEAT=$4
+  writeThermPeriodSetbackHeat $CLASS $PERIOD $SETHEAT
+  if [ $? -ne 1 ]; then
+    echo "Heat Setback for Class: $CLASS Period: $PERIOD set to $SETHEAT"
+  else
+    echo "ERROR: Failed to set period heat setback"
+  fi
+fi
+
+# Set Period Cool Setback
+if [ $CMD = "setperiodcool" ]; then
+  if [ ! $4 ]; then
+    echo "usage: $0 setperiodcool  In|Out|Away Morning|Day|Evening|Night TEMPERATURE"
+    exit 1
+  fi
+  CLASS=$2
+  PERIOD=$3
+  SETCOOL=$4
+  writeThermPeriodSetbackCool $CLASS $PERIOD $SETCOOL
+  if [ $? -ne 1 ]; then
+    echo "Cool Setback for Class: $CLASS Period: $PERIOD set to $SETCOOL"
+  else
+    echo "ERROR: Failed to set period cool setback"
+  fi
 fi
 
 # EOF

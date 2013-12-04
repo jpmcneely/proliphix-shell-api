@@ -1919,6 +1919,117 @@ function writeThermPeriodSetbackHeat {
   fi
 }
 
+function writeThermPeriodSetbackCool {
+  # OID4.4.1.5.1-3.1-4 - Schedule Period Cool Setback Value
+  # In : Schedule_Class, Schedule_Period, Cool_Setback_Temp
+  # Out: Return Code
+  OID="OID4.4.1.5"
+  CLASS=$1
+  PERIOD=$2
+  SETCOOL=$3
+  NEWCOOL=`tempToDeciDegrees $SETCOOL`
+  case $CLASS in
+  "In")
+    INCLASS=1
+    ;;
+  "Out")
+    INCLASS=2
+    ;;
+  "Away")
+    INCLASS=3
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Class: $0"
+    return 1
+    ;;
+  esac
+  case $PERIOD in
+  "Morning")
+    INPERIOD=1
+    ;;
+  "Day")
+    INPERIOD=2
+    ;;
+  "Evening")
+    INPERIOD=3
+    ;;
+  "Night")
+    INPERIOD=4
+    ;;
+  *)
+    echo "ERR-${OID}.X.X - Invalid Period: $0"
+    return 1
+    ;;
+  esac
+  OID="${OID}.${INCLASS}.${INPERIOD}"
+  setData ${OID} $NEWCOOL
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function writeThermDefaultClassId {
+  # OID4.4.3.2.1-7 - Schedule Default Class ID
+  # In : DayName Class
+  # Out: Return Code
+  OID="OID4.4.3.2"
+  DAY=$1
+  CLASS=$2
+  case $DAY in
+  "Sunday")
+    DAYIDX=1
+    ;;
+  "Monday")
+    DAYIDX=2
+    ;;
+  "Tuesday")
+    DAYIDX=3
+    ;;
+  "Wednesday")
+    DAYIDX=4
+    ;;
+  "Thursday")
+    DAYIDX=5
+    ;;
+  "Friday")
+    DAYIDX=6
+    ;;
+  "Saturday")
+    DAYIDX=7
+    ;;
+  *)
+    echo "ERR-$OID.${DAYIDX} - Invalid Day Name: $0"
+    return 1
+    ;;
+  esac
+  case $CLASS in
+  "In")
+    CLASSIDX=1
+    ;;
+  "Out")
+    CLASSIDX=2
+    ;;
+  3)
+    CLASSIDX=3
+    ;;
+  *)
+    echo "ERR-$OID.${DAYIDX} - Invalid Class: $0"
+    return 1
+    ;;
+  esac
+  OID="${OID}.${DAYIDX}"
+  setData $OID $CLASSIDX
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function writeThermHeat1Usage {
   # OID4.5.1 - Set HEAT1 State Usage in Minutes
   # In : Number of Minutes
@@ -2389,7 +2500,7 @@ function milTimeToMin {
 function tempToDeciDegrees {
   # Convert fahrenheit temp to deci-degrees
   TEMP=$1
-  DECITEMP=$[$TEMP * 10]
+  DECITEMP=`echo "$TEMP * 10" | bc | awk -F. '{print $1}'`
   printf "%d\n" $DECITEMP
 }
 
