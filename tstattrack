@@ -10,14 +10,10 @@
 . ./tstatapi.inc
 
 # Basic Info
-MAINNAME=`readCommonDevName`
 MAINTEMP=`readThermSensorTemp Local`
-MAINAVG=`readThermSensorAverage Local`
 HVACMODE=`readThermHvacMode`
 HVACSTATE=`readThermHvacState`
 FANMODE=`readThermFanMode`
-FANSTATE=`readThermFanState`
-UPTIME=`readSystemUptime`
 AVGTEMP=`readThermAverageTemp`
 HEATSETPOINT=`readThermSetbackHeat`
 COOLSETPOINT=`readThermSetbackCool`
@@ -27,23 +23,15 @@ sleep 5
 # Remote Sensors
 RS1STATE=`readThermSensorState RS1`
 if [ $RS1STATE = "Enabled" ]; then
-  RS1NAME=`readThermSensorName RS1`
   RS1TEMP=`readThermSensorTemp RS1`
-  RS1AVG=`readThermSensorAverage RS1`
 else
-  RS1NAME="NONE"
   RS1TEMP=0
-  RS1AVG=1
 fi
 RS2STATE=`readThermSensorState RS2`
 if [ $RS2STATE = "Enabled" ]; then
-  RS2NAME=`readThermSensorName RS2`
   RS2TEMP=`readThermSensorTemp RS2`
-  RS2AVG=`readThermSensorAverage RS2`
 else
-  RS2NAME="NONE"
   RS2TEMP=0
-  RS2AVG=1
 fi
 sleep 5
 
@@ -58,17 +46,7 @@ SCHEDCLASS=`readThermCurrentClass`
 ACTIVEPERIOD=`readThermActivePeriod`
 sleep 5
 
-# Usage
-HEAT1USAGE=`readThermHeat1Usage`
-HEAT2USAGE=`readThermHeat2Usage`
-HEAT3USAGE=`readThermHeat3Usage`
-COOL1USAGE=`readThermCool1Usage`
-COOL2USAGE=`readThermCool2Usage`
-FANUSAGE=`readThermFanUsage`
-USAGERESET=`readThermLastUsageResetDateTime`
-sleep 5
-
-QUERY="INSERT INTO tstat_tracking VALUES (0,NOW(),\"$MAINNAME\",$MAINTEMP,\"$MAINAVG\",\"$HVACMODE\",\"$HVACSTATE\",\"$FANMODE\",\"$FANSTATE\",\"$RS1STATE\",\"$RS1NAME\",$RS1TEMP,\"$RS1AVG\",\"$RS2STATE\",\"$RS2NAME\",$RS2TEMP,\"$RS2AVG\",$AVGTEMP,$HEATSETPOINT,$COOLSETPOINT,\"$SETBACKSTATUS\",\"$SCHEDCLASS\",\"$SCHEDPERIOD\",\"$ACTIVEPERIOD\",\"$LOWTEMPALARM\",\"$HIGHTEMPALARM\",\"$FILTERALARM\",$HEAT1USAGE,$HEAT2USAGE,$HEAT3USAGE,$COOL1USAGE,$COOL2USAGE,$FANUSAGE,\"$UPTIME\",\"$USAGERESET\");"
+QUERY="INSERT INTO tstat_tracking VALUES (0,NOW(),$MAINTEMP,\"$RS1STATE\",$RS1TEMP,\"$RS2STATE\",$RS2TEMP,$AVGTEMP,$HEATSETPOINT,$COOLSETPOINT,\"$SETBACKSTATUS\",\"$HVACMODE\",\"$HVACSTATE\",\"$FANMODE\",\"$SCHEDCLASS\",\"$SCHEDPERIOD\",\"$ACTIVEPERIOD\",\"$LOWTEMPALARM\",\"$HIGHTEMPALARM\",\"$FILTERALARM\");"
 
 echo $QUERY | mysql -h $DBHOST -u $DBUSER -p${DBPSWD} $DBNAME
 

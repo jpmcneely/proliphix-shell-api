@@ -24,6 +24,7 @@ if [ ! ${1} ]; then
   echo " "
   echo "Available Commands:"
   echo "General:"
+  echo "    brief           : View Brief Status"
   echo "    status          : View Full Status"
   echo "    reset           : Reset the System"
   echo "Settings:"
@@ -54,6 +55,45 @@ if [ ! ${1} ]; then
 fi
 
 CMD=${1}
+
+# Brief Status
+if [ $CMD = "brief" ]; then
+  LOCALNAME=`readCommonDevName` 
+  LOCALTEMP=`readThermSensorTemp Local`
+  RS1STATE=`readThermSensorState RS1`
+  RS2STATE=`readThermSensorState RS2`
+  CURSCHEDPERIOD=`readThermCurrentPeriod`
+  CURSCHEDCLASS=`readThermCurrentClass`
+  CURACTIVEPERIOD=`readThermActivePeriod`
+  AVGTEMP=`readThermAverageTemp`
+  CURMODE=`readThermHvacMode`
+  CURSTATE=`readThermHvacState`
+  CURFANMODE=`readThermFanMode`
+  CURHEATSETPOINT=`readThermSetbackHeat`
+  CURCOOLSETPOINT=`readThermSetbackCool`
+  CURSETBACKSTATUS=`readThermSetbackStatus`
+  LOWTEMPALRM=`readCommonAlarmStatus LowTemp`
+  HIGHTEMPALRM=`readCommonAlarmStatus HighTemp`
+  FILTERALRM=`readCommonAlarmStatus Filter`
+
+  if [ $RS1STATE = "Enabled" ]; then
+    RS1NAME=`readThermSensorName RS1`
+    RS1TEMP=`readThermSensorTemp RS1`
+  fi
+
+  if [ $RS2STATE = "Enabled" ]; then
+    RS2NAME=`readThermSensorName RS2`
+    RS2TEMP=`readThermSensorTemp RS2`
+  fi
+
+  echo "Status    : $CURMODE $CURSTATE  -  Fan: $CURFANMODE"
+  echo "Alarms    : Low: $LOWTEMPALRM  High: $HIGHTEMPALRM  Filter: $FILTERALRM"
+  echo "Setpoints : Heat: $CURHEATSETPOINT  Cool: $CURCOOLSETPOINT  -  Setback Status: $CURSETBACKSTATUS"
+  echo "Sensors   : $LOCALNAME $LOCALTEMP  RS1-$RS1NAME ($RS1STATE) $RS1TEMP  RS2-$RS2NAME ($RS2STATE) $RS2TEMP"
+  echo "Schedule  : $CURSCHEDCLASS-$CURSCHEDPERIOD  ($CURACTIVEPERIOD Active)"
+  echo ""
+  exit 0
+fi
 
 # Full Status
 if [ $CMD = "status" ]; then
@@ -86,16 +126,15 @@ if [ $CMD = "status" ]; then
   CURMODE=`readThermHvacMode`
   CURSTATE=`readThermHvacState`
   CURFANMODE=`readThermFanMode`
-  CURFANSTATE=`readThermFanState`
   CURHEATSETPOINT=`readThermSetbackHeat`
   CURCOOLSETPOINT=`readThermSetbackCool`
   CURSETBACKSTATUS=`readThermSetbackStatus`
-  HEAT1USAGE=`readThermHeat1Usage`
-  HEAT2USAGE=`readThermHeat2Usage`
-  HEAT3USAGE=`readThermHeat3Usage`
-  COOL1USAGE=`readThermCool1Usage`
-  COOL2USAGE=`readThermCool2Usage`
-  FANUSAGE=`readThermFanUsage`
+  HEAT1USAGE=`readThermHeat1UsageHHMM`
+  HEAT2USAGE=`readThermHeat2UsageHHMM`
+  HEAT3USAGE=`readThermHeat3UsageHHMM`
+  COOL1USAGE=`readThermCool1UsageHHMM`
+  COOL2USAGE=`readThermCool2UsageHHMM`
+  FANUSAGE=`readThermFanUsageHHMM`
   USAGEOPTS=`readThermUsageOptions`
   USAGERESET=`readThermLastUsageReset`
 
@@ -115,7 +154,6 @@ if [ $CMD = "status" ]; then
     RS2TYPE=`readThermSensorType RS2`
   fi
 
-  echo " "
   echo "Name/Site     : $NAME / $SITENAME"
   echo "Versions      : Model: $MODEL  SWRev: $SWVER  HWRev: $HWVER  Serial: $SERIAL"
   echo "MAC Address   : $MACADDRESS"
@@ -126,7 +164,6 @@ if [ $CMD = "status" ]; then
   echo "HVAC Mode     : $CURMODE"
   echo "HVAC State    : $CURSTATE"
   echo "Fan Mode      : $CURFANMODE"
-  echo "Fan State     : $CURFANSTATE"
   echo "Main Temp     : ${LOCALTEMP}${TEMPSCALETAG}"
   echo "Main Averaged : $LOCALAVG"
   echo "RS1 State     : $RS1STATE"
@@ -158,6 +195,7 @@ if [ $CMD = "status" ]; then
   echo "Usage Options : $USAGEOPTS"
   echo "Usage Reset   : $USAGERESET"
   echo " "
+  exit 0
 fi
 
 # Reset the System
@@ -167,7 +205,9 @@ if [ $CMD = "reset" ]; then
     echo "System Reset in Progress"
   else
     echo "ERROR: System Reset Failed"
+    exit 1
   fi
+  exit 0
 fi
 
 # Set Device Name
@@ -180,6 +220,7 @@ if [ $CMD = "setname" ]; then
   NEWNAME=$2
   writeCommonDevName $NEWNAME
   echo "Device Name Set to $NEWNAME" | tr "+" " "
+  exit 0
 fi
 
 # Set HVAC Mode
@@ -191,6 +232,7 @@ if [ $CMD = "sethvacmode" ]; then
   NEWMODE=$2
   SETMODE=`writeThermHvacMode $NEWMODE`
   echo "HVAC Mode Set to $SETMODE"
+  exit 0
 fi
 
 # Set Fan Mode
@@ -202,6 +244,7 @@ if [ $CMD = "setfanmode" ]; then
   NEWMODE=$2
   SETMODE=`writeThermFanMode $NEWMODE`
   echo "Fan Mode Set to $SETMODE"
+  exit 0
 fi
 
 # Set Heat SetPoint
@@ -213,7 +256,8 @@ if [ $CMD = "setheat" ]; then
   fi
   NEWTEMP=$2
   SETHEAT=`writeThermSetbackHeat $NEWTEMP`
-  echo "Heat Set to ${SETHEAT}f"
+  echo "Heat Set to ${SETHEAT}"
+  exit 0
 fi
 
 # Set Cool SetPoint
@@ -225,7 +269,8 @@ if [ $CMD = "setcool" ]; then
   fi
   NEWTEMP=$2
   SETCOOL=`writeThermSetbackCool $NEWTEMP`
-  echo "Cool Set to ${SETCOOL}f"
+  echo "Cool Set to ${SETCOOL}"
+  exit 0
 fi
 
 # Set Setback Status
@@ -237,21 +282,25 @@ if [ $CMD = "setsetback" ]; then
   NEWMODE=$2
   SETBACKMODE=`writeThermSetbackStatus $NEWMODE`
   echo "Setback Set to $SETBACKMODE"
+  exit 0
 fi
 
 # Get Filter Reminder Alarm Status
 if [ $CMD = "filteralarm" ]; then
   readThermConfigFilterReminderPending
+  exit 0
 fi
 
 # Get Zone Low Temp Alarm Status
 if [ $CMD = "lowtempalarm" ]; then
   readThermConfigLowTempPending
+  exit 0
 fi
 
 # Get Zone High Temp Alarm Status
 if [ $CMD = "hightempalarm" ]; then
   readThermConfigHighTempPending
+  exit 0
 fi
 
 # Clear Filter Reminder Alarm
@@ -263,6 +312,7 @@ if [ $CMD = "filterclear" ]; then
   else
     echo "No"
   fi
+  exit 0
 fi
 
 # Clear Zone Low Temp Alarm
@@ -274,6 +324,7 @@ if [ $CMD = "lowtempclear" ]; then
   else
     echo "No"
   fi
+  exit 0
 fi
 
 # Clear Zone High Temp Alarm
@@ -285,6 +336,7 @@ if [ $CMD = "hightempclear" ]; then
   else
     echo "No"
   fi
+  exit 0
 fi
 
 # Set Remote Sensor Temp Offset
@@ -297,6 +349,7 @@ if [ $CMD = "setsensoroffset" ]; then
   OFFSET=$3
   SENSOROFFSET=`writeThermSensorCorrection $SENSOR $OFFSET`
   echo "Sensor Correction for $SENSOR Set to $SENSOROFFSET"
+  exit 0
 fi
 
 # Set Remote Sensor Name
@@ -310,6 +363,7 @@ if [ $CMD = "setsensorname" ]; then
   NEWNAME=$3
   writeThermSensorName $SENSOR $NEWNAME
   echo "Sensor $SENSOR Name Set to $NEWNAME" | tr "+" " "
+  exit 0
 fi
 
 # Set Sensor State
@@ -322,6 +376,7 @@ if [ $CMD = "setsensorstate" ]; then
   STATE=$3
   NEWSTATE=`writeThermSensorState $SENSOR $STATE`
   echo "Sensor $SENSOR Set to $NEWSTATE"
+  exit 0
 fi
 
 # Set Sensor Avg
@@ -334,6 +389,7 @@ if [ $CMD = "setsensoravg" ]; then
   STATE=$3
   NEWSTATE=`writeThermSensorAverage $SENSOR $STATE`
   echo "Sensor $SENSOR Average Inclusion Set to $NEWSTATE"
+  exit 0
 fi
 
 # Set Sensor Type
@@ -346,6 +402,7 @@ if [ $CMD = "setsensortype" ]; then
   TYPE=$3
   NEWTYPE=`writeThermSensorType $SENSOR $TYPE`
   echo "Sensor $SENSOR Type Set to $NEWTYPE"
+  exit 0
 fi
 
 # Set Usage
@@ -382,6 +439,7 @@ if [ $CMD = "setusage" ]; then
     echo "Fan Usage Set to $NEWFAN Minutes"
     ;;
   esac
+  exit 0
 fi
 
 # Reset Last Usage
@@ -395,6 +453,12 @@ if [ $CMD = "resetusage" ]; then
   COOL2=`writeThermCool2Usage 0`
   FAN=`writeThermFanUsage 0`
   echo "Reset: Heat1: $HEAT1  Heat2: $HEAT2  Heat3: $HEAT3  Cool1: $COOL1  Cool2: $COOL2  Fan: $FAN"
+  exit 0
 fi
+
+# Fallthrough
+echo "ERR: Invalid Command: $1"
+echo ""
+exit 1
 
 # EOF

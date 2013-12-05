@@ -81,7 +81,6 @@ if [ $CMD = "listclass" ]; then
     exit 1
   fi
   CLASS=$2
-  echo ""
   echo "Schedule Class: $CLASS"
   echo ""
   echo " Period    Start    Heat    Cool"
@@ -110,7 +109,6 @@ fi
 
 # List Default Schedule Classes
 if [ $CMD = "listdefaults" ]; then
-  echo ""
   echo "Default Schedule Class"
   echo ""
   echo "======================"
@@ -149,7 +147,6 @@ fi
 # List Special Day Schedules
 if [ $CMD = "listspecial" ]; then
   SDIDX=1
-  echo ""
   echo "Special Schedule Days"
   echo ""
   echo " Idx  Day  Month         Year   Dur     Class"

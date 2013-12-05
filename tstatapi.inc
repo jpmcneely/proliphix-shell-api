@@ -527,6 +527,21 @@ function readThermAverageTemp {
   fi
 }
 
+function readLowTempLimit {
+  # OID4.2.7 - Low Temperature Limit
+  # In : No Input
+  # Out: Low Temp Limit Setting
+  OID="OID4.2.7"
+  getData $OID temp
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function readThermConfigFilterReminderPending {
   # OID4.2.9 - Filter Reminder Alarm Pending State
   # In : No Input
@@ -581,6 +596,21 @@ function readThermConfigLowTempPending {
   fi
 }
 
+function readHighTempLimit {
+  # OID4.2.12 - High Temperature Limit
+  # In : No Input
+  # Out: High Temp Limit Setting
+  OID="OID4.2.12"
+  getData $OID temp
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+} 
+
 function readThermConfigHighTempPending {
   # OID4.2.13 - Zone High Temperature Alarm Pending State
   # In : No Input
@@ -602,6 +632,21 @@ function readThermConfigHighTempPending {
       return 1
       ;;
     esac
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readFilterRuntimeDaysLimit {
+  # OID4.2.12 - Maximum Filter Runtime Days
+  # In : No Input
+  # Out: Max Filter Runtime Days Limit
+  OID="OID4.2.18"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo $RTNDATA
+    return 0
   else
     echo "ERR-$OID - Failed Return Code: $0"
     return 1
@@ -1254,6 +1299,21 @@ function readThermHeat1Usage {
   fi
 }
 
+function readThermHeat1UsageHHMM {
+  # OID4.5.1 - HEAT1 State Usage in HH:MM
+  # In : No Input
+  # Out: Usage Time
+  OID="OID4.5.1"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo `minToMilTime $RTNDATA`
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function readThermHeat2Usage {
   # OID4.5.2 - HEAT2 State Usage in Minutes
   # In : No Input
@@ -1262,6 +1322,21 @@ function readThermHeat2Usage {
   getData $OID int
   if [ $? -ne 1 ]; then
     echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermHeat2UsageHHMM {
+  # OID4.5.2 - HEAT2 State Usage in HH:MM
+  # In : No Input
+  # Out: Usage Time
+  OID="OID4.5.2"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo `minToMilTime $RTNDATA`
     return 0
   else
     echo "ERR-$OID - Failed Return Code: $0"
@@ -1284,6 +1359,21 @@ function readThermCool1Usage {
   fi
 }
 
+function readThermCool1UsageHHMM {
+  # OID4.5.3 - COOL1 State Usage in HH:MM
+  # In : No Input
+  # Out: Usage Time
+  OID="OID4.5.3"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo `minToMilTime $RTNDATA`
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function readThermCool2Usage {
   # OID4.5.4 - COOL2 State Usage in Minutes
   # In : No Input
@@ -1299,6 +1389,21 @@ function readThermCool2Usage {
   fi
 }
 
+function readThermCool2UsageHHMM {
+  # OID4.5.4 - COOL2 State Usage in HH:MM
+  # In : No Input
+  # Out: Usage Time
+  OID="OID4.5.4"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo `minToMilTime $RTNDATA`
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function readThermFanUsage {
   # OID4.5.5 - Fan On Usage in Minutes
   # In : No Input
@@ -1307,6 +1412,21 @@ function readThermFanUsage {
   getData $OID int
   if [ $? -ne 1 ]; then
     echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermFanUsageHHMM {
+  # OID4.5.5 - Fan On Usage in HH:MM
+  # In : No Input
+  # Out: Usage Time
+  OID="OID4.5.5"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo `minToMilTime $RTNDATA`
     return 0
   else
     echo "ERR-$OID - Failed Return Code: $0"
@@ -1345,14 +1465,19 @@ function readThermLastUsageReset {
 }
 
 function readThermUsageOptions {
-  # OID4.5.8 - If 1, Include Heat1/Heat2 in Fan Usage Results
+  # OID4.5.8 - Include Heat in Fan Usage Results Status
   # In : No Input
   # Out: Option Bit
   OID="OID4.5.8"
   getData $OID int
   if [ $? -ne 1 ]; then
-    echo $RTNDATA
-    return 0
+    if [ $RTNDATA = "1" ]; then
+      echo "Fan Includes Heat"
+      return 0
+    else
+      echo "Fan Excludes Heat"
+      return 0
+    fi
   else
     echo "ERR-$OID - Failed Return Code: $0"
     return 1
@@ -1367,6 +1492,21 @@ function readThermHeat3Usage {
   getData $OID int
   if [ $? -ne 1 ]; then
     echo $RTNDATA
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function readThermHeat3UsageHHMM {
+  # OID4.5.9 - HEAT3 State Usage in HH:MM
+  # In : No Input
+  # Out: Usage Time
+  OID="OID4.5.9"
+  getData $OID int
+  if [ $? -ne 1 ]; then
+    echo `minToMilTime $RTNDATA`
     return 0
   else
     echo "ERR-$OID - Failed Return Code: $0"
@@ -2502,6 +2642,23 @@ function tempToDeciDegrees {
   TEMP=$1
   DECITEMP=`echo "$TEMP * 10" | bc | awk -F. '{print $1}'`
   printf "%d\n" $DECITEMP
+}
+
+function prtBanner {
+  CUSTID=`readCustomerID`
+  MODEL=`readSystemMimModelNumber`
+  HWVER=`readHWVer`
+  SWVER=`readSWVer`
+  SERIAL=`readSerialNo`
+  IPADDRESS=`readIPAddress`
+  MACADDRESS=`readMacAddress`
+  UPTIME=`readSystemUptime`
+  SYSTIME=`readSystemTime`
+
+  printf "\n========================================================================\n"
+  printf " %-10s %-8s                                        Up %-8s\n" $SYSTIME $UPTIME
+  printf " %-15s  %-4s  %-4s %-5s %-8s %-17s %-9s\n" $IPADDRESS $MODEL $HWVER $SWVER $SERIAL $MACADDRESS $CUSTID
+  printf "========================================================================\n\n"
 }
 
 # EOF
