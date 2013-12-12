@@ -2188,6 +2188,30 @@ function writeThermDefaultClassId {
   fi
 }
 
+function writeThermScheduleSpecialDelete {
+  # OID4.4.4.2.1-20 - Remove Schedule Special Entry
+  # In : Special_Day_Index
+  # Out: Return Code
+  OID="OID4.4.4.2"
+  if [ ! $1 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Parameter Count: $0"
+    return 1
+  fi
+  SDIDX=$1
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  OID="$OID.$SDIDX"
+  setData $OID 0
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function writeThermScheduleSpecialDay {
   # OID4.4.4.2.1-20 - Set Schedule Special Day of Month
   # In : Special_Day_Index Start_Day_Of_Month

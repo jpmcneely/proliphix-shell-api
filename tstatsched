@@ -33,6 +33,7 @@ if [ ! ${1} ]; then
   echo "    setperiodheat   : Set schedule period heat setback temperature"
   echo "    setperiodcool   : Set schedule period cool setback temperature"
   echo "    setdefaultclass : Set default schedule class for day"
+  echo "    removespecial   : Remove special day schedule"
   echo " "
   exit 1
 fi
@@ -241,5 +242,19 @@ if [ $CMD = "setdefaultclass" ]; then
   fi
 fi
 
+# Remove Special Day Schedule
+if [ $CMD = "removespecial" ]; then
+  if [ ! $2 ]; then
+    echo "usage: $0 removespecial SPECIAL_DAY_INDEX"
+    exit 1
+  fi
+  SDIDX=$2
+  writeThermScheduleSpecialDelete $SDIDX
+    if [ $? -ne 1 ]; then
+    echo "Special Day Index $SDIDX Removed"
+  else
+    "ERROR: Failed to remove special day schedule"
+  fi
+fi
 
 # EOF
