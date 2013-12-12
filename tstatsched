@@ -27,6 +27,7 @@ if [ ! ${1} ]; then
   echo "    showperiodcool  : Show cool setback for schedule period"
   echo "    showdefaultclass: Show default schedule class for day"
   echo "    showspecial     : Show special day schedule"
+  echo "    shownextspecial : Show next available special day index"
   echo "Settings:"
   echo "    setperiodstart  : Set schedule period start time"
   echo "    setperiodheat   : Set schedule period heat setback temperature"
@@ -142,6 +143,12 @@ if [ $CMD = "showspecial" ]; then
   else
     echo "$SDIDX:Not Defined"
   fi
+fi
+
+# Show Next Available Special Day Index
+if [ $CMD = "shownextspecial" ]; then
+  SDNEXTINDEX=`readThermScheduleSpecialNextIndex`
+  echo "Next Special Day Index: $SDNEXTINDEX"
 fi
 
 # List Special Day Schedules

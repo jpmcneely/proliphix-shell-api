@@ -10,6 +10,7 @@
 . ./tstatapi.inc
 
 # Basic Info
+UPTIME=`readSystemUptime`
 MAINTEMP=`readThermSensorTemp Local`
 HVACMODE=`readThermHvacMode`
 HVACSTATE=`readThermHvacState`
@@ -35,6 +36,11 @@ else
 fi
 sleep 5
 
+# Usage
+LASTUSAGERESET=`readThermLastUsageReset`
+HEAT1USAGE=`readThermHeat1UsageHHMM`
+COOL1USAGE=`readThermCool1UsageHHMM`
+
 # Alarms
 LOWTEMPALARM=`readCommonAlarmStatus LowTemp`
 HIGHTEMPALARM=`readCommonAlarmStatus HighTemp`
@@ -46,7 +52,7 @@ SCHEDCLASS=`readThermCurrentClass`
 ACTIVEPERIOD=`readThermActivePeriod`
 sleep 5
 
-QUERY="INSERT INTO tstat_tracking VALUES (0,NOW(),$MAINTEMP,\"$RS1STATE\",$RS1TEMP,\"$RS2STATE\",$RS2TEMP,$AVGTEMP,$HEATSETPOINT,$COOLSETPOINT,\"$SETBACKSTATUS\",\"$HVACMODE\",\"$HVACSTATE\",\"$FANMODE\",\"$SCHEDCLASS\",\"$SCHEDPERIOD\",\"$ACTIVEPERIOD\",\"$LOWTEMPALARM\",\"$HIGHTEMPALARM\",\"$FILTERALARM\");"
+QUERY="INSERT INTO tstat_tracking VALUES (0,NOW(),\"$UPTIME\",$MAINTEMP,\"$RS1STATE\",$RS1TEMP,\"$RS2STATE\",$RS2TEMP,$AVGTEMP,$HEATSETPOINT,$COOLSETPOINT,\"$SETBACKSTATUS\",\"$HVACMODE\",\"$HVACSTATE\",\"$FANMODE\",\"$SCHEDCLASS\",\"$SCHEDPERIOD\",\"$ACTIVEPERIOD\",\"$LASTUSAGERESET\",\"$HEAT1USAGE\",\"$COOL1USAGE\",\"$LOWTEMPALARM\",\"$HIGHTEMPALARM\",\"$FILTERALARM\");"
 
 echo $QUERY | mysql -h $DBHOST -u $DBUSER -p${DBPSWD} $DBNAME
 

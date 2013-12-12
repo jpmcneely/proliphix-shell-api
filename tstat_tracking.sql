@@ -9,6 +9,7 @@
 CREATE TABLE IF NOT EXISTS `tstat_tracking` (
   `GUID` bigint(20) NOT NULL AUTO_INCREMENT,
   `TS_DateTime` datetime NOT NULL,
+  `TS_Uptime` time NOT NULL,
   `TS_MainTemp` float(4,1) NOT NULL,
   `TS_RS1State` varchar(10) NOT NULL,
   `TS_RS1Temp` float(4,1) DEFAULT NULL,
@@ -24,6 +25,9 @@ CREATE TABLE IF NOT EXISTS `tstat_tracking` (
   `TS_SchedClass` varchar(10) NOT NULL,
   `TS_SchedPeriod` varchar(10) NOT NULL,
   `TS_ActivePeriod` varchar(10) NOT NULL,
+  `TS_LastUsageReset` datetime NOT NULL,
+  `TS_RuntimeHeat` time NOT NULL,
+  `TS_RuntimeCool` time NOT NULL,
   `TS_AlarmLowTemp` varchar(10) NOT NULL,
   `TS_AlarmHighTemp` varchar(10) NOT NULL,
   `TS_AlarmFilterReminder` varchar(10) NOT NULL,

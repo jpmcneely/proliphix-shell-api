@@ -1284,6 +1284,24 @@ function readThermScheduleSpecialClassId {
   fi
 }
 
+function readThermScheduleSpecialNextIndex {
+  # Relates to OID4.4.4.X.X
+  # In : No Input
+  # Out: Next Available Special Day Index
+  SDIDX=1
+  AVIDX=1
+  while [ $SDIDX -le 20 ]
+    do
+      SDSTARTDAY=`readThermScheduleSpecialDay $SDIDX`
+      if [ $SDSTARTDAY -gt 0 ]; then
+        AVIDX=$[$SDIDX + 1]
+      fi
+      SDIDX=$[$SDIDX + 1]
+    done
+  echo $AVIDX
+  return 0
+}
+
 function readThermHeat1Usage {
   # OID4.5.1 - HEAT1 State Usage in Minutes
   # In : No Input
@@ -2170,6 +2188,162 @@ function writeThermDefaultClassId {
   fi
 }
 
+function writeThermScheduleSpecialDay {
+  # OID4.4.4.2.1-20 - Set Schedule Special Day of Month
+  # In : Special_Day_Index Start_Day_Of_Month
+  # Out: Return Code
+  OID="OID4.4.4.2"
+  SDIDX=$1
+  if [ ! $2 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Parameter Count: $0"
+    return 1
+  fi
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  SDDOM=$2
+  OID="$OID.$SDIDX"
+  setData $OID $SDDOM
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function writeThermScheduleSpecialMonth {
+  # OID4.4.4.3.1-20 - Set Schedule Special Month
+  # In : Special_Day_Index Start_Month (1-12 - 0 for Every Month)
+  # Out: Return Code
+  OID="OID4.4.4.3"
+  SDIDX=$1
+  if [ ! $2 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Parameter Count: $0"
+    return 1
+  fi
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  SDMON=$2
+  if [ $SDMON -lt 0 -o $SDMON -gt 12 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Month-$SDMON: $0"
+    return 1
+  fi
+  OID="$OID.$SDIDX"
+  setData $OID $SDMON
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function writeThermScheduleSpecialYear {
+  # OID4.4.4.4.1-20 - Set Schedule Special Year
+  # In : Special_Day_Index Year (0 for Every Year)
+  # Out: Return Code
+  OID="OID4.4.4.4"
+  SDIDX=$1
+  if [ ! $2 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Parameter Count: $0"
+    return 1
+  fi
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  SDYEAR=$2
+  if [ $SDYEAR -ne 0 ]; then
+    CURYEAR=`date +"%Y"`
+    MAXYEAR=$[$CURYEAR + 3]
+    if [ $SDYEAR -lt $CURYEAR -o $SDYEAR -gt $MAXYEAR ]; then
+      echo "ERR-$OID.$SDIDX - Invalid Year - Must be Current to Current+3 or 0: $0"
+      return 1
+    fi
+  fi
+  OID="$OID.$SDIDX"
+  setData $OID $SDYEAR
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function writeThermScheduleSpecialDuration {
+  # OID4.4.4.5.1-20 - Set Schedule Special Day Duration in Days
+  # In : Special_Day_Index Duration_in_Days (1-240)
+  # Out: Return Code
+  OID="OID4.4.4.5"
+  SDIDX=$1
+  if [ ! $2 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Parameter Count: $0"
+    return 1
+  fi
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  SDDUR=$2
+  if [ $SDDUR -lt 1 -o $SDDUR -gt 240 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Duration - Must be 1-240: $0"
+    return 1
+  fi
+  OID="$OID.$SDIDX"
+  setData $OID $SDDUR
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
+function writeThermScheduleSpecialClassId {
+  # OID4.4.4.6.1-20 - Schedule Special Day Class ID
+  # In : Special_Day_Index Class_String
+  # Out: Return Code
+  OID="OID4.4.4.6"
+  SDIDX=$1
+  if [ ! $2 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Parameter Count: $0"
+    return 1
+  fi
+  if [ $SDIDX -lt 1 -o $SDIDX -gt 20 ]; then
+    echo "ERR-$OID.$SDIDX - Invalid Index: $0"
+    return 1
+  fi
+  CLASS=$2
+  case $CLASS in
+  "In")
+    INCLASS=1
+    ;;
+  "Out")
+    INCLASS=2
+    ;;
+  "Away")
+    INCLASS=3
+    ;;
+  *)
+    echo "ERR-$OID.$SDIDX - Invalid Class: $0"
+    return 1
+    ;;
+  esac
+  OID="$OID.$SDIDX"
+  setData $OID $INCLASS
+  if [ $? -ne 1 ]; then
+    return 0
+  else
+    echo "ERR-$OID - Failed Return Code: $0"
+    return 1
+  fi
+}
+
 function writeThermHeat1Usage {
   # OID4.5.1 - Set HEAT1 State Usage in Minutes
   # In : Number of Minutes
@@ -2328,7 +2502,7 @@ function writeThermHeat3Usage {
 # ------------------------------------------------------------------------------
 # Undocumented Function
 # These are functions found in the Web UI that are not in the API docs.
-# Due to the undocumented status, these are read-only.
+# Due to the undocumented status, these are mostly read-only.
 # ------------------------------------------------------------------------------
 
 function readSWVer {
@@ -2611,7 +2785,7 @@ function readThermTempScaleTag {
 
 # ------------------------------------------------------------------------------
 # Utility Functions
-# Generally useful function.
+# Generally useful functions.
 # ------------------------------------------------------------------------------
 
 function nowToEpoch {
